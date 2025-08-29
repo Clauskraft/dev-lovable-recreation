@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Paperclip, Globe, ArrowUp } from "lucide-react";
-import lovableHeart from "@/assets/lovable-heart.png";
 
 const HeroSection = () => {
   const [chatInput, setChatInput] = useState("");
@@ -12,14 +11,8 @@ const HeroSection = () => {
       {/* Main Heading */}
       <div className="flex items-center gap-3 mb-6">
         <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white">
-          Build with
+          Build with POWER
         </h1>
-        <div className="flex items-center gap-2">
-          <img src={lovableHeart} alt="POWER:K heart" className="w-12 h-12 md:w-16 md:h-16" />
-          <span className="text-5xl md:text-6xl lg:text-7xl font-bold text-white">
-            POWER
-          </span>
-        </div>
       </div>
       
       {/* Subtitle */}
