@@ -6,49 +6,49 @@
 
 @layer base {
   :root {
-    /* Core colors */
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Core colors - TDC navy theme */
+    --background: 220 35% 8%;
+    --foreground: 210 20% 98%;
     
-    /* Gradient colors for the beautiful background */
-    --gradient-start: 220 70% 85%;
-    --gradient-middle: 250 60% 75%;
-    --gradient-end: 15 80% 70%;
+    /* Gradient colors for TDC-inspired background */
+    --gradient-start: 220 35% 8%;
+    --gradient-middle: 220 70% 45%;
+    --gradient-end: 220 85% 58%;
     
-    /* Brand colors inspired by Lovable */
-    --brand-primary: 15 80% 55%;
-    --brand-secondary: 220 70% 65%;
+    /* Brand colors inspired by TDC */
+    --brand-primary: 220 85% 58%;
+    --brand-secondary: 220 70% 45%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 220 45% 12%;
+    --card-foreground: 210 20% 98%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 220 45% 12%;
+    --popover-foreground: 210 20% 98%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 220 85% 58%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 220 45% 15%;
+    --secondary-foreground: 210 20% 98%;
     
-    /* Chat interface colors */
-    --chat-bg: 0 0% 98%;
-    --chat-border: 220 13% 91%;
-    --chat-button: 220 9% 46%;
-    --chat-button-hover: 220 9% 36%;
+    /* Chat interface colors - TDC style */
+    --chat-bg: 220 45% 12%;
+    --chat-border: 220 85% 58%;
+    --chat-button: 220 85% 58%;
+    --chat-button-hover: 220 100% 65%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 220 45% 15%;
+    --muted-foreground: 215.4 16.3% 70%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 220 85% 58%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 220 45% 20%;
+    --input: 220 45% 20%;
+    --ring: 220 85% 58%;
 
     --radius: 0.5rem;
 
@@ -70,43 +70,43 @@
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
+    --background: 220 45% 6%;
     --foreground: 210 40% 98%;
     
-    /* Dark mode gradient adjustments */
-    --gradient-start: 220 50% 25%;
-    --gradient-middle: 250 40% 20%;
-    --gradient-end: 15 60% 25%;
+    /* Dark mode gradient adjustments - TDC darker theme */
+    --gradient-start: 220 45% 6%;
+    --gradient-middle: 220 80% 50%;
+    --gradient-end: 220 100% 65%;
     
-    --chat-bg: 222.2 84% 4.9%;
-    --chat-border: 217.2 32.6% 17.5%;
-    --chat-button: 215 20.2% 65.1%;
-    --chat-button-hover: 210 40% 98%;
+    --chat-bg: 220 45% 8%;
+    --chat-border: 220 85% 58%;
+    --chat-button: 220 100% 65%;
+    --chat-button-hover: 220 100% 70%;
 
-    --card: 222.2 84% 4.9%;
+    --card: 220 45% 10%;
     --card-foreground: 210 40% 98%;
 
-    --popover: 222.2 84% 4.9%;
+    --popover: 220 45% 10%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: 220 100% 65%;
+    --primary-foreground: 220 45% 6%;
 
-    --secondary: 217.2 32.6% 17.5%;
+    --secondary: 220 45% 15%;
     --secondary-foreground: 210 40% 98%;
 
-    --muted: 217.2 32.6% 17.5%;
+    --muted: 220 45% 15%;
     --muted-foreground: 215 20.2% 65.1%;
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 220 100% 65%;
+    --accent-foreground: 220 45% 6%;
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    --border: 220 45% 20%;
+    --input: 220 45% 20%;
+    --ring: 220 100% 65%;
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;

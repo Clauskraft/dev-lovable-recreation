@@ -2,28 +2,28 @@ import { Button } from "@/components/ui/button";
 
 const Navigation = () => {
   return (
-    <nav className="w-full px-6 py-4 bg-white/10 backdrop-blur-md border-b border-white/20">
+    <nav className="w-full px-6 py-4 bg-background/95 backdrop-blur-md border-b border-primary/20">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         {/* Logo */}
         <div className="flex items-center gap-2">
-          <span className="text-xl font-bold text-white">POWER:K</span>
+          <span className="text-xl font-bold text-foreground">POWER:K</span>
         </div>
         
         {/* Navigation Links */}
         <div className="hidden md:flex items-center gap-8">
-          <a href="#" className="text-white/80 hover:text-white transition-colors">Community</a>
-          <a href="#" className="text-white/80 hover:text-white transition-colors">Pricing</a>
-          <a href="#" className="text-white/80 hover:text-white transition-colors">Enterprise</a>
-          <a href="#" className="text-white/80 hover:text-white transition-colors">Learn</a>
-          <a href="#" className="text-white/80 hover:text-white transition-colors">Launched</a>
+          <a href="#" className="text-foreground/80 hover:text-foreground transition-colors">Community</a>
+          <a href="#" className="text-foreground/80 hover:text-foreground transition-colors">Pricing</a>
+          <a href="#" className="text-foreground/80 hover:text-foreground transition-colors">Enterprise</a>
+          <a href="#" className="text-foreground/80 hover:text-foreground transition-colors">Learn</a>
+          <a href="#" className="text-foreground/80 hover:text-foreground transition-colors">Launched</a>
         </div>
         
         {/* Auth Buttons */}
         <div className="flex items-center gap-3">
-          <Button variant="ghost" className="text-white hover:bg-white/20 border-0">
+          <Button variant="ghost" className="text-foreground hover:bg-accent/20 border-0">
             Log in
           </Button>
-          <Button className="bg-white text-gray-900 hover:bg-gray-100 font-medium">
+          <Button className="bg-primary text-primary-foreground hover:bg-primary/90 font-medium">
             Get started
           </Button>
         </div>
