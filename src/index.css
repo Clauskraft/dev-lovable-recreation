@@ -2,14 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Lovable Design System - Beautiful gradients and modern colors */
 
 @layer base {
   :root {
+    /* Core colors */
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
+    
+    /* Gradient colors for the beautiful background */
+    --gradient-start: 220 70% 85%;
+    --gradient-middle: 250 60% 75%;
+    --gradient-end: 15 80% 70%;
+    
+    /* Brand colors inspired by Lovable */
+    --brand-primary: 15 80% 55%;
+    --brand-secondary: 220 70% 65%;
 
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
@@ -22,6 +30,12 @@ All colors MUST be HSL.
 
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
+    
+    /* Chat interface colors */
+    --chat-bg: 0 0% 98%;
+    --chat-border: 220 13% 91%;
+    --chat-button: 220 9% 46%;
+    --chat-button-hover: 220 9% 36%;
 
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
@@ -58,6 +72,16 @@ All colors MUST be HSL.
   .dark {
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
+    
+    /* Dark mode gradient adjustments */
+    --gradient-start: 220 50% 25%;
+    --gradient-middle: 250 40% 20%;
+    --gradient-end: 15 60% 25%;
+    
+    --chat-bg: 222.2 84% 4.9%;
+    --chat-border: 217.2 32.6% 17.5%;
+    --chat-button: 215 20.2% 65.1%;
+    --chat-button-hover: 210 40% 98%;
 
     --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
@@ -100,6 +124,20 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+  
+  .gradient-bg {
+    background: linear-gradient(135deg, 
+      hsl(var(--gradient-start)) 0%, 
+      hsl(var(--gradient-middle)) 50%, 
+      hsl(var(--gradient-end)) 100%
+    );
+  }
+  
+  .glass-effect {
+    backdrop-filter: blur(20px);
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
   }
 }

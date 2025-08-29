@@ -24,6 +24,19 @@ export default {
 				ring: 'hsl(var(--ring))',
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
+				
+				/* Brand and gradient colors */
+				'gradient-start': 'hsl(var(--gradient-start))',
+				'gradient-middle': 'hsl(var(--gradient-middle))',
+				'gradient-end': 'hsl(var(--gradient-end))',
+				'brand-primary': 'hsl(var(--brand-primary))',
+				'brand-secondary': 'hsl(var(--brand-secondary))',
+				
+				/* Chat interface */
+				'chat-bg': 'hsl(var(--chat-bg))',
+				'chat-border': 'hsl(var(--chat-border))',
+				'chat-button': 'hsl(var(--chat-button))',
+				'chat-button-hover': 'hsl(var(--chat-button-hover))',
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
 					foreground: 'hsl(var(--primary-foreground))'
