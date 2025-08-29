@@ -7,8 +7,8 @@ const Navigation = () => {
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         {/* Logo */}
         <div className="flex items-center gap-2">
-          <img src={lovableHeart} alt="Lovable" className="w-8 h-8" />
-          <span className="text-xl font-bold text-white">Lovable</span>
+          <img src={lovableHeart} alt="POWER:K" className="w-8 h-8" />
+          <span className="text-xl font-bold text-white">POWER:K</span>
         </div>
         
         {/* Navigation Links */}

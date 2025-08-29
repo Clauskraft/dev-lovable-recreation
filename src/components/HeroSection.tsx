@@ -12,12 +12,12 @@ const HeroSection = () => {
       {/* Main Heading */}
       <div className="flex items-center gap-3 mb-6">
         <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white">
-          Build something
+          Build with
         </h1>
         <div className="flex items-center gap-2">
-          <img src={lovableHeart} alt="Lovable heart" className="w-12 h-12 md:w-16 md:h-16" />
+          <img src={lovableHeart} alt="POWER:K heart" className="w-12 h-12 md:w-16 md:h-16" />
           <span className="text-5xl md:text-6xl lg:text-7xl font-bold text-white">
-            Lovable
+            POWER
           </span>
         </div>
       </div>
@@ -34,7 +34,7 @@ const HeroSection = () => {
             <Input
               value={chatInput}
               onChange={(e) => setChatInput(e.target.value)}
-              placeholder="Ask Lovable to create a landing page for my..."
+              placeholder="Ask POWER:K to create a landing page for my..."
               className="flex-1 border-0 bg-white/90 text-gray-900 placeholder:text-gray-600 text-lg py-6"
             />
             <Button 
