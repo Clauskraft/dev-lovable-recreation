@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 const Navigation = () => {
   return (
@@ -11,11 +12,10 @@ const Navigation = () => {
         
         {/* Navigation Links */}
         <div className="hidden md:flex items-center gap-8">
-          <a href="#" className="text-foreground/80 hover:text-foreground transition-colors">Community</a>
-          <a href="#" className="text-foreground/80 hover:text-foreground transition-colors">Pricing</a>
-          <a href="#" className="text-foreground/80 hover:text-foreground transition-colors">Enterprise</a>
-          <a href="#" className="text-foreground/80 hover:text-foreground transition-colors">Learn</a>
-          <a href="#" className="text-foreground/80 hover:text-foreground transition-colors">Launched</a>
+          <Link to="/community" className="text-foreground/80 hover:text-foreground transition-colors">Community</Link>
+          <Link to="/pricing" className="text-foreground/80 hover:text-foreground transition-colors">Pricing</Link>
+          <Link to="/learn" className="text-foreground/80 hover:text-foreground transition-colors">Learn</Link>
+          <Link to="/launched" className="text-foreground/80 hover:text-foreground transition-colors">Launched</Link>
         </div>
         
         {/* Auth Buttons */}
