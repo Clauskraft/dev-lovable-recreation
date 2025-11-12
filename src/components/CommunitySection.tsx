@@ -47,12 +47,12 @@ const projects = [
 
 const CommunitySection = () => {
   return (
-    <section className="w-full bg-white/95 backdrop-blur-sm rounded-t-3xl mt-auto">
+    <section className="w-full bg-white/95 backdrop-blur-sm rounded-t-3xl mt-auto shadow-floating animate-slide-up">
       <div className="max-w-7xl mx-auto px-6 py-16">
         {/* Section Header */}
         <div className="flex items-center justify-between mb-8">
           <h2 className="text-3xl font-bold text-gray-900">Sikkerhed. Compliance. Ro i Sindet. Indbygget.</h2>
-          <Button className="bg-white text-primary hover:bg-white/90 border-0 shadow-lg">
+          <Button className="bg-white text-primary hover:bg-white/90 border-0 shadow-lg transition-smooth hover:scale-105 hover:shadow-xl">
             Se Alle
           </Button>
         </div>
@@ -75,7 +75,7 @@ const CommunitySection = () => {
           {projects.map((project) => {
             const Card = (
               <div
-                className="group bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300 cursor-pointer"
+                className="group bg-white rounded-xl border border-gray-200 overflow-hidden hover-lift shadow-world-class cursor-pointer"
               >
                 {/* Project Image */}
                 <div className="aspect-video overflow-hidden bg-gray-100">
