@@ -6,77 +6,77 @@ import { Check, Zap, Building, Crown } from "lucide-react";
 const Pricing = () => {
   const plans = [
     {
-      name: "Free",
+      name: "Gratis",
       icon: Zap,
-      price: "$0",
-      period: "per month",
-      description: "Discover what TDC AI can do for you",
-      badge: "Free forever",
-      buttonText: "Get Started",
+      price: "0 kr",
+      period: "pr. måned",
+      description: "Opdag hvad TDC AI kan gøre for dig",
+      badge: "Gratis for evigt",
+      buttonText: "Kom i gang",
       buttonVariant: "outline" as const,
       features: [
-        "5 daily credits (up to 30/month)",
-        "Public projects",
-        "Unlimited collaborators",
+        "5 daglige credits (op til 30/måned)",
+        "Offentlige projekter",
+        "Ubegrænset samarbejdspartnere",
         "Community support"
       ]
     },
     {
       name: "Pro",
       icon: Building,
-      price: "$25",
-      period: "per month",
-      description: "Designed for fast-moving teams building together in real time.",
-      badge: "Most Popular",
-      buttonText: "Get Started",
+      price: "199 kr",
+      period: "pr. måned",
+      description: "Designet til hurtige teams der bygger sammen i realtid.",
+      badge: "Mest Populær",
+      buttonText: "Kom i gang",
       buttonVariant: "default" as const,
       features: [
-        "100 monthly credits",
-        "5 daily credits (up to 150/month)",
-        "Private projects",
-        "User roles & permissions",
-        "Custom domains",
-        "Remove TDC AI badge",
-        "Credit rollovers"
+        "100 månedlige credits",
+        "5 daglige credits (op til 150/måned)",
+        "Private projekter",
+        "Brugerroller & tilladelser",
+        "Tilpassede domæner",
+        "Fjern TDC AI badge",
+        "Credit overførsler"
       ]
     },
     {
       name: "Business",
       icon: Crown,
-      price: "$50",
-      period: "per month", 
-      description: "Advanced controls and power features for growing departments",
-      badge: "Enterprise Ready",
-      buttonText: "Get Started",
+      price: "399 kr",
+      period: "pr. måned", 
+      description: "Avanceret kontrol og kraftfulde funktioner til voksende afdelinger",
+      badge: "Enterprise Klar",
+      buttonText: "Kom i gang",
       buttonVariant: "outline" as const,
       features: [
-        "200 monthly credits",
+        "200 månedlige credits",
         "SSO integration",
-        "Personal Projects",
-        "Opt out of data training",
-        "Design templates",
-        "Priority support",
-        "Advanced analytics"
+        "Personlige Projekter",
+        "Fravælg data træning",
+        "Design skabeloner",
+        "Prioriteret support",
+        "Avanceret analyse"
       ]
     }
   ];
 
   const faqs = [
     {
-      question: "What is TDC AI and how does it work?",
-      answer: "TDC AI is an AI-powered development platform that lets you create applications by chatting with AI. Simply describe what you want to build, and our AI will generate the code for you."
+      question: "Hvad er TDC AI og hvordan virker det?",
+      answer: "TDC AI er en AI-drevet udviklingsplatform der lader dig skabe applikationer ved at chatte med AI. Beskriv blot hvad du vil bygge, og vores AI genererer koden for dig."
     },
     {
-      question: "What does the free plan include?",
-      answer: "The free plan includes 5 daily credits (up to 30 per month), public projects, unlimited collaborators, and community support. Perfect for trying out TDC AI."
+      question: "Hvad inkluderer gratis planen?",
+      answer: "Gratis planen inkluderer 5 daglige credits (op til 30 pr. måned), offentlige projekter, ubegrænset samarbejdspartnere og community support. Perfekt til at prøve TDC AI."
     },
     {
-      question: "What is a credit?",
-      answer: "A credit is used each time you send a message to the AI. Simple changes use 1 credit, while complex features may use more credits."
+      question: "Hvad er en credit?",
+      answer: "En credit bruges hver gang du sender en besked til AI'en. Simple ændringer bruger 1 credit, mens komplekse funktioner kan bruge flere credits."
     },
     {
-      question: "Can I upgrade or downgrade my plan?",
-      answer: "Yes, you can upgrade or downgrade your plan at any time. Changes will be reflected in your next billing cycle."
+      question: "Kan jeg opgradere eller nedgradere min plan?",
+      answer: "Ja, du kan opgradere eller nedgradere din plan når som helst. Ændringer træder i kraft i din næste faktureringsperiode."
     }
   ];
 
@@ -86,10 +86,10 @@ const Pricing = () => {
         {/* Header */}
         <div className="text-center mb-16">
           <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6">
-            Simple, Transparent <span className="text-primary">Pricing</span>
+            Enkel, Transparent <span className="text-primary">Prissætning</span>
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Start for free. Upgrade to get the capacity that exactly matches your team's needs.
+            Start gratis. Opgradér for at få præcis den kapacitet dit team har brug for.
           </p>
         </div>
 
@@ -146,17 +146,17 @@ const Pricing = () => {
               <div>
                 <h3 className="text-2xl font-bold text-foreground mb-2">Enterprise</h3>
                 <p className="text-muted-foreground mb-4">
-                  Built for large orgs needing flexibility, scale, and governance.
+                  Bygget til store organisationer der har brug for fleksibilitet, skalering og governance.
                 </p>
                 <ul className="text-sm text-muted-foreground space-y-1">
-                  <li>• Dedicated support & onboarding</li>
-                  <li>• Custom connections & integrations</li>
-                  <li>• Group-based access control</li>
+                  <li>• Dedikeret support & onboarding</li>
+                  <li>• Tilpassede forbindelser & integrationer</li>
+                  <li>• Gruppebaseret adgangskontrol</li>
                 </ul>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-foreground mb-2">Custom pricing</div>
-                <Button size="lg">Book a Demo</Button>
+                <div className="text-2xl font-bold text-foreground mb-2">Tilpasset prissætning</div>
+                <Button size="lg">Book en Demo</Button>
               </div>
             </div>
           </CardContent>
@@ -165,7 +165,7 @@ const Pricing = () => {
         {/* FAQ */}
         <div className="max-w-3xl mx-auto">
           <h2 className="text-3xl font-bold text-center text-foreground mb-12">
-            Frequently Asked Questions
+            Ofte Stillede Spørgsmål
           </h2>
           <div className="space-y-6">
             {faqs.map((faq, index) => (

@@ -16,18 +16,18 @@ const Navigation = () => {
         {/* Navigation Links */}
         <div className="hidden md:flex items-center gap-8">
           <Link to="/community" className="text-white/90 hover:text-white transition-colors">Community</Link>
-          <Link to="/pricing" className="text-white/90 hover:text-white transition-colors">Pricing</Link>
-          <Link to="/learn" className="text-white/90 hover:text-white transition-colors">Learn</Link>
+          <Link to="/pricing" className="text-white/90 hover:text-white transition-colors">Priser</Link>
+          <Link to="/learn" className="text-white/90 hover:text-white transition-colors">Lær</Link>
           <Link to="/launched" className="text-white/90 hover:text-white transition-colors">Inside</Link>
         </div>
         
         {/* Auth Buttons */}
         <div className="flex items-center gap-3">
           <Button variant="ghost" className="text-white hover:bg-white/10 border-0">
-            Log in
+            Log ind
           </Button>
           <Button className="bg-white text-primary hover:bg-white/90 font-medium">
-            Get started
+            Kom i gang
           </Button>
         </div>
       </div>

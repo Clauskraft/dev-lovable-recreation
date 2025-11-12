@@ -52,7 +52,7 @@ const CommunitySection = () => {
         <div className="flex items-center justify-between mb-8">
           <h2 className="text-3xl font-bold text-gray-900">Sikkerhed. Compliance. Ro i Sindet. Indbygget.</h2>
           <Button className="bg-white text-primary hover:bg-white/90 border-0 shadow-lg">
-            View All
+            Se Alle
           </Button>
         </div>
         

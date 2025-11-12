@@ -38,51 +38,51 @@ const Community = () => {
 
   const heroSlides = [
     {
-      title: "Build with TDC Trusted Digital Community",
+      title: "Byg med TDC Trusted Digital Community",
       subtitle: "TRUSTED DIGITAL COMMUNITY",
-      description: "Join thousands of builders creating amazing applications with AI-powered development",
-      buttonText: "Join Community"
+      description: "Bliv en del af tusindvis af udviklere der skaber fantastiske applikationer med AI-drevet udvikling",
+      buttonText: "Deltag i Community"
     },
     {
-      title: "Collaborate & Innovate Together",
-      subtitle: "COLLABORATIVE BUILDING",
-      description: "Work with developers worldwide to create cutting-edge solutions",
-      buttonText: "Start Building"
+      title: "Samarbejd & Innovér Sammen",
+      subtitle: "SAMARBEJDSBASERET UDVIKLING",
+      description: "Arbejd sammen med udviklere verden over for at skabe banebrydende løsninger",
+      buttonText: "Start med at bygge"
     },
     {
-      title: "Launch Your Ideas Faster",
-      subtitle: "RAPID DEVELOPMENT",
-      description: "Use AI-powered tools to bring your vision to life in record time",
-      buttonText: "Get Started"
+      title: "Lancer Dine Idéer Hurtigere",
+      subtitle: "HURTIG UDVIKLING",
+      description: "Brug AI-drevne værktøjer til at realisere din vision på rekordtid",
+      buttonText: "Kom i gang"
     }
   ];
   const stats = [
-    { label: "Active Builders", value: "25,000+", icon: Users },
-    { label: "Projects Created", value: "500k+", icon: Rocket },
-    { label: "Community Stars", value: "150k+", icon: Star },
-    { label: "Monthly Growth", value: "40%", icon: TrendingUp },
+    { label: "Aktive Udviklere", value: "25.000+", icon: Users },
+    { label: "Projekter Skabt", value: "500k+", icon: Rocket },
+    { label: "Community Stjerner", value: "150k+", icon: Star },
+    { label: "Månedlig Vækst", value: "40%", icon: TrendingUp },
   ];
 
   const featuredProjects = [
     {
-      title: "E-commerce Dashboard",
-      category: "Business",
+      title: "E-handel Dashboard",
+      category: "Erhverv",
       author: "Alex Chen",
-      remixes: "12.5k",
+      remixes: "12,5k",
       image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=400&fit=crop",
     },
     {
-      title: "Social Media Analytics",
-      category: "Analytics", 
+      title: "Sociale Medier Analyse",
+      category: "Analyse", 
       author: "Sarah Wilson",
-      remixes: "8.2k",
+      remixes: "8,2k",
       image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=400&fit=crop",
     },
     {
-      title: "Project Management Tool",
-      category: "Productivity",
+      title: "Projektstyring Værktøj",
+      category: "Produktivitet",
       author: "Mike Johnson", 
-      remixes: "15.3k",
+      remixes: "15,3k",
       image: "https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=800&h=400&fit=crop",
     },
   ];
@@ -172,9 +172,9 @@ const Community = () => {
         {/* Featured Projects - Card Style */}
         <div className="mb-16">
           <div className="flex items-center justify-between mb-8">
-            <h2 className="text-3xl font-bold text-card-foreground">Featured Projects</h2>
+            <h2 className="text-3xl font-bold text-card-foreground">Fremhævede Projekter</h2>
             <Button variant="outline" className="border-border hover:bg-accent">
-              View All
+              Se Alle
             </Button>
           </div>
           
@@ -194,7 +194,7 @@ const Community = () => {
                     <span className="text-sm text-muted-foreground">{project.remixes} remixes</span>
                   </div>
                   <h3 className="text-xl font-bold text-card-foreground mb-2">{project.title}</h3>
-                  <p className="text-muted-foreground text-sm">by {project.author}</p>
+                  <p className="text-muted-foreground text-sm">af {project.author}</p>
                 </div>
               </div>
             ))}
@@ -203,22 +203,22 @@ const Community = () => {
 
         {/* Community Features - Blue Card Style */}
         <div className="bg-accent rounded-2xl p-12">
-          <h2 className="text-3xl font-bold text-accent-foreground mb-12 text-center">Why Join TDC AI Community?</h2>
+          <h2 className="text-3xl font-bold text-accent-foreground mb-12 text-center">Hvorfor Deltage i TDC AI Community?</h2>
           <div className="grid md:grid-cols-3 gap-8">
             <div className="bg-card rounded-lg p-8 transition-all duration-300 hover:scale-105" style={{ boxShadow: 'var(--shadow-card)' }}>
               <Users className="w-12 h-12 text-primary mb-4" />
-              <h3 className="text-xl font-semibold mb-3 text-card-foreground">Collaborative Building</h3>
-              <p className="text-muted-foreground">Work together with developers worldwide to create amazing applications</p>
+              <h3 className="text-xl font-semibold mb-3 text-card-foreground">Samarbejdsbaseret Udvikling</h3>
+              <p className="text-muted-foreground">Arbejd sammen med udviklere verden over for at skabe fantastiske applikationer</p>
             </div>
             <div className="bg-card rounded-lg p-8 transition-all duration-300 hover:scale-105" style={{ boxShadow: 'var(--shadow-card)' }}>
               <Rocket className="w-12 h-12 text-primary mb-4" />
-              <h3 className="text-xl font-semibold mb-3 text-card-foreground">Launch Faster</h3>
-              <p className="text-muted-foreground">Use community templates and components to accelerate your development</p>
+              <h3 className="text-xl font-semibold mb-3 text-card-foreground">Lancer Hurtigere</h3>
+              <p className="text-muted-foreground">Brug community skabeloner og komponenter til at accelerere din udvikling</p>
             </div>
             <div className="bg-card rounded-lg p-8 transition-all duration-300 hover:scale-105" style={{ boxShadow: 'var(--shadow-card)' }}>
               <TrendingUp className="w-12 h-12 text-primary mb-4" />
-              <h3 className="text-xl font-semibold mb-3 text-card-foreground">Learn & Grow</h3>
-              <p className="text-muted-foreground">Share knowledge and learn from the best builders in the community</p>
+              <h3 className="text-xl font-semibold mb-3 text-card-foreground">Lær & Voks</h3>
+              <p className="text-muted-foreground">Del viden og lær fra de bedste udviklere i community</p>
             </div>
           </div>
         </div>

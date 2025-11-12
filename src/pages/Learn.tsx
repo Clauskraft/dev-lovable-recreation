@@ -5,58 +5,58 @@ import { BookOpen, Video, Code, Lightbulb, Clock, Users } from "lucide-react";
 
 const Learn = () => {
   const categories = [
-    { name: "Getting Started", count: 12, icon: Lightbulb },
+    { name: "Kom i gang", count: 12, icon: Lightbulb },
     { name: "Tutorials", count: 28, icon: Video },
     { name: "Best Practices", count: 15, icon: BookOpen },
-    { name: "Advanced", count: 8, icon: Code },
+    { name: "Avanceret", count: 8, icon: Code },
   ];
 
   const tutorials = [
     {
-      title: "Your First TDC AI App",
-      description: "Learn how to create your first application using AI-powered development",
+      title: "Din Første TDC AI App",
+      description: "Lær hvordan du opretter din første applikation med AI-drevet udvikling",
       duration: "10 min",
-      level: "Beginner",
-      category: "Getting Started",
+      level: "Begynder",
+      category: "Kom i gang",
       image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&h=400&fit=crop",
     },
     {
-      title: "Building a Dashboard",
-      description: "Step-by-step guide to creating interactive dashboards with beautiful charts",
+      title: "Byg et Dashboard",
+      description: "Trin-for-trin guide til at oprette interaktive dashboards med smukke diagrammer",
       duration: "25 min", 
-      level: "Intermediate",
+      level: "Mellemliggende",
       category: "Tutorials",
       image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=400&fit=crop",
     },
     {
       title: "Database Integration",
-      description: "Connect your app to databases and manage data effectively",
+      description: "Forbind din app til databaser og håndtér data effektivt",
       duration: "30 min",
-      level: "Intermediate", 
+      level: "Mellemliggende", 
       category: "Tutorials",
       image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&h=400&fit=crop",
     },
     {
       title: "AI Prompt Engineering",
-      description: "Master the art of communicating with AI to get the best results",
+      description: "Mestre kunsten at kommunikere med AI for at få de bedste resultater",
       duration: "15 min",
-      level: "Beginner",
+      level: "Begynder",
       category: "Best Practices",
       image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=400&fit=crop",
     },
     {
-      title: "Custom Components",
-      description: "Build reusable components and design systems for your projects",
+      title: "Tilpassede Komponenter",
+      description: "Byg genanvendelige komponenter og design systemer til dine projekter",
       duration: "35 min",
-      level: "Advanced",
-      category: "Advanced", 
+      level: "Avanceret",
+      category: "Avanceret", 
       image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&h=400&fit=crop",
     },
     {
-      title: "Deployment Guide",
-      description: "Deploy your applications to production with confidence",
+      title: "Udrulningsguide",
+      description: "Udrul dine applikationer til produktion med selvtillid",
       duration: "20 min",
-      level: "Intermediate",
+      level: "Mellemliggende",
       category: "Tutorials",
       image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&h=400&fit=crop",
     },
@@ -64,26 +64,26 @@ const Learn = () => {
 
   const resources = [
     {
-      title: "Documentation",
-      description: "Complete reference guide for all TDC AI features",
+      title: "Dokumentation",
+      description: "Komplet referenceguide for alle TDC AI funktioner",
       icon: BookOpen,
       link: "#"
     },
     {
-      title: "Video Courses", 
-      description: "In-depth video tutorials for visual learners",
+      title: "Video Kurser", 
+      description: "Dybdegående video tutorials for visuelle lærere",
       icon: Video,
       link: "#"
     },
     {
       title: "Community Forum",
-      description: "Get help and share knowledge with other builders",
+      description: "Få hjælp og del viden med andre udviklere",
       icon: Users,
       link: "#"
     },
     {
-      title: "Code Examples",
-      description: "Ready-to-use code snippets and templates", 
+      title: "Kode Eksempler",
+      description: "Klar-til-brug kode snippets og skabeloner", 
       icon: Code,
       link: "#"
     }
@@ -95,13 +95,13 @@ const Learn = () => {
         {/* Header */}
         <div className="text-center mb-16">
           <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6">
-            Learn to Build with <span className="text-primary">POWER</span>
+            Lær at Bygge med <span className="text-primary">KRAFT</span>
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
-            Master AI-powered development with our comprehensive tutorials and guides
+            Mestre AI-drevet udvikling med vores omfattende tutorials og guider
           </p>
           <Button size="lg" className="bg-primary hover:bg-primary/90">
-            Start Learning
+            Start med at lære
           </Button>
         </div>
 
@@ -112,7 +112,7 @@ const Learn = () => {
               <CardContent className="p-6">
                 <category.icon className="w-8 h-8 text-primary mx-auto mb-3" />
                 <h3 className="font-semibold text-foreground mb-1">{category.name}</h3>
-                <p className="text-sm text-muted-foreground">{category.count} lessons</p>
+                <p className="text-sm text-muted-foreground">{category.count} lektioner</p>
               </CardContent>
             </Card>
           ))}
@@ -121,9 +121,9 @@ const Learn = () => {
         {/* Featured Tutorials */}
         <div className="mb-16">
           <div className="flex items-center justify-between mb-8">
-            <h2 className="text-3xl font-bold text-foreground">Featured Tutorials</h2>
+            <h2 className="text-3xl font-bold text-foreground">Fremhævede Tutorials</h2>
             <Button variant="outline" className="border-primary/20">
-              View All
+              Se Alle
             </Button>
           </div>
           
@@ -158,7 +158,7 @@ const Learn = () => {
 
         {/* Learning Resources */}
         <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold text-foreground mb-8">Learning Resources</h2>
+          <h2 className="text-3xl font-bold text-foreground mb-8">Lærings Ressourcer</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {resources.map((resource, index) => (
               <Card key={index} className="border-primary/20 hover:border-primary/40 transition-colors cursor-pointer">
