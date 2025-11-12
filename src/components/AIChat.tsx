@@ -144,47 +144,49 @@ const AIChat = () => {
   };
 
   return (
-    <div className="w-full max-w-xl mx-auto flex flex-col">
+    <div className="w-full max-w-3xl mx-auto flex flex-col h-full">
       {/* Messages Area */}
       {messages.length > 0 && (
-        <div className="glass-effect rounded-2xl p-6 mb-4 max-h-[400px] overflow-y-auto">
-          <div className="space-y-4">
-            {messages.map((msg, idx) => (
-              <div
-                key={idx}
-                className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
-              >
+        <div className="glass-effect rounded-2xl mb-4 flex flex-col" style={{ height: '500px' }}>
+          <div className="flex-1 overflow-y-auto p-6">
+            <div className="space-y-4">
+              {messages.map((msg, idx) => (
                 <div
-                  className={`max-w-[80%] rounded-2xl px-4 py-3 ${
-                    msg.role === "user"
-                      ? "bg-primary text-white"
-                      : "bg-white/90 text-gray-900"
-                  }`}
+                  key={idx}
+                  className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
                 >
-                  <p className="whitespace-pre-wrap">{msg.content}</p>
+                  <div
+                    className={`rounded-2xl px-5 py-3 shadow-md ${
+                      msg.role === "user"
+                        ? "bg-primary text-primary-foreground max-w-[75%]"
+                        : "bg-white text-foreground max-w-[85%]"
+                    }`}
+                  >
+                    <p className="whitespace-pre-wrap text-sm leading-relaxed">{msg.content}</p>
+                  </div>
                 </div>
-              </div>
-            ))}
-            <div ref={messagesEndRef} />
+              ))}
+              <div ref={messagesEndRef} />
+            </div>
           </div>
         </div>
       )}
 
       {/* Input Area */}
-      <div className="glass-effect rounded-2xl p-4">
+      <div className="glass-effect rounded-2xl p-4 shadow-lg">
         <div className="flex items-center gap-3 mb-4">
           <Input
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyPress={handleKeyPress}
-            placeholder="Spørg TDC DKAI om at skabe en løsning til..."
-            className="flex-1 border-0 bg-white/90 text-gray-900 placeholder:text-gray-600 text-lg py-6"
+            placeholder="Spørg TDC AI om at skabe en løsning til..."
+            className="flex-1 border-0 bg-white text-gray-900 placeholder:text-gray-500 text-base py-6 shadow-sm"
             disabled={isLoading}
           />
           <Button
             onClick={handleSend}
             disabled={isLoading || !input.trim()}
-            className="p-3 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full"
+            className="p-3 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full shadow-md transition-all hover:scale-105"
             size="icon"
           >
             {isLoading ? (
@@ -200,9 +202,13 @@ const AIChat = () => {
             <SelectTrigger className="text-white/80 hover:text-white border-0 bg-transparent w-auto gap-2">
               <SelectValue />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="bg-[hsl(230,45%,15%)] border-white/10">
               {MODELS.map((model) => (
-                <SelectItem key={model.id} value={model.id}>
+                <SelectItem 
+                  key={model.id} 
+                  value={model.id}
+                  className="text-white/90 hover:text-white hover:bg-white/10"
+                >
                   {model.name}
                 </SelectItem>
               ))}
