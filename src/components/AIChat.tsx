@@ -30,27 +30,6 @@ const AIChat = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
   };
 
-  // Welcome message on first load
-  useEffect(() => {
-    if (messages.length === 0) {
-      setMessages([{
-        role: "assistant",
-        content: `Goddag! Jeg er Erhvervsrådgiveren fra TDC Erhverv. 
-
-Jeg er her for at hjælpe jer med at finde de rigtige digitale løsninger til jeres virksomhed.
-
-Vores samtale vil følge denne struktur:
-
-1. **Discovery** - Jeg vil stille åbne spørgsmål for at forstå jeres situation og udfordringer
-2. **Problemets konsekvenser** - Vi dykker ned i, hvordan udfordringerne påvirker jeres forretning
-3. **Løsning og værdi** - Jeg præsenterer relevante TDC-løsninger, der matcher jeres specifikke behov
-4. **Næste skridt** - Vi aftaler konkrete handlinger
-
-Hvad kan jeg hjælpe jer med i dag?`
-      }]);
-    }
-  }, []);
-
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
