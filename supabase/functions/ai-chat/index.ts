@@ -1,4 +1,5 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -13,7 +14,44 @@ serve(async (req) => {
     const OPENROUTER_API_KEY = Deno.env.get("OPENROUTER_API_KEY");
     if (!OPENROUTER_API_KEY) throw new Error("OPENROUTER_API_KEY is not configured");
 
-    console.log("Using model:", model);
+    // Initialize Supabase client
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+    const supabase = createClient(supabaseUrl, supabaseKey);
+
+    // Fetch system prompt from database
+    const { data: settingsData } = await supabase
+      .from('chat_settings')
+      .select('system_prompt')
+      .order('created_at', { ascending: false })
+      .limit(1)
+      .maybeSingle();
+
+    const systemPrompt = settingsData?.system_prompt || 'Du er en hjælpsom AI-assistent fra TDC Erhverv. Du hjælper med at besvare spørgsmål om teknologi, løsninger og services.';
+
+    // Fetch all context files
+    const { data: contextFiles } = await supabase
+      .from('context_files')
+      .select('file_name, content')
+      .order('created_at', { ascending: false });
+
+    // Build context string from files
+    let contextString = '';
+    if (contextFiles && contextFiles.length > 0) {
+      contextString = '\n\nTilgængelig produktinformation:\n\n';
+      contextFiles.forEach((file: any) => {
+        if (file.content) {
+          contextString += `--- ${file.file_name} ---\n${file.content}\n\n`;
+        }
+      });
+    }
+
+    // Combine system prompt with context
+    const enhancedSystemPrompt = systemPrompt + contextString;
+
+    console.log('Using model:', model);
+    console.log('System prompt length:', enhancedSystemPrompt.length);
+    console.log('Context files count:', contextFiles?.length || 0);
 
     const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
       method: "POST",
@@ -26,7 +64,7 @@ serve(async (req) => {
       body: JSON.stringify({
         model: model || "mistralai/mistral-7b-instruct",
         messages: [
-          { role: "system", content: "Du er en hjælpsom AI-assistent fra TDC Erhverv. Du hjælper med at besvare spørgsmål om teknologi, løsninger og services." },
+          { role: "system", content: enhancedSystemPrompt },
           ...messages,
         ],
         stream: true,
@@ -40,6 +78,13 @@ serve(async (req) => {
       if (response.status === 429) {
         return new Response(JSON.stringify({ error: "For mange anmodninger, prøv igen senere." }), {
           status: 429,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      
+      if (response.status === 402) {
+        return new Response(JSON.stringify({ error: "Betalingskrævet. Tilføj midler til din konto." }), {
+          status: 402,
           headers: { ...corsHeaders, "Content-Type": "application/json" },
         });
       }

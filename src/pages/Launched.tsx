@@ -3,57 +3,119 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Upload, FileText, Folder, Search, Download, Trash2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
+import Navigation from "@/components/Navigation";
+import SystemPromptEditor from "@/components/SystemPromptEditor";
+import ContextFileUpload from "@/components/ContextFileUpload";
 
 const Launched = () => {
+  const { toast } = useToast();
   const [searchQuery, setSearchQuery] = useState("");
+  const [products, setProducts] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const categories = [
-    { name: "Alle produkter", count: 24 },
-    { name: "AI Løsninger", count: 8 },
-    { name: "Netværk", count: 6 },
-    { name: "Sikkerhed", count: 5 },
-    { name: "Cloud Services", count: 5 },
+    { name: "Alle produkter", count: products.length },
+    { name: "AI Løsninger", count: products.filter(p => p.category === "AI Løsninger").length },
+    { name: "Netværk", count: products.filter(p => p.category === "Netværk").length },
+    { name: "Sikkerhed", count: products.filter(p => p.category === "Sikkerhed").length },
+    { name: "Cloud Services", count: products.filter(p => p.category === "Cloud Services").length },
   ];
 
-  const products = [
-    {
-      id: 1,
-      name: "TDC AI Mobile",
-      category: "AI Løsninger",
-      description: "AI-drevet mobiltelefon med Perplexity Assistant",
-      fileType: "PDF",
-      uploadDate: "2025-01-15",
-      fileSize: "2.4 MB",
-    },
-    {
-      id: 2,
-      name: "TDC Threat Intel API",
-      category: "Sikkerhed",
-      description: "Threat intelligence API til sikkerhedsovervågning",
-      fileType: "PDF",
-      uploadDate: "2025-01-10",
-      fileSize: "1.8 MB",
-    },
-    {
-      id: 3,
-      name: "TDC GDPR Referatservice",
-      category: "Cloud Services",
-      description: "GDPR-kompatibel dokumentation og referatservice",
-      fileType: "PDF",
-      uploadDate: "2025-01-08",
-      fileSize: "3.2 MB",
-    },
-    {
-      id: 4,
-      name: "TDC 5G Erhvervsløsning",
-      category: "Netværk",
-      description: "5G netværksløsninger til erhvervskunder",
-      fileType: "PDF",
-      uploadDate: "2025-01-05",
-      fileSize: "4.1 MB",
-    },
-  ];
+  useEffect(() => {
+    fetchContextFiles();
+    
+    // Listen for file updates from ContextFileUpload component
+    const handleFileUpdate = () => {
+      fetchContextFiles();
+    };
+    
+    window.addEventListener('context-files-updated', handleFileUpdate);
+    
+    return () => {
+      window.removeEventListener('context-files-updated', handleFileUpdate);
+    };
+  }, []);
+
+  const fetchContextFiles = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('context_files')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      
+      // Transform context files to product format for display
+      const transformedProducts = data?.map((file, index) => ({
+        id: file.id,
+        name: file.file_name,
+        category: file.file_type.includes('pdf') ? 'AI Løsninger' : 
+                 file.file_type.includes('json') ? 'Cloud Services' :
+                 file.file_type.includes('text') ? 'Netværk' : 'Sikkerhed',
+        description: `Uploadet kontekstfil: ${file.file_name}`,
+        fileType: file.file_type.split('/')[1]?.toUpperCase() || 'FILE',
+        uploadDate: new Date(file.created_at).toLocaleDateString('da-DK'),
+        fileSize: formatFileSize(file.file_size),
+        file_path: file.file_path,
+      })) || [];
+
+      setProducts(transformedProducts);
+    } catch (error) {
+      console.error('Error fetching files:', error);
+      toast({
+        title: "Fejl",
+        description: "Kunne ikke hente filer",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const formatFileSize = (bytes: number) => {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
+  };
+
+  const deleteFile = async (fileId: string, filePath: string) => {
+    try {
+      // Delete from storage
+      const { error: storageError } = await supabase.storage
+        .from('product-context')
+        .remove([filePath]);
+
+      if (storageError) throw storageError;
+
+      // Delete from database
+      const { error: dbError } = await supabase
+        .from('context_files')
+        .delete()
+        .eq('id', fileId);
+
+      if (dbError) throw dbError;
+
+      // Refresh the list
+      fetchContextFiles();
+
+      toast({
+        title: "Fil slettet",
+        description: "Filen er blevet fjernet",
+      });
+    } catch (error) {
+      console.error('Error deleting file:', error);
+      toast({
+        title: "Fejl",
+        description: "Kunne ikke slette fil",
+        variant: "destructive",
+      });
+    }
+  };
 
   const filteredProducts = products.filter(product =>
     product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -62,6 +124,7 @@ const Launched = () => {
 
   return (
     <div className="min-h-screen" style={{ background: 'var(--gradient-hero)' }}>
+      <Navigation />
       <div className="container mx-auto px-4 py-12">
         {/* Header */}
         <div className="mb-12 animate-fade-in">
@@ -73,31 +136,11 @@ const Launched = () => {
           </p>
         </div>
 
-        {/* Upload Section */}
-        <Card className="mb-8 bg-card border-0 transition-all duration-300 hover:scale-[1.02]" style={{ boxShadow: 'var(--shadow-card)' }}>
-          <CardContent className="p-8">
-            <div className="flex flex-col md:flex-row items-center gap-6">
-              <div className="flex-1">
-                <h3 className="text-xl font-semibold text-card-foreground mb-2 flex items-center gap-2">
-                  <Upload className="w-5 h-5 text-primary" />
-                  Upload Produktinformation
-                </h3>
-                <p className="text-muted-foreground mb-4">
-                  Tilføj produktspecifikationer, datasheets, bruger guider og anden relevant dokumentation
-                </p>
-                <Button className="bg-primary text-primary-foreground hover:bg-primary/90" style={{ boxShadow: 'var(--shadow-button)' }}>
-                  <Upload className="w-4 h-4 mr-2" />
-                  Vælg filer
-                </Button>
-              </div>
-              <div className="flex-shrink-0">
-                <div className="w-32 h-32 rounded-lg border-2 border-dashed border-primary/30 flex items-center justify-center bg-accent/10">
-                  <Folder className="w-12 h-12 text-primary/60" />
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+        {/* System Prompt Editor */}
+        <SystemPromptEditor />
+
+        {/* Context File Upload */}
+        <ContextFileUpload />
 
         <div className="grid lg:grid-cols-4 gap-8">
           {/* Sidebar - Categories */}
@@ -178,11 +221,17 @@ const Launched = () => {
                           variant="outline" 
                           className="flex-1 bg-primary text-primary-foreground hover:bg-primary/90 border-0"
                           style={{ boxShadow: 'var(--shadow-button)' }}
+                          disabled
                         >
                           <Download className="w-4 h-4 mr-1" />
                           Download
                         </Button>
-                        <Button size="sm" variant="ghost" className="text-destructive hover:text-destructive hover:bg-destructive/10">
+                        <Button 
+                          size="sm" 
+                          variant="ghost" 
+                          className="text-destructive hover:text-destructive hover:bg-destructive/10"
+                          onClick={() => deleteFile(product.id, product.file_path)}
+                        >
                           <Trash2 className="w-4 h-4" />
                         </Button>
                       </div>
