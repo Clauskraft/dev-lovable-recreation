@@ -1,54 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Mukta+Mahee:wght@300;400;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Lovable Design System - Beautiful gradients and modern colors */
+/* TDC Erhverv CVI design system 
+All colors MUST be HSL.
+*/
 
 @layer base {
   :root {
-    /* Core colors - TDC navy theme */
-    --background: 220 35% 8%;
-    --foreground: 210 20% 98%;
-    
-    /* Gradient colors for TDC-inspired background */
-    --gradient-start: 220 35% 8%;
-    --gradient-middle: 220 70% 45%;
-    --gradient-end: 220 85% 58%;
-    
-    /* Brand colors inspired by TDC */
-    --brand-primary: 220 85% 58%;
-    --brand-secondary: 220 70% 45%;
+    --background: 0 0% 100%;
+    --foreground: 0 0% 15%;
 
-    --card: 220 45% 12%;
-    --card-foreground: 210 20% 98%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 15%;
 
-    --popover: 220 45% 12%;
-    --popover-foreground: 210 20% 98%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 15%;
 
-    --primary: 220 85% 58%;
+    /* TDC Digital Blue brand colors */
+    --primary: 240 100% 37.5%;  /* #0000BF */
     --primary-foreground: 0 0% 100%;
+    --primary-dark: 240 100% 23.5%;  /* #000078 */
 
-    --secondary: 220 45% 15%;
-    --secondary-foreground: 210 20% 98%;
-    
-    /* Chat interface colors - TDC style */
-    --chat-bg: 220 45% 12%;
-    --chat-border: 220 85% 58%;
-    --chat-button: 220 85% 58%;
-    --chat-button-hover: 220 100% 65%;
+    /* TDC secondary colors */
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 15%;
 
-    --muted: 220 45% 15%;
-    --muted-foreground: 215.4 16.3% 70%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
 
-    --accent: 220 85% 58%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 240 100% 97%;
+    --accent-foreground: 240 100% 37.5%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --success: 142 71% 45%;
+    --warning: 38 92% 50%;
 
-    --border: 220 45% 20%;
-    --input: 220 45% 20%;
-    --ring: 220 85% 58%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 240 100% 37.5%;
+
+    /* TDC Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(240 100% 37.5%) 0%, hsl(240 100% 23.5%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(240 100% 97%) 0%, hsl(0 0% 100%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(240 100% 37.5%) 0%, hsl(240 100% 23.5%) 100%);
+
+    /* TDC Shadows */
+    --shadow-card: 0 4px 20px hsl(240 100% 37.5% / 0.1);
+    --shadow-hero: 0 25px 50px hsl(240 100% 37.5% / 0.15);
+    --shadow-button: 0 8px 25px hsl(240 100% 37.5% / 0.2);
 
     --radius: 0.5rem;
 
@@ -70,43 +74,42 @@
   }
 
   .dark {
-    --background: 220 45% 6%;
-    --foreground: 210 40% 98%;
-    
-    /* Dark mode gradient adjustments - TDC darker theme */
-    --gradient-start: 220 45% 6%;
-    --gradient-middle: 220 80% 50%;
-    --gradient-end: 220 100% 65%;
-    
-    --chat-bg: 220 45% 8%;
-    --chat-border: 220 85% 58%;
-    --chat-button: 220 100% 65%;
-    --chat-button-hover: 220 100% 70%;
+    --background: 0 0% 12%;
+    --foreground: 0 0% 98%;
 
-    --card: 220 45% 10%;
-    --card-foreground: 210 40% 98%;
+    --card: 0 0% 15%;
+    --card-foreground: 0 0% 98%;
 
-    --popover: 220 45% 10%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 0 0% 15%;
+    --popover-foreground: 0 0% 98%;
 
-    --primary: 220 100% 65%;
-    --primary-foreground: 220 45% 6%;
+    --primary: 240 100% 37.5%;
+    --primary-foreground: 0 0% 100%;
+    --primary-dark: 240 100% 23.5%;
 
-    --secondary: 220 45% 15%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 0 0% 20%;
+    --secondary-foreground: 0 0% 98%;
 
-    --muted: 220 45% 15%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 0 0% 20%;
+    --muted-foreground: 0 0% 65%;
 
-    --accent: 220 100% 65%;
-    --accent-foreground: 220 45% 6%;
+    --accent: 0 0% 20%;
+    --accent-foreground: 240 100% 37.5%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 220 45% 20%;
-    --input: 220 45% 20%;
-    --ring: 220 100% 65%;
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
+    --ring: 240 100% 37.5%;
+
+    --gradient-primary: linear-gradient(135deg, hsl(240 100% 37.5%) 0%, hsl(240 100% 23.5%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 15%) 0%, hsl(0 0% 12%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(240 100% 37.5%) 0%, hsl(240 100% 23.5%) 100%);
+
+    --shadow-card: 0 4px 20px hsl(0 0% 0% / 0.3);
+    --shadow-hero: 0 25px 50px hsl(0 0% 0% / 0.4);
+    --shadow-button: 0 8px 25px hsl(240 100% 37.5% / 0.3);
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -124,20 +127,37 @@
   }
 
   body {
-    @apply bg-background text-foreground font-sans antialiased;
+    @apply bg-background text-foreground;
+    font-family: 'Mukta Mahee', sans-serif;
   }
-  
-  .gradient-bg {
-    background: linear-gradient(135deg, 
-      hsl(var(--gradient-start)) 0%, 
-      hsl(var(--gradient-middle)) 50%, 
-      hsl(var(--gradient-end)) 100%
-    );
+}
+
+/* TDC Erhverv farver for nemmere brug i Tailwind */
+@layer utilities {
+  .bg-tdc-digital-blue { 
+    background-color: hsl(240 100% 37.5%); 
   }
-  
-  .glass-effect {
-    backdrop-filter: blur(20px);
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+  .text-tdc-digital-blue { 
+    color: hsl(240 100% 37.5%); 
+  }
+  .bg-tdc-dark-blue { 
+    background-color: hsl(240 100% 23.5%); 
+  }
+  .border-tdc-digital-blue { 
+    border-color: hsl(240 100% 37.5%); 
+  }
+  .animate-fade-in {
+    animation: fadeIn 1s ease-in-out;
+  }
+}
+
+@keyframes fadeIn {
+  from { 
+    opacity: 0; 
+    transform: translateY(10px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
   }
 }
