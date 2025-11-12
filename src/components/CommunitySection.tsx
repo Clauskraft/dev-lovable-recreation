@@ -8,7 +8,7 @@ const categories = [
 const projects = [
   {
     id: 1,
-    title: "wrlds-ai-integration",
+    title: "TDC MCP & Data Hub",
     category: "Website",
     remixes: "10586",
     image: "https://images.unsplash.com/photo-1551650975-87deedd944c3?w=400&h=300&fit=crop"
