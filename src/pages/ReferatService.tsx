@@ -1,40 +1,40 @@
 import Navigation from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Check, Mic, Volume2, Languages, Shield } from "lucide-react";
+import { Check, Mic, FileText, Clock, Shield } from "lucide-react";
 
 const ReferatService = () => {
   const features = [
-    "Naturlig dansk stemme med høj kvalitet",
-    "Flere stemmer og dialekter",
-    "Hurtig generering af lydfiler",
+    "Automatisk transskription af lydfiler",
+    "Høj nøjagtighed i dansk sprog",
+    "Support for flere filformater",
     "GDPR-compliant databehandling",
-    "Support for lange tekster",
-    "Download som MP3 eller WAV"
+    "Hurtig behandling af store filer",
+    "Eksport til Word, PDF og TXT"
   ];
 
   const plans = [
     {
       name: "Basis",
-      price: "149",
+      price: "199",
       period: "pr. måned",
       features: [
-        "Op til 50.000 tegn/måned",
-        "5 danske stemmer",
-        "MP3 download",
-        "Standard kvalitet"
+        "Op til 10 timers transskription/måned",
+        "Dansk og engelsk support",
+        "Standard kvalitet",
+        "48 timers behandlingstid"
       ]
     },
     {
       name: "Professional",
-      price: "399",
+      price: "499",
       period: "pr. måned",
       popular: true,
       features: [
-        "Op til 500.000 tegn/måned",
-        "15+ stemmer og accenter",
-        "HD kvalitet audio",
-        "Batch processing",
+        "Op til 100 timers transskription/måned",
+        "10+ sprog support",
+        "HD kvalitet transskription",
+        "24 timers behandlingstid",
         "API adgang",
         "Prioriteret support"
       ]
@@ -44,8 +44,8 @@ const ReferatService = () => {
       price: "Kontakt os",
       period: "skræddersyet løsning",
       features: [
-        "Ubegrænsede tegn",
-        "Custom stemme-træning",
+        "Ubegrænsede transskriptions-timer",
+        "Real-time transskription",
         "On-premise mulighed",
         "SLA garanti",
         "Dedikeret account manager"
@@ -66,11 +66,11 @@ const ReferatService = () => {
           </div>
           
           <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">
-            TDC Text-to-Speech
+            TDC Referatservice
           </h1>
           <p className="text-xl text-white/80 max-w-3xl mx-auto mb-8">
-            AI-drevet tekst-til-tale service med naturlige danske stemmer. 
-            Konverter enhver tekst til professionel, høj-kvalitets lyd på sekunder
+            AI-drevet transskriptionsservice der konverterer tale til tekst med høj nøjagtighed. 
+            Perfekt til mødereferater, interviews og transskription af lydfiler
           </p>
           
           <div className="flex gap-4 justify-center">
@@ -78,7 +78,7 @@ const ReferatService = () => {
               Start gratis prøveperiode
             </Button>
             <Button size="lg" variant="outline" className="border-white/20 text-white hover:bg-white/10">
-              Hør eksempler
+              Se demo
             </Button>
           </div>
         </div>
@@ -87,30 +87,30 @@ const ReferatService = () => {
         <div className="grid md:grid-cols-3 gap-6 mb-16">
           <Card className="bg-white/5 border-white/10 backdrop-blur">
             <CardHeader>
-              <Volume2 className="w-12 h-12 text-tdc-digital-blue mb-4" />
-              <CardTitle className="text-white">Naturlige Stemmer</CardTitle>
-              <CardDescription className="text-white/70">
-                AI-genererede stemmer der lyder autentiske og menneskelige
-              </CardDescription>
-            </CardHeader>
-          </Card>
-
-          <Card className="bg-white/5 border-white/10 backdrop-blur">
-            <CardHeader>
-              <Languages className="w-12 h-12 text-tdc-digital-blue mb-4" />
-              <CardTitle className="text-white">Flere Sprog & Accenter</CardTitle>
-              <CardDescription className="text-white/70">
-                Dansk plus 30+ andre sprog med forskellige dialekter
-              </CardDescription>
-            </CardHeader>
-          </Card>
-
-          <Card className="bg-white/5 border-white/10 backdrop-blur">
-            <CardHeader>
               <Mic className="w-12 h-12 text-tdc-digital-blue mb-4" />
-              <CardTitle className="text-white">Høj Kvalitet</CardTitle>
+              <CardTitle className="text-white">Præcis Transskription</CardTitle>
               <CardDescription className="text-white/70">
-                Studiokvalitets audio med professionel lyd output
+                AI-drevet transskription med høj nøjagtighed i dansk og andre sprog
+              </CardDescription>
+            </CardHeader>
+          </Card>
+
+          <Card className="bg-white/5 border-white/10 backdrop-blur">
+            <CardHeader>
+              <FileText className="w-12 h-12 text-tdc-digital-blue mb-4" />
+              <CardTitle className="text-white">Flere Formater</CardTitle>
+              <CardDescription className="text-white/70">
+                Support for MP3, WAV, M4A og andre lydformater
+              </CardDescription>
+            </CardHeader>
+          </Card>
+
+          <Card className="bg-white/5 border-white/10 backdrop-blur">
+            <CardHeader>
+              <Clock className="w-12 h-12 text-tdc-digital-blue mb-4" />
+              <CardTitle className="text-white">Hurtig Behandling</CardTitle>
+              <CardDescription className="text-white/70">
+                Få din transskription klar på rekordtid
               </CardDescription>
             </CardHeader>
           </Card>
@@ -138,15 +138,15 @@ const ReferatService = () => {
           <div className="flex flex-col md:flex-row items-center gap-8">
             <div className="flex-1">
               <h2 className="text-3xl font-bold text-white mb-4">
-                Powered by Meetly TTS
+                Powered by Meetly STT
               </h2>
               <p className="text-white/80 mb-4">
-                Vores løsning er bygget på den open-source Meetly TTS platform, 
-                der leverer branchens mest naturlige AI-stemmer med fuld kontrol over dine data.
+                Vores løsning er bygget på den open-source Meetly STT platform, 
+                der leverer branchens mest præcise tale-til-tekst transskription med fuld kontrol over dine data.
               </p>
               <p className="text-white/70 text-sm">
-                Meetly er en pålidelig text-to-speech platform der bruges af 
-                tusindvis af virksomheder verden over til at skabe professionel voice content.
+                Meetly er en pålidelig speech-to-text platform der bruges af 
+                tusindvis af virksomheder verden over til at transskribere møder, interviews og lydindhold.
               </p>
             </div>
             <div className="flex-shrink-0">
@@ -218,10 +218,10 @@ const ReferatService = () => {
         {/* CTA Section */}
         <div className="text-center bg-gradient-to-r from-tdc-digital-blue/20 to-purple-500/20 rounded-2xl p-12 border border-tdc-digital-blue/30">
           <h2 className="text-3xl font-bold text-white mb-4">
-            Klar til at give dine tekster en stemme?
+            Klar til at automatisere dine transskriptioner?
           </h2>
           <p className="text-white/80 mb-8 max-w-2xl mx-auto">
-            Få adgang til AI-drevet text-to-speech med naturlige danske stemmer, fuld GDPR-compliance og dansk support
+            Få adgang til AI-drevet speech-to-text med høj nøjagtighed, fuld GDPR-compliance og dansk support
           </p>
           <Button size="lg" className="bg-white text-primary hover:bg-white/90">
             Kom i gang i dag
