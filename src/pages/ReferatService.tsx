@@ -60,17 +60,19 @@ const ReferatService = () => {
       <main className="container mx-auto px-6 py-16">
         {/* Hero Section */}
         <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 bg-tdc-digital-blue/20 px-4 py-2 rounded-full mb-6">
-            <Shield className="w-4 h-4 text-tdc-digital-blue" />
-            <span className="text-sm text-white/90">100% GDPR-compliant</span>
+          <div className="inline-flex items-center gap-3 bg-gradient-to-r from-tdc-digital-blue/20 to-green-500/20 px-6 py-3 rounded-full mb-6 border border-tdc-digital-blue/30">
+            <Shield className="w-5 h-5 text-tdc-digital-blue" />
+            <span className="text-base font-semibold text-white">GDPR & NIS2 Compliant by Default</span>
           </div>
           
           <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">
             TDC Referatservice
           </h1>
-          <p className="text-xl text-white/80 max-w-3xl mx-auto mb-8">
-            AI-drevet transskriptionsservice der konverterer tale til tekst med høj nøjagtighed. 
-            Perfekt til mødereferater, interviews og transskription af lydfiler
+          <p className="text-xl text-white/80 max-w-3xl mx-auto mb-4">
+            AI-drevet transskriptionsservice der konverterer tale til tekst med høj nøjagtighed
+          </p>
+          <p className="text-lg text-tdc-digital-blue font-medium max-w-2xl mx-auto mb-8">
+            Indbygget GDPR & NIS2 compliance. Ingen bekymringer. Fuld kontrol.
           </p>
           
           <div className="flex gap-4 justify-center">
@@ -119,7 +121,7 @@ const ReferatService = () => {
         {/* Key Features */}
         <div className="bg-white/5 backdrop-blur rounded-2xl p-8 mb-16 border border-white/10">
           <h2 className="text-3xl font-bold text-white mb-8 text-center">
-            Alt du behøver i én løsning
+            Compliance & Sikkerhed by Default
           </h2>
           <div className="grid md:grid-cols-2 gap-4">
             {features.map((feature, index) => (
@@ -130,6 +132,86 @@ const ReferatService = () => {
                 <span className="text-white/90">{feature}</span>
               </div>
             ))}
+          </div>
+        </div>
+
+        {/* GDPR & NIS2 Section */}
+        <div className="bg-gradient-to-r from-green-500/10 to-tdc-digital-blue/10 rounded-2xl p-10 mb-16 border-2 border-green-500/30">
+          <div className="text-center mb-8">
+            <div className="inline-flex items-center gap-3 bg-green-500/20 px-6 py-3 rounded-full mb-6">
+              <Shield className="w-6 h-6 text-green-400" />
+              <span className="text-lg font-bold text-white">Suveræn Sikkerhed</span>
+            </div>
+            <h2 className="text-4xl font-bold text-white mb-4">
+              GDPR & NIS2 Compliance fra Dag Ét
+            </h2>
+            <p className="text-white/80 text-lg max-w-3xl mx-auto">
+              Vores løsning er designet med compliance som kerneprincip. 
+              Du får automatisk overholdelse af GDPR og NIS2 uden ekstra konfiguration.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            <Card className="bg-white/5 border-green-500/20 backdrop-blur">
+              <CardHeader>
+                <CardTitle className="text-white flex items-center gap-2">
+                  <Check className="w-5 h-5 text-green-400" />
+                  GDPR Ready
+                </CardTitle>
+                <CardDescription className="text-white/70">
+                  Fuld GDPR compliance med indbygget datasubjekt rettigheder, 
+                  kryptering og audit logs
+                </CardDescription>
+              </CardHeader>
+            </Card>
+
+            <Card className="bg-white/5 border-green-500/20 backdrop-blur">
+              <CardHeader>
+                <CardTitle className="text-white flex items-center gap-2">
+                  <Check className="w-5 h-5 text-green-400" />
+                  NIS2 Sikret
+                </CardTitle>
+                <CardDescription className="text-white/70">
+                  Opfylder NIS2 krav til cybersikkerhed, incident response 
+                  og risikostyring
+                </CardDescription>
+              </CardHeader>
+            </Card>
+
+            <Card className="bg-white/5 border-green-500/20 backdrop-blur">
+              <CardHeader>
+                <CardTitle className="text-white flex items-center gap-2">
+                  <Check className="w-5 h-5 text-green-400" />
+                  Data Suverænitet
+                </CardTitle>
+                <CardDescription className="text-white/70">
+                  Alle data forbliver i EU. Ingen dataoverførsel til tredjelande.
+                  Fuld kontrol.
+                </CardDescription>
+              </CardHeader>
+            </Card>
+          </div>
+
+          <div className="mt-8 p-6 bg-white/5 rounded-xl border border-green-500/20">
+            <h3 className="text-xl font-bold text-white mb-4">Hvad betyder det for dig?</h3>
+            <ul className="space-y-3 text-white/80">
+              <li className="flex items-start gap-3">
+                <Check className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
+                <span>Ingen bekymringer om GDPR bøder - compliance er indbygget</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <Check className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
+                <span>Opfyld NIS2 krav uden ekstra IT-investeringer</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <Check className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
+                <span>Fuld transparens og kontrol over dine følsomme data</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <Check className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
+                <span>Ready for audits - komplet dokumentation inkluderet</span>
+              </li>
+            </ul>
           </div>
         </div>
 
