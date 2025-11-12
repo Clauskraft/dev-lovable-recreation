@@ -3,11 +3,14 @@ import { Link } from "react-router-dom";
 
 const Navigation = () => {
   return (
-    <nav className="w-full px-6 py-4 bg-[hsl(240,100%,23.5%)] border-b border-white/10">
+    <nav className="w-full px-6 py-4 bg-[hsl(230,45%,12%)] border-b border-white/10">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         {/* Logo */}
-        <div className="flex items-center gap-2">
-          <span className="text-3xl font-bold text-white tracking-tight">TDC DKAI</span>
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-full bg-[hsl(210,100%,50%)] flex items-center justify-center">
+            <span className="text-white font-bold text-sm">TDC</span>
+          </div>
+          <span className="text-2xl font-bold text-white tracking-tight">Erhverv</span>
         </div>
         
         {/* Navigation Links */}

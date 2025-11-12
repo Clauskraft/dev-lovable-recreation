@@ -25,6 +25,11 @@ export default {
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
 				
+				/* TDC Brand colors */
+				'tdc-dark-navy': 'hsl(230, 45%, 12%)',
+				'tdc-bright-blue': 'hsl(210, 100%, 50%)',
+				'tdc-pure-blue': 'hsl(240, 100%, 50%)',
+				
 				/* Brand and gradient colors */
 				'gradient-start': 'hsl(var(--gradient-start))',
 				'gradient-middle': 'hsl(var(--gradient-middle))',
@@ -39,7 +44,10 @@ export default {
 				'chat-button-hover': 'hsl(var(--chat-button-hover))',
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
-					foreground: 'hsl(var(--primary-foreground))'
+					foreground: 'hsl(var(--primary-foreground))',
+					dark: 'hsl(var(--primary-dark))',
+					light: 'hsl(var(--primary-light))',
+					brand: 'hsl(var(--primary-brand))'
 				},
 				secondary: {
 					DEFAULT: 'hsl(var(--secondary))',

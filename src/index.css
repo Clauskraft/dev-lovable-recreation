@@ -19,11 +19,12 @@ All colors MUST be HSL.
     --popover: 0 0% 100%;
     --popover-foreground: 240 100% 37.5%;
 
-    /* TDC Digital Blue brand colors */
-    --primary: 240 100% 37.5%;  /* #0000BF */
+    /* TDC Digital Blue brand colors - matching tdc.dk */
+    --primary: 210 100% 50%;  /* Bright blue #0080FF */
     --primary-foreground: 0 0% 100%;
-    --primary-dark: 240 100% 23.5%;  /* #000078 */
+    --primary-dark: 230 45% 12%;  /* Very dark navy #0A0E2E */
     --primary-light: 210 100% 45%;  /* Bright blue accent */
+    --primary-brand: 240 100% 50%; /* Pure blue #0000FF */
 
     /* TDC secondary colors */
     --secondary: 0 0% 96%;
@@ -45,10 +46,10 @@ All colors MUST be HSL.
     --input: 220 13% 91%;
     --ring: 240 100% 37.5%;
 
-    /* TDC Gradients - Rich, dynamic blues */
-    --gradient-primary: linear-gradient(135deg, hsl(210 100% 45%) 0%, hsl(240 100% 37.5%) 50%, hsl(240 100% 23.5%) 100%);
+    /* TDC Gradients - Rich, dynamic blues matching tdc.dk */
+    --gradient-primary: linear-gradient(135deg, hsl(210 100% 50%) 0%, hsl(240 100% 50%) 100%);
     --gradient-card: linear-gradient(145deg, hsl(240 100% 97%) 0%, hsl(0 0% 100%) 100%);
-    --gradient-hero: linear-gradient(135deg, hsl(210 100% 45%) 0%, hsl(240 100% 37.5%) 50%, hsl(240 100% 23.5%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(230 45% 12%) 0%, hsl(210 100% 50%) 100%);
 
     /* TDC Shadows */
     --shadow-card: 0 4px 20px hsl(240 100% 37.5% / 0.1);
@@ -130,12 +131,12 @@ All colors MUST be HSL.
   body {
     @apply text-foreground;
     font-family: 'Mukta Mahee', sans-serif;
-    background: linear-gradient(135deg, hsl(210 100% 45%) 0%, hsl(240 100% 37.5%) 50%, hsl(240 100% 23.5%) 100%);
+    background: linear-gradient(135deg, hsl(230 45% 12%) 0%, hsl(210 100% 50%) 100%);
     min-height: 100vh;
   }
   
   .gradient-bg {
-    background: linear-gradient(135deg, hsl(210 100% 45%) 0%, hsl(240 100% 37.5%) 50%, hsl(240 100% 23.5%) 100%);
+    background: linear-gradient(135deg, hsl(230 45% 12%) 0%, hsl(210 100% 50%) 100%);
   }
 }
 
