@@ -41,7 +41,7 @@ const Community = () => {
         {/* Header */}
         <div className="text-center mb-16">
           <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6">
-            Build Together with <span className="text-primary">POWER</span>
+            Build with <span className="text-primary">TDC Trusted Digital Community</span>
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
             Join thousands of builders creating amazing applications with AI-powered development
