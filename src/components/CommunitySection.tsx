@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import { Globe, Shield, FileText, Layers } from "lucide-react";
 
 const categories = [
-  "Popular", "Discover", "Internal Tools", "Website", 
-  "B2B & B2C App", "Consumer App", "B2B App", "Prototype"
+  "Popular", "Offentlig Sektor", "Defense", "Health", 
+  "DataBankBox", "Consumer App", "B2B App", "Prototype"
 ];
 
 const projects = [
