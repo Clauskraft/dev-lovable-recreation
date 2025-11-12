@@ -8,9 +8,19 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-import { Search } from "lucide-react";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { Search, Menu, ChevronRight } from "lucide-react";
+import { useState } from "react";
 
 const Navigation = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <nav className="w-full px-6 py-3 bg-[hsl(230,45%,12%)] border-b border-white/10">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
@@ -88,19 +98,120 @@ const Navigation = () => {
         </NavigationMenu>
         
         {/* Right Side Actions */}
-        <div className="flex items-center gap-4">
-          <Button variant="ghost" size="icon" className="text-white/90 hover:text-white hover:bg-white/10 border-0">
+        <div className="flex items-center gap-2">
+          <Button variant="ghost" size="icon" className="hidden md:flex text-white/90 hover:text-white hover:bg-white/10 border-0">
             <Search className="h-5 w-5" />
           </Button>
-          <Button variant="ghost" className="hidden md:inline-flex text-white/90 hover:text-white hover:bg-white/10 border-0">
+          <Button variant="ghost" className="hidden lg:inline-flex text-white/90 hover:text-white hover:bg-white/10 border-0">
             Find hjælp
           </Button>
-          <Button variant="ghost" className="hidden md:inline-flex text-white/90 hover:text-white hover:bg-white/10 border-0">
+          <Button variant="ghost" className="hidden lg:inline-flex text-white/90 hover:text-white hover:bg-white/10 border-0">
             Kontakt os
           </Button>
-          <Button variant="outline" className="bg-transparent text-white border-white/20 hover:bg-white/10">
+          <Button variant="outline" className="hidden md:inline-flex bg-transparent text-white border-white/20 hover:bg-white/10">
             Log ind
           </Button>
+
+          {/* Mobile Menu */}
+          <Sheet open={isOpen} onOpenChange={setIsOpen}>
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="icon" className="lg:hidden text-white/90 hover:text-white hover:bg-white/10">
+                <Menu className="h-6 w-6" />
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="right" className="w-[300px] bg-[hsl(230,45%,12%)] border-white/10">
+              <SheetHeader>
+                <SheetTitle className="text-white text-left">Menu</SheetTitle>
+              </SheetHeader>
+              <div className="flex flex-col gap-4 mt-8">
+                <Link 
+                  to="/" 
+                  onClick={() => setIsOpen(false)}
+                  className="flex items-center justify-between p-3 rounded-lg text-white/90 hover:text-white hover:bg-white/10 transition-colors"
+                >
+                  <span className="font-medium">Forside</span>
+                  <ChevronRight className="h-4 w-4" />
+                </Link>
+
+                <div className="border-t border-white/10 pt-4">
+                  <div className="text-white/60 text-xs font-semibold uppercase tracking-wider mb-3 px-3">AI Løsninger</div>
+                  <Link 
+                    to="/ai-mobile" 
+                    onClick={() => setIsOpen(false)}
+                    className="flex items-center justify-between p-3 rounded-lg text-white/90 hover:text-white hover:bg-white/10 transition-colors"
+                  >
+                    <div>
+                      <div className="font-medium">TDC AI Mobile</div>
+                      <div className="text-sm text-white/60">AI-powered enheder til alle</div>
+                    </div>
+                    <ChevronRight className="h-4 w-4 flex-shrink-0" />
+                  </Link>
+                  <Link 
+                    to="/referatservice" 
+                    onClick={() => setIsOpen(false)}
+                    className="flex items-center justify-between p-3 rounded-lg text-white/90 hover:text-white hover:bg-white/10 transition-colors"
+                  >
+                    <div>
+                      <div className="font-medium">Referatservice</div>
+                      <div className="text-sm text-white/60">Automatisk mødereferater</div>
+                    </div>
+                    <ChevronRight className="h-4 w-4 flex-shrink-0" />
+                  </Link>
+                </div>
+
+                <div className="border-t border-white/10 pt-4 space-y-1">
+                  <Link 
+                    to="/community" 
+                    onClick={() => setIsOpen(false)}
+                    className="flex items-center justify-between p-3 rounded-lg text-white/90 hover:text-white hover:bg-white/10 transition-colors"
+                  >
+                    <span className="font-medium">Community</span>
+                    <ChevronRight className="h-4 w-4" />
+                  </Link>
+                  <Link 
+                    to="/pricing" 
+                    onClick={() => setIsOpen(false)}
+                    className="flex items-center justify-between p-3 rounded-lg text-white/90 hover:text-white hover:bg-white/10 transition-colors"
+                  >
+                    <span className="font-medium">Priser</span>
+                    <ChevronRight className="h-4 w-4" />
+                  </Link>
+                  <Link 
+                    to="/learn" 
+                    onClick={() => setIsOpen(false)}
+                    className="flex items-center justify-between p-3 rounded-lg text-white/90 hover:text-white hover:bg-white/10 transition-colors"
+                  >
+                    <span className="font-medium">Lær</span>
+                    <ChevronRight className="h-4 w-4" />
+                  </Link>
+                  <Link 
+                    to="/launched" 
+                    onClick={() => setIsOpen(false)}
+                    className="flex items-center justify-between p-3 rounded-lg text-white/90 hover:text-white hover:bg-white/10 transition-colors"
+                  >
+                    <span className="font-medium">Inside</span>
+                    <ChevronRight className="h-4 w-4" />
+                  </Link>
+                </div>
+
+                <div className="border-t border-white/10 pt-4 space-y-2">
+                  <Button variant="ghost" className="w-full justify-start text-white/90 hover:text-white hover:bg-white/10">
+                    <Search className="h-4 w-4 mr-2" />
+                    Søg
+                  </Button>
+                  <Button variant="ghost" className="w-full justify-start text-white/90 hover:text-white hover:bg-white/10">
+                    Find hjælp
+                  </Button>
+                  <Button variant="ghost" className="w-full justify-start text-white/90 hover:text-white hover:bg-white/10">
+                    Kontakt os
+                  </Button>
+                  <Button variant="outline" className="w-full bg-transparent text-white border-white/20 hover:bg-white/10">
+                    Log ind
+                  </Button>
+                </div>
+              </div>
+            </SheetContent>
+          </Sheet>
         </div>
       </div>
     </nav>
