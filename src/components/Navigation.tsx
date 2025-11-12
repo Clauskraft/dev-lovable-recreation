@@ -26,6 +26,14 @@ const Navigation = () => {
         <NavigationMenu className="hidden lg:flex">
           <NavigationMenuList className="gap-1">
             <NavigationMenuItem>
+              <Link to="/">
+                <NavigationMenuLink className="inline-flex h-10 w-max items-center justify-center rounded-md px-4 py-2 text-sm font-medium text-white/90 hover:text-white hover:bg-white/10 transition-colors">
+                  Forside
+                </NavigationMenuLink>
+              </Link>
+            </NavigationMenuItem>
+
+            <NavigationMenuItem>
               <NavigationMenuTrigger className="bg-transparent text-white/90 hover:text-white hover:bg-white/10 data-[state=open]:bg-white/10 data-[active]:bg-white/10">
                 AI Løsninger
               </NavigationMenuTrigger>
