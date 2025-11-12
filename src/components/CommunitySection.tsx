@@ -22,7 +22,7 @@ const projects = [
   },
   {
     id: 3,
-    title: "Sovereign Speach t. Talk",
+    title: "TDC GDPR Referatservice",
     category: "B2B App", 
     remixes: "4521",
     image: "https://images.unsplash.com/photo-1553877522-43269d4ea984?w=400&h=300&fit=crop"
