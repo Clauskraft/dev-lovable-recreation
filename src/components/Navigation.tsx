@@ -1,33 +1,97 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "@/components/ui/navigation-menu";
+import { Search } from "lucide-react";
 
 const Navigation = () => {
   return (
-    <nav className="w-full px-6 py-4 bg-[hsl(230,45%,12%)] border-b border-white/10">
+    <nav className="w-full px-6 py-3 bg-[hsl(230,45%,12%)] border-b border-white/10">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         {/* Logo */}
-        <div className="flex items-center gap-3">
+        <Link to="/" className="flex items-center gap-3 hover:opacity-90 transition-opacity">
           <div className="w-10 h-10 rounded-full bg-[hsl(210,100%,50%)] flex items-center justify-center">
             <span className="text-white font-bold text-sm">TDC</span>
           </div>
-          <span className="text-2xl font-bold text-white tracking-tight">Erhverv</span>
-        </div>
+          <span className="text-xl font-bold text-white tracking-tight">Erhverv</span>
+        </Link>
         
-        {/* Navigation Links */}
-        <div className="hidden md:flex items-center gap-8">
-          <Link to="/community" className="text-white/90 hover:text-white transition-colors">Community</Link>
-          <Link to="/pricing" className="text-white/90 hover:text-white transition-colors">Priser</Link>
-          <Link to="/learn" className="text-white/90 hover:text-white transition-colors">Lær</Link>
-          <Link to="/launched" className="text-white/90 hover:text-white transition-colors">Inside</Link>
-        </div>
+        {/* Main Navigation */}
+        <NavigationMenu className="hidden lg:flex">
+          <NavigationMenuList className="gap-1">
+            <NavigationMenuItem>
+              <NavigationMenuTrigger className="bg-transparent text-white/90 hover:text-white hover:bg-white/10 data-[state=open]:bg-white/10 data-[active]:bg-white/10">
+                AI Løsninger
+              </NavigationMenuTrigger>
+              <NavigationMenuContent>
+                <div className="w-[400px] p-4 bg-background">
+                  <div className="space-y-3">
+                    <Link to="/ai-mobile" className="block p-3 rounded-md hover:bg-accent transition-colors">
+                      <div className="font-medium mb-1">TDC AI Mobile</div>
+                      <div className="text-sm text-muted-foreground">AI-powered enheder til alle</div>
+                    </Link>
+                    <Link to="/referatservice" className="block p-3 rounded-md hover:bg-accent transition-colors">
+                      <div className="font-medium mb-1">Referatservice</div>
+                      <div className="text-sm text-muted-foreground">Automatisk mødereferater</div>
+                    </Link>
+                  </div>
+                </div>
+              </NavigationMenuContent>
+            </NavigationMenuItem>
+
+            <NavigationMenuItem>
+              <Link to="/community">
+                <NavigationMenuLink className="inline-flex h-10 w-max items-center justify-center rounded-md px-4 py-2 text-sm font-medium text-white/90 hover:text-white hover:bg-white/10 transition-colors">
+                  Community
+                </NavigationMenuLink>
+              </Link>
+            </NavigationMenuItem>
+
+            <NavigationMenuItem>
+              <Link to="/pricing">
+                <NavigationMenuLink className="inline-flex h-10 w-max items-center justify-center rounded-md px-4 py-2 text-sm font-medium text-white/90 hover:text-white hover:bg-white/10 transition-colors">
+                  Priser
+                </NavigationMenuLink>
+              </Link>
+            </NavigationMenuItem>
+
+            <NavigationMenuItem>
+              <Link to="/learn">
+                <NavigationMenuLink className="inline-flex h-10 w-max items-center justify-center rounded-md px-4 py-2 text-sm font-medium text-white/90 hover:text-white hover:bg-white/10 transition-colors">
+                  Lær
+                </NavigationMenuLink>
+              </Link>
+            </NavigationMenuItem>
+
+            <NavigationMenuItem>
+              <Link to="/launched">
+                <NavigationMenuLink className="inline-flex h-10 w-max items-center justify-center rounded-md px-4 py-2 text-sm font-medium text-white/90 hover:text-white hover:bg-white/10 transition-colors">
+                  Inside
+                </NavigationMenuLink>
+              </Link>
+            </NavigationMenuItem>
+          </NavigationMenuList>
+        </NavigationMenu>
         
-        {/* Auth Buttons */}
-        <div className="flex items-center gap-3">
-          <Button variant="ghost" className="text-white hover:bg-white/10 border-0">
-            Log ind
+        {/* Right Side Actions */}
+        <div className="flex items-center gap-4">
+          <Button variant="ghost" size="icon" className="text-white/90 hover:text-white hover:bg-white/10 border-0">
+            <Search className="h-5 w-5" />
           </Button>
-          <Button className="bg-white text-primary hover:bg-white/90 font-medium">
-            Kom i gang
+          <Button variant="ghost" className="hidden md:inline-flex text-white/90 hover:text-white hover:bg-white/10 border-0">
+            Find hjælp
+          </Button>
+          <Button variant="ghost" className="hidden md:inline-flex text-white/90 hover:text-white hover:bg-white/10 border-0">
+            Kontakt os
+          </Button>
+          <Button variant="outline" className="bg-transparent text-white border-white/20 hover:bg-white/10">
+            Log ind
           </Button>
         </div>
       </div>
