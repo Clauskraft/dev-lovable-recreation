@@ -124,7 +124,7 @@ Brug altid kontekstfiler når de er tilgængelige for præcise produktdetaljer.`
       headers: {
         Authorization: `Bearer ${OPENROUTER_API_KEY}`,
         "Content-Type": "application/json",
-        "HTTP-Referer": "https://tdc-dkai.lovable.app",
+        "HTTP-Referer": "https://tdc-erhverv-ai.railway.app",
         "X-Title": "TDC DKAI",
       },
       body: JSON.stringify({

@@ -1,73 +1,62 @@
-# Welcome to your Lovable project
+# TDC Erhverv AI Platform
 
-## Project info
+## Project Overview
 
-**URL**: https://lovable.dev/projects/76b367a0-8e0e-41cd-a9c6-02d84813a981
+Modern AI-powered platform built with enterprise-grade technologies for TDC Erhverv.
 
-## How can I edit this code?
+## Getting Started
 
-There are several ways of editing your application.
+### Prerequisites
 
-**Use Lovable**
+- Node.js 18+ installed ([install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating))
+- npm or yarn package manager
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/76b367a0-8e0e-41cd-a9c6-02d84813a981) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
+### Local Development
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
+# Clone the repository
 git clone <YOUR_GIT_URL>
 
-# Step 2: Navigate to the project directory.
+# Navigate to the project directory
 cd <YOUR_PROJECT_NAME>
 
-# Step 3: Install the necessary dependencies.
-npm i
+# Install dependencies
+npm install
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Start the development server
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+The application will be available at `http://localhost:8080`
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
+## Technologies
 
 This project is built with:
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+- **Vite** - Lightning-fast build tool
+- **TypeScript** - Type-safe development
+- **React 18** - Modern UI framework
+- **shadcn-ui** - Beautiful, accessible components
+- **Tailwind CSS** - Utility-first styling
+- **Supabase** - Backend and authentication
+- **React Query** - Data fetching and caching
 
-## How can I deploy this project?
+## Available Scripts
 
-Simply open [Lovable](https://lovable.dev/projects/76b367a0-8e0e-41cd-a9c6-02d84813a981) and click on Share -> Publish.
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run build:dev` - Build in development mode
+- `npm run lint` - Run ESLint
+- `npm run preview` - Preview production build
 
-## Can I connect a custom domain to my Lovable project?
+## Deployment
 
-Yes, you can!
+This application is configured for deployment on Railway. See deployment documentation for specific instructions.
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+## Architecture
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+- **Frontend**: React SPA with TypeScript
+- **Styling**: Tailwind CSS with custom TDC theme
+- **State Management**: React Query
+- **Routing**: React Router v6
+- **AI Integration**: Multiple LLM models via Supabase Edge Functions
