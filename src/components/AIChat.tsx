@@ -142,7 +142,7 @@ const AIChat = () => {
   };
 
   return (
-    <div className="w-full max-w-2xl mx-auto flex flex-col">
+    <div className="w-full max-w-xl mx-auto flex flex-col">
       {/* Messages Area */}
       {messages.length > 0 && (
         <div className="glass-effect rounded-2xl p-6 mb-4 max-h-[400px] overflow-y-auto">
