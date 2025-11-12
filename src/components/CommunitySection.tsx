@@ -32,7 +32,8 @@ const projects = [
     category: "B2B App", 
     remixes: "4521",
     image: "https://images.unsplash.com/photo-1553877522-43269d4ea984?w=400&h=300&fit=crop",
-    icon: FileText
+    icon: FileText,
+    link: "/referatservice"
   },
   {
     id: 4,
