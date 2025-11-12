@@ -104,8 +104,8 @@ const Pricing = () => {
           {plans.map((plan, index) => (
             <Card 
               key={index} 
-              className={`relative bg-card border-0 transition-all duration-300 hover:scale-105 ${
-                plan.name === 'Pro' ? 'ring-2 ring-primary scale-105' : ''
+              className={`relative bg-card border-0 transition-all duration-300 hover:scale-[1.02] flex flex-col h-full ${
+                plan.name === 'Pro' ? 'ring-2 ring-primary md:-mt-4' : ''
               }`}
               style={{ boxShadow: 'var(--shadow-card)' }}
             >
@@ -125,14 +125,14 @@ const Pricing = () => {
                   <plan.icon className="w-8 h-8 text-primary" />
                 </div>
                 <CardTitle className="text-3xl font-bold text-card-foreground mb-3">{plan.name}</CardTitle>
-                <p className="text-muted-foreground text-sm mb-4">{plan.description}</p>
+                <p className="text-muted-foreground text-sm mb-4 min-h-[3rem]">{plan.description}</p>
                 <div className="mt-4">
                   <span className="text-5xl font-bold text-card-foreground">{plan.price}</span>
                   <span className="text-muted-foreground ml-2 text-lg">{plan.period}</span>
                 </div>
               </CardHeader>
               
-              <CardContent className="px-6 pb-8">
+              <CardContent className="px-6 pb-8 flex-1 flex flex-col">
                 <Button 
                   className={`w-full mb-8 text-lg py-6 ${
                     plan.buttonVariant === 'default' 
@@ -146,7 +146,7 @@ const Pricing = () => {
                   {plan.buttonText}
                 </Button>
                 
-                <ul className="space-y-4">
+                <ul className="space-y-4 flex-1">
                   {plan.features.map((feature, featureIndex) => (
                     <li key={featureIndex} className="flex items-start gap-3">
                       <div className="w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0 mt-0.5">
