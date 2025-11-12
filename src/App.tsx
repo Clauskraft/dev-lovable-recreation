@@ -8,6 +8,7 @@ import Community from "./pages/Community";
 import Pricing from "./pages/Pricing";
 import Learn from "./pages/Learn";
 import Launched from "./pages/Launched";
+import AIMobile from "./pages/AIMobile";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -24,6 +25,7 @@ const App = () => (
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/learn" element={<Learn />} />
           <Route path="/launched" element={<Launched />} />
+          <Route path="/ai-mobile" element={<AIMobile />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

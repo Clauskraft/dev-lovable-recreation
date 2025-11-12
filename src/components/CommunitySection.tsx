@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 const categories = [
   "Popular", "Discover", "Internal Tools", "Website", 
@@ -11,7 +12,8 @@ const projects = [
     title: "TDC AI Mobile",
     category: "Website",
     remixes: "10586",
-    image: "https://images.unsplash.com/photo-1551650975-87deedd944c3?w=400&h=300&fit=crop"
+    image: "https://images.unsplash.com/photo-1551650975-87deedd944c3?w=400&h=300&fit=crop",
+    link: "/ai-mobile"
   },
   {
     id: 2,
@@ -63,34 +65,43 @@ const CommunitySection = () => {
         
         {/* Project Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {projects.map((project) => (
-            <div
-              key={project.id}
-              className="group bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300 cursor-pointer"
-            >
-              {/* Project Image */}
-              <div className="aspect-video overflow-hidden bg-gray-100">
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-              </div>
-              
-              {/* Project Info */}
-              <div className="p-4">
-                <div className="flex items-center gap-2 mb-2">
-                  <div className="w-6 h-6 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"></div>
-                  <h3 className="font-medium text-gray-900 truncate">{project.title}</h3>
+          {projects.map((project) => {
+            const Card = (
+              <div
+                className="group bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300 cursor-pointer"
+              >
+                {/* Project Image */}
+                <div className="aspect-video overflow-hidden bg-gray-100">
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
                 </div>
                 
-                <div className="flex items-center justify-between text-sm text-gray-600">
-                  <span className="bg-gray-100 px-2 py-1 rounded-md">{project.category}</span>
-                  <span>{project.remixes} Remixes</span>
+                {/* Project Info */}
+                <div className="p-4">
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="w-6 h-6 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"></div>
+                    <h3 className="font-medium text-gray-900 truncate">{project.title}</h3>
+                  </div>
+                  
+                  <div className="flex items-center justify-between text-sm text-gray-600">
+                    <span className="bg-gray-100 px-2 py-1 rounded-md">{project.category}</span>
+                    <span>{project.remixes} Remixes</span>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+
+            return project.link ? (
+              <Link key={project.id} to={project.link}>
+                {Card}
+              </Link>
+            ) : (
+              <div key={project.id}>{Card}</div>
+            );
+          })}
         </div>
       </div>
     </section>
