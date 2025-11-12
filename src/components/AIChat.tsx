@@ -142,30 +142,10 @@ const AIChat = () => {
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto flex flex-col h-[600px]">
-      {/* Model Selector */}
-      <div className="mb-4">
-        <Select value={selectedModel} onValueChange={setSelectedModel}>
-          <SelectTrigger className="w-full bg-white/90 border-0">
-            <SelectValue placeholder="Vælg AI model" />
-          </SelectTrigger>
-          <SelectContent>
-            {MODELS.map((model) => (
-              <SelectItem key={model.id} value={model.id}>
-                {model.name}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
-
+    <div className="w-full max-w-2xl mx-auto flex flex-col">
       {/* Messages Area */}
-      <div className="flex-1 glass-effect rounded-2xl p-6 mb-4 overflow-y-auto">
-        {messages.length === 0 ? (
-          <div className="h-full flex items-center justify-center text-white/60">
-            <p className="text-center">Stil et spørgsmål for at komme i gang...</p>
-          </div>
-        ) : (
+      {messages.length > 0 && (
+        <div className="glass-effect rounded-2xl p-6 mb-4 max-h-[400px] overflow-y-auto">
           <div className="space-y-4">
             {messages.map((msg, idx) => (
               <div
@@ -185,17 +165,17 @@ const AIChat = () => {
             ))}
             <div ref={messagesEndRef} />
           </div>
-        )}
-      </div>
+        </div>
+      )}
 
       {/* Input Area */}
       <div className="glass-effect rounded-2xl p-4">
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 mb-4">
           <Input
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyPress={handleKeyPress}
-            placeholder="Spørg TDC DKAI om en løsning..."
+            placeholder="Spørg TDC DKAI om at skabe en løsning til..."
             className="flex-1 border-0 bg-white/90 text-gray-900 placeholder:text-gray-600 text-lg py-6"
             disabled={isLoading}
           />
@@ -211,6 +191,21 @@ const AIChat = () => {
               <ArrowUp className="w-5 h-5" />
             )}
           </Button>
+        </div>
+        
+        <div className="flex items-center gap-4">
+          <Select value={selectedModel} onValueChange={setSelectedModel}>
+            <SelectTrigger className="text-white/80 hover:text-white border-0 bg-transparent w-auto gap-2">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {MODELS.map((model) => (
+                <SelectItem key={model.id} value={model.id}>
+                  {model.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
       </div>
     </div>
