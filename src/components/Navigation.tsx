@@ -18,7 +18,7 @@ const Navigation = () => {
           <Link to="/community" className="text-white/90 hover:text-white transition-colors">Community</Link>
           <Link to="/pricing" className="text-white/90 hover:text-white transition-colors">Pricing</Link>
           <Link to="/learn" className="text-white/90 hover:text-white transition-colors">Learn</Link>
-          <Link to="/launched" className="text-white/90 hover:text-white transition-colors">Launched</Link>
+          <Link to="/launched" className="text-white/90 hover:text-white transition-colors">Inside</Link>
         </div>
         
         {/* Auth Buttons */}
