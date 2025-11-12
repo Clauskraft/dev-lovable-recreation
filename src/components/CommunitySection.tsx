@@ -23,7 +23,8 @@ const projects = [
     category: "Consumer App",
     remixes: "6832",
     image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=300&fit=crop",
-    icon: Shield
+    icon: Shield,
+    link: "https://cyberstreams-v2-production.up.railway.app/"
   },
   {
     id: 3,
@@ -100,13 +101,23 @@ const CommunitySection = () => {
               </div>
             );
 
-            return project.link ? (
-              <Link key={project.id} to={project.link}>
-                {Card}
-              </Link>
-            ) : (
-              <div key={project.id}>{Card}</div>
-            );
+            if (project.link) {
+              // External link
+              if (project.link.startsWith('http')) {
+                return (
+                  <a key={project.id} href={project.link} target="_blank" rel="noopener noreferrer">
+                    {Card}
+                  </a>
+                );
+              }
+              // Internal link
+              return (
+                <Link key={project.id} to={project.link}>
+                  {Card}
+                </Link>
+              );
+            }
+            return <div key={project.id}>{Card}</div>;
           })}
         </div>
       </div>
