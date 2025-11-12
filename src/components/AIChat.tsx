@@ -27,12 +27,19 @@ const AIChat = () => {
   const { toast } = useToast();
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
   };
 
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  // Auto-scroll during streaming
+  useEffect(() => {
+    if (isLoading) {
+      scrollToBottom();
+    }
+  }, [messages.length, isLoading]);
 
   const streamChat = async (userMessage: Message) => {
     const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/ai-chat`;
@@ -147,9 +154,9 @@ const AIChat = () => {
     <div className="w-full max-w-3xl mx-auto flex flex-col h-full">
       {/* Messages Area */}
       {messages.length > 0 && (
-        <div className="glass-effect rounded-2xl mb-4 flex flex-col" style={{ height: '500px' }}>
-          <div className="flex-1 overflow-y-auto p-6">
-            <div className="space-y-4">
+        <div className="glass-effect rounded-2xl mb-4 flex flex-col overflow-hidden" style={{ height: '500px' }}>
+          <div className="flex-1 overflow-y-auto p-6 flex flex-col">
+            <div className="space-y-4 flex-grow">
               {messages.map((msg, idx) => (
                 <div
                   key={idx}
@@ -166,8 +173,8 @@ const AIChat = () => {
                   </div>
                 </div>
               ))}
-              <div ref={messagesEndRef} />
             </div>
+            <div ref={messagesEndRef} className="h-1" />
           </div>
         </div>
       )}
