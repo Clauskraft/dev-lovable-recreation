@@ -30,15 +30,15 @@ const Navigation = () => {
                 AI Løsninger
               </NavigationMenuTrigger>
               <NavigationMenuContent>
-                <div className="w-[400px] p-4 bg-background">
-                  <div className="space-y-3">
-                    <Link to="/ai-mobile" className="block p-3 rounded-md hover:bg-accent transition-colors">
-                      <div className="font-medium mb-1">TDC AI Mobile</div>
-                      <div className="text-sm text-muted-foreground">AI-powered enheder til alle</div>
+                <div className="w-[400px] p-6">
+                  <div className="space-y-1">
+                    <Link to="/ai-mobile" className="block p-4 rounded-lg hover:bg-white/5 transition-all group">
+                      <div className="font-medium mb-1 text-white group-hover:text-[hsl(210,100%,60%)] transition-colors">TDC AI Mobile</div>
+                      <div className="text-sm text-white/70">AI-powered enheder til alle</div>
                     </Link>
-                    <Link to="/referatservice" className="block p-3 rounded-md hover:bg-accent transition-colors">
-                      <div className="font-medium mb-1">Referatservice</div>
-                      <div className="text-sm text-muted-foreground">Automatisk mødereferater</div>
+                    <Link to="/referatservice" className="block p-4 rounded-lg hover:bg-white/5 transition-all group">
+                      <div className="font-medium mb-1 text-white group-hover:text-[hsl(210,100%,60%)] transition-colors">Referatservice</div>
+                      <div className="text-sm text-white/70">Automatisk mødereferater</div>
                     </Link>
                   </div>
                 </div>
