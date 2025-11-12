@@ -15,7 +15,7 @@ const projects = [
   },
   {
     id: 2,
-    title: "Threat Intel API", 
+    title: "TDC Threat Intel API", 
     category: "Consumer App",
     remixes: "6832",
     image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=300&fit=crop"
