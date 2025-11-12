@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { Globe, Shield, FileText, Layers } from "lucide-react";
 
 const categories = [
   "Popular", "Discover", "Internal Tools", "Website", 
@@ -13,28 +14,32 @@ const projects = [
     category: "Website",
     remixes: "10586",
     image: "https://images.unsplash.com/photo-1551650975-87deedd944c3?w=400&h=300&fit=crop",
-    link: "/ai-mobile"
+    link: "/ai-mobile",
+    icon: Globe
   },
   {
     id: 2,
     title: "TDC Threat Intel API", 
     category: "Consumer App",
     remixes: "6832",
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=300&fit=crop"
+    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=300&fit=crop",
+    icon: Shield
   },
   {
     id: 3,
     title: "TDC GDPR Referatservice",
     category: "B2B App", 
     remixes: "4521",
-    image: "https://images.unsplash.com/photo-1553877522-43269d4ea984?w=400&h=300&fit=crop"
+    image: "https://images.unsplash.com/photo-1553877522-43269d4ea984?w=400&h=300&fit=crop",
+    icon: FileText
   },
   {
     id: 4,
     title: "creative-portfolio",
     category: "B2B & B2C App",
     remixes: "3247",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=300&fit=crop"
+    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=300&fit=crop",
+    icon: Layers
   }
 ];
 
@@ -82,7 +87,9 @@ const CommunitySection = () => {
                 {/* Project Info */}
                 <div className="p-4">
                   <div className="flex items-center gap-2 mb-2">
-                    <div className="w-6 h-6 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"></div>
+                    <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                      <project.icon className="w-4 h-4 text-primary" strokeWidth={2} />
+                    </div>
                     <h3 className="font-medium text-gray-900 truncate">{project.title}</h3>
                   </div>
                   
