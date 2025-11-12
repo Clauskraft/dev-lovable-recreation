@@ -1,177 +1,218 @@
+import Navigation from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { BookOpen, Video, Code, Lightbulb, Clock, Users } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+import { BookOpen, Video, Code, Lightbulb, GraduationCap, Rocket } from "lucide-react";
 
 const Learn = () => {
   const categories = [
-    { name: "Kom i gang", count: 12, icon: Lightbulb },
-    { name: "Tutorials", count: 28, icon: Video },
-    { name: "Best Practices", count: 15, icon: BookOpen },
-    { name: "Avanceret", count: 8, icon: Code },
+    { 
+      name: "Kom i gang", 
+      description: "Grundlæggende introduktion til TDC AI platform",
+      icon: Rocket,
+      count: "12 guider"
+    },
+    { 
+      name: "AI Udvikling", 
+      description: "Lær at bygge intelligente løsninger",
+      icon: Lightbulb,
+      count: "28 tutorials"
+    },
+    { 
+      name: "Best Practices", 
+      description: "Bedste fremgangsmåder og design patterns",
+      icon: GraduationCap,
+      count: "15 artikler"
+    },
+    { 
+      name: "Avanceret", 
+      description: "Dyk ned i komplekse enterprise-løsninger",
+      icon: Code,
+      count: "8 moduler"
+    },
   ];
 
-  const tutorials = [
+  const learningPaths = [
     {
-      title: "Din Første TDC AI App",
-      description: "Lær hvordan du opretter din første applikation med AI-drevet udvikling",
-      duration: "10 min",
-      level: "Begynder",
-      category: "Kom i gang",
-      image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&h=400&fit=crop",
+      title: "AI-Drevet Udvikling",
+      description: "Fra grundlæggende koncepter til produktion-klar implementering af AI-løsninger",
+      modules: 8,
+      duration: "6 timer",
+      level: "Begynder til Mellemliggende",
+      topics: ["AI Fundamentals", "Model Integration", "Prompt Engineering", "Production Deploy"]
     },
     {
-      title: "Byg et Dashboard",
-      description: "Trin-for-trin guide til at oprette interaktive dashboards med smukke diagrammer",
-      duration: "25 min", 
-      level: "Mellemliggende",
-      category: "Tutorials",
-      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=400&fit=crop",
+      title: "Enterprise Integration",
+      description: "Integrer TDC AI i eksisterende virksomhedssystemer og workflows",
+      modules: 12,
+      duration: "10 timer",
+      level: "Mellemliggende til Avanceret",
+      topics: ["System Architecture", "API Integration", "Security & Compliance", "Scaling"]
     },
     {
-      title: "Database Integration",
-      description: "Forbind din app til databaser og håndtér data effektivt",
-      duration: "30 min",
-      level: "Mellemliggende", 
-      category: "Tutorials",
-      image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&h=400&fit=crop",
-    },
-    {
-      title: "AI Prompt Engineering",
-      description: "Mestre kunsten at kommunikere med AI for at få de bedste resultater",
-      duration: "15 min",
-      level: "Begynder",
-      category: "Best Practices",
-      image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=400&fit=crop",
-    },
-    {
-      title: "Tilpassede Komponenter",
-      description: "Byg genanvendelige komponenter og design systemer til dine projekter",
-      duration: "35 min",
-      level: "Avanceret",
-      category: "Avanceret", 
-      image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&h=400&fit=crop",
-    },
-    {
-      title: "Udrulningsguide",
-      description: "Udrul dine applikationer til produktion med selvtillid",
-      duration: "20 min",
-      level: "Mellemliggende",
-      category: "Tutorials",
-      image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&h=400&fit=crop",
-    },
+      title: "Compliance & Sikkerhed",
+      description: "GDPR-compliant AI-løsninger med indbygget sikkerhed og datakontrol",
+      modules: 6,
+      duration: "4 timer",
+      level: "Alle niveauer",
+      topics: ["GDPR Basics", "Data Protection", "Audit Trails", "Encryption"]
+    }
   ];
 
   const resources = [
     {
       title: "Dokumentation",
-      description: "Komplet referenceguide for alle TDC AI funktioner",
+      description: "Komplet API reference og teknisk dokumentation",
       icon: BookOpen,
       link: "#"
     },
     {
-      title: "Video Kurser", 
-      description: "Dybdegående video tutorials for visuelle lærere",
+      title: "Video Bibliotek", 
+      description: "Step-by-step video tutorials og webinarer",
       icon: Video,
       link: "#"
     },
     {
-      title: "Community Forum",
-      description: "Få hjælp og del viden med andre udviklere",
-      icon: Users,
+      title: "Kode Eksempler",
+      description: "Production-ready kode snippets og templates", 
+      icon: Code,
       link: "#"
     },
     {
-      title: "Kode Eksempler",
-      description: "Klar-til-brug kode snippets og skabeloner", 
-      icon: Code,
+      title: "Certificering",
+      description: "Bliv certificeret TDC AI developer",
+      icon: GraduationCap,
       link: "#"
     }
   ];
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="container mx-auto px-4 py-12">
-        {/* Header */}
-        <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6">
-            Lær at Bygge med <span className="text-primary">KRAFT</span>
-          </h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
-            Mestre AI-drevet udvikling med vores omfattende tutorials og guider
-          </p>
-          <Button size="lg" className="bg-primary hover:bg-primary/90">
-            Start med at lære
-          </Button>
-        </div>
-
-        {/* Categories */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
-          {categories.map((category, index) => (
-            <Card key={index} className="text-center border-primary/20 hover:border-primary/40 cursor-pointer transition-colors">
-              <CardContent className="p-6">
-                <category.icon className="w-8 h-8 text-primary mx-auto mb-3" />
-                <h3 className="font-semibold text-foreground mb-1">{category.name}</h3>
-                <p className="text-sm text-muted-foreground">{category.count} lektioner</p>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-
-        {/* Featured Tutorials */}
-        <div className="mb-16">
-          <div className="flex items-center justify-between mb-8">
-            <h2 className="text-3xl font-bold text-foreground">Fremhævede Tutorials</h2>
-            <Button variant="outline" className="border-primary/20">
-              Se Alle
-            </Button>
+    <div className="min-h-screen gradient-bg flex flex-col">
+      <Navigation />
+      
+      {/* Hero Section */}
+      <section className="relative py-20 px-6 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-[hsl(210,100%,50%)]/10 to-transparent" />
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight">
+              Lær at Bygge Fremtidens AI-Løsninger
+            </h1>
+            <p className="text-xl text-white/80 mb-8">
+              Komplet træningsprogram for TDC AI platformen. Fra begynder til enterprise-ekspert.
+            </p>
+            <div className="flex gap-4 justify-center">
+              <Button size="lg" className="bg-white text-[hsl(230,45%,12%)] hover:bg-white/90 font-medium px-8">
+                Start læring
+              </Button>
+              <Button size="lg" variant="outline" className="border-white/20 text-white hover:bg-white/10">
+                Se video intro
+              </Button>
+            </div>
           </div>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {tutorials.map((tutorial, index) => (
-              <Card key={index} className="border-primary/20 hover:border-primary/40 transition-colors cursor-pointer">
-                <div className="aspect-video bg-muted rounded-t-lg overflow-hidden">
-                  <img 
-                    src={tutorial.image} 
-                    alt={tutorial.title}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <CardHeader>
-                  <div className="flex items-center justify-between mb-2">
-                    <Badge variant="secondary">{tutorial.category}</Badge>
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <Clock className="w-4 h-4" />
-                      {tutorial.duration}
-                    </div>
-                  </div>
-                  <CardTitle className="text-lg">{tutorial.title}</CardTitle>
-                  <p className="text-muted-foreground text-sm">{tutorial.description}</p>
-                  <div className="pt-2">
-                    <Badge variant="outline">{tutorial.level}</Badge>
-                  </div>
-                </CardHeader>
-              </Card>
-            ))}
-          </div>
-        </div>
 
-        {/* Learning Resources */}
-        <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold text-foreground mb-8">Lærings Ressourcer</h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {resources.map((resource, index) => (
-              <Card key={index} className="border-primary/20 hover:border-primary/40 transition-colors cursor-pointer">
-                <CardContent className="p-6 text-center">
-                  <resource.icon className="w-12 h-12 text-primary mx-auto mb-4" />
-                  <h3 className="text-lg font-semibold text-foreground mb-3">{resource.title}</h3>
-                  <p className="text-muted-foreground text-sm">{resource.description}</p>
+          {/* Categories Grid */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
+            {categories.map((category, index) => (
+              <Card key={index} className="bg-white/5 backdrop-blur-sm border-white/10 hover:bg-white/10 transition-all cursor-pointer group">
+                <CardContent className="p-6">
+                  <category.icon className="w-10 h-10 text-[hsl(210,100%,60%)] mb-4 group-hover:scale-110 transition-transform" />
+                  <h3 className="text-lg font-semibold text-white mb-2">{category.name}</h3>
+                  <p className="text-white/70 text-sm mb-3">{category.description}</p>
+                  <p className="text-white/50 text-xs">{category.count}</p>
                 </CardContent>
               </Card>
             ))}
           </div>
         </div>
-      </div>
+      </section>
+
+      {/* Learning Paths */}
+      <section className="py-16 px-6 bg-gradient-to-b from-transparent to-[hsl(230,45%,15%)]">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold text-white mb-4">Læringsforløb</h2>
+            <p className="text-white/70 text-lg max-w-2xl mx-auto">
+              Strukturerede forløb designet til at tage dig fra nybegynder til ekspert
+            </p>
+          </div>
+
+          <div className="grid lg:grid-cols-3 gap-8 mb-16">
+            {learningPaths.map((path, index) => (
+              <Card key={index} className="bg-[hsl(230,45%,15%)] border-white/10 hover:border-[hsl(210,100%,60%)]/50 transition-all cursor-pointer">
+                <CardContent className="p-8">
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="bg-[hsl(210,100%,50%)]/10 rounded-lg p-3">
+                      <GraduationCap className="w-6 h-6 text-[hsl(210,100%,60%)]" />
+                    </div>
+                    <span className="text-xs text-white/50 bg-white/5 px-3 py-1 rounded-full">{path.level}</span>
+                  </div>
+                  
+                  <h3 className="text-xl font-bold text-white mb-3">{path.title}</h3>
+                  <p className="text-white/70 text-sm mb-6">{path.description}</p>
+                  
+                  <div className="flex gap-4 text-sm text-white/60 mb-6">
+                    <span>{path.modules} moduler</span>
+                    <span>•</span>
+                    <span>{path.duration}</span>
+                  </div>
+
+                  <div className="space-y-2 mb-6">
+                    <p className="text-xs text-white/50 font-medium">EMNER</p>
+                    <div className="flex flex-wrap gap-2">
+                      {path.topics.map((topic, idx) => (
+                        <span key={idx} className="text-xs bg-white/5 text-white/70 px-2 py-1 rounded">
+                          {topic}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <Button className="w-full bg-[hsl(210,100%,50%)] hover:bg-[hsl(210,100%,60%)] text-white">
+                    Start forløb
+                  </Button>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Resources */}
+      <section className="py-16 px-6 bg-[hsl(230,45%,15%)]">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold text-white mb-4">Læringsressourcer</h2>
+            <p className="text-white/70 text-lg">Alt du behøver for at mestre TDC AI platformen</p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {resources.map((resource, index) => (
+              <Card key={index} className="bg-white/5 border-white/10 hover:bg-white/10 transition-all cursor-pointer group">
+                <CardContent className="p-8 text-center">
+                  <div className="bg-[hsl(210,100%,50%)]/10 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                    <resource.icon className="w-8 h-8 text-[hsl(210,100%,60%)]" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-white mb-2">{resource.title}</h3>
+                  <p className="text-white/70 text-sm">{resource.description}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-20 px-6 bg-gradient-to-t from-[hsl(210,100%,50%)]/10 to-transparent">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-4xl font-bold text-white mb-6">Klar til at komme i gang?</h2>
+          <p className="text-xl text-white/70 mb-8">
+            Bliv en del af TDC's AI-community og lær at bygge næste generations enterprise-løsninger
+          </p>
+          <Button size="lg" className="bg-white text-[hsl(230,45%,12%)] hover:bg-white/90 font-medium px-12">
+            Start i dag
+          </Button>
+        </div>
+      </section>
     </div>
   );
 };
