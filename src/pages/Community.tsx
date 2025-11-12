@@ -1,9 +1,61 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Users, TrendingUp, Rocket, Star } from "lucide-react";
+import { Users, TrendingUp, Rocket, Star, ChevronLeft, ChevronRight } from "lucide-react";
+import { useState, useCallback, useEffect } from "react";
+import useEmblaCarousel from "embla-carousel-react";
+import Autoplay from "embla-carousel-autoplay";
 
 const Community = () => {
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [Autoplay({ delay: 5000 })]);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
+  const scrollPrev = useCallback(() => {
+    if (emblaApi) emblaApi.scrollPrev();
+  }, [emblaApi]);
+
+  const scrollNext = useCallback(() => {
+    if (emblaApi) emblaApi.scrollNext();
+  }, [emblaApi]);
+
+  const scrollTo = useCallback((index: number) => {
+    if (emblaApi) emblaApi.scrollTo(index);
+  }, [emblaApi]);
+
+  const onSelect = useCallback(() => {
+    if (!emblaApi) return;
+    setSelectedIndex(emblaApi.selectedScrollSnap());
+  }, [emblaApi]);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+    onSelect();
+    emblaApi.on("select", onSelect);
+    return () => {
+      emblaApi.off("select", onSelect);
+    };
+  }, [emblaApi, onSelect]);
+
+  const heroSlides = [
+    {
+      title: "Build with TDC Trusted Digital Community",
+      subtitle: "TRUSTED DIGITAL COMMUNITY",
+      description: "Join thousands of builders creating amazing applications with AI-powered development",
+      buttonText: "Join Community"
+    },
+    {
+      title: "Collaborate & Innovate Together",
+      subtitle: "COLLABORATIVE BUILDING",
+      description: "Work with developers worldwide to create cutting-edge solutions",
+      buttonText: "Start Building"
+    },
+    {
+      title: "Launch Your Ideas Faster",
+      subtitle: "RAPID DEVELOPMENT",
+      description: "Use AI-powered tools to bring your vision to life in record time",
+      buttonText: "Get Started"
+    }
+  ];
   const stats = [
     { label: "Active Builders", value: "25,000+", icon: Users },
     { label: "Projects Created", value: "500k+", icon: Rocket },
@@ -37,24 +89,66 @@ const Community = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Hero Section - TDC Style */}
+      {/* Hero Carousel - TDC Style */}
       <div className="relative bg-[hsl(230,45%,12%)] text-white overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-primary/20 via-primary/10 to-transparent"></div>
-        <div className="container mx-auto px-4 py-24 relative z-10">
-          <div className="text-center max-w-4xl mx-auto">
-            <p className="text-sm uppercase tracking-wider mb-4 text-primary/80">
-              TRUSTED DIGITAL COMMUNITY
-            </p>
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">
-              Build with TDC Trusted Digital Community
-            </h1>
-            <p className="text-xl text-white/80 max-w-2xl mx-auto mb-8">
-              Join thousands of builders creating amazing applications with AI-powered development
-            </p>
-            <Button size="lg" className="bg-primary hover:bg-primary/90 text-white">
-              Join Community
-            </Button>
+        
+        {/* Embla Carousel */}
+        <div className="overflow-hidden relative" ref={emblaRef}>
+          <div className="flex">
+            {heroSlides.map((slide, index) => (
+              <div key={index} className="flex-[0_0_100%] min-w-0">
+                <div className="container mx-auto px-4 py-24 relative z-10">
+                  <div className="text-center max-w-4xl mx-auto">
+                    <p className="text-sm uppercase tracking-wider mb-4 text-primary/80">
+                      {slide.subtitle}
+                    </p>
+                    <h1 className="text-4xl md:text-6xl font-bold mb-6">
+                      {slide.title}
+                    </h1>
+                    <p className="text-xl text-white/80 max-w-2xl mx-auto mb-8">
+                      {slide.description}
+                    </p>
+                    <Button size="lg" className="bg-primary hover:bg-primary/90 text-white">
+                      {slide.buttonText}
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
+        </div>
+
+        {/* Navigation Arrows */}
+        <button
+          onClick={scrollPrev}
+          className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-sm transition-colors flex items-center justify-center"
+          aria-label="Previous slide"
+        >
+          <ChevronLeft className="w-6 h-6" />
+        </button>
+        <button
+          onClick={scrollNext}
+          className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-sm transition-colors flex items-center justify-center"
+          aria-label="Next slide"
+        >
+          <ChevronRight className="w-6 h-6" />
+        </button>
+
+        {/* Dots Navigation */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-2">
+          {heroSlides.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => scrollTo(index)}
+              className={`w-2 h-2 rounded-full transition-all ${
+                index === selectedIndex 
+                  ? "bg-white w-8" 
+                  : "bg-white/40 hover:bg-white/60"
+              }`}
+              aria-label={`Go to slide ${index + 1}`}
+            />
+          ))}
         </div>
       </div>
 
