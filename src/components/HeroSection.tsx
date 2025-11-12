@@ -11,13 +11,13 @@ const HeroSection = () => {
       {/* Main Heading */}
       <div className="flex items-center gap-3 mb-6">
         <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white">
-          Build with POWER
+          TDC Erhverv X Gefion
         </h1>
       </div>
       
       {/* Subtitle */}
       <p className="text-xl md:text-2xl text-white/90 mb-12 max-w-2xl">
-        Create apps and websites by chatting with AI
+        Suveræn AI-kraft. Med fuld kontrol og indbygget compliance.
       </p>
       
       {/* Chat Interface */}
@@ -27,7 +27,7 @@ const HeroSection = () => {
             <Input
               value={chatInput}
               onChange={(e) => setChatInput(e.target.value)}
-              placeholder="Ask POWER:K to create a landing page for my..."
+              placeholder="Spørg TDC DKAI om at skabe en løsning til..."
               className="flex-1 border-0 bg-white/90 text-gray-900 placeholder:text-gray-600 text-lg py-6"
             />
             <Button 
