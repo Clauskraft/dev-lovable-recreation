@@ -8,12 +8,14 @@ import { useToast } from "@/hooks/use-toast";
 type Message = { role: "user" | "assistant"; content: string };
 
 const MODELS = [
-  { id: "google/gemini-2.5-flash", name: "Gemini 2.5 Flash (Hurtig & Afbalanceret)" },
-  { id: "google/gemini-2.5-pro", name: "Gemini 2.5 Pro (Mest Avanceret)" },
-  { id: "google/gemini-2.5-flash-lite", name: "Gemini 2.5 Flash Lite (Hurtigst)" },
-  { id: "openai/gpt-5", name: "GPT-5 (Kraftfuld)" },
-  { id: "openai/gpt-5-mini", name: "GPT-5 Mini (Afbalanceret)" },
-  { id: "openai/gpt-5-nano", name: "GPT-5 Nano (Hurtig)" },
+  { id: "mistralai/mistral-7b-instruct", name: "Mistral 7B (Hurtig & Effektiv)" },
+  { id: "mistralai/mixtral-8x7b-instruct", name: "Mixtral 8x7B (Kraftfuld)" },
+  { id: "mistralai/mistral-large", name: "Mistral Large (Mest Avanceret)" },
+  { id: "meta-llama/llama-3-8b-instruct", name: "Llama 3 8B (Hurtig)" },
+  { id: "meta-llama/llama-3-70b-instruct", name: "Llama 3 70B (Kraftfuld)" },
+  { id: "meta-llama/llama-3.1-405b-instruct", name: "Llama 3.1 405B (Mest Kraftfuld)" },
+  { id: "google/gemma-7b-it", name: "Gemma 7B (Google)" },
+  { id: "openchat/openchat-7b", name: "OpenChat 7B" },
 ];
 
 const AIChat = () => {

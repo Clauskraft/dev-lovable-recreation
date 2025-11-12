@@ -10,17 +10,21 @@ serve(async (req) => {
 
   try {
     const { messages, model } = await req.json();
-    const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
-    if (!LOVABLE_API_KEY) throw new Error("LOVABLE_API_KEY is not configured");
+    const OPENROUTER_API_KEY = Deno.env.get("OPENROUTER_API_KEY");
+    if (!OPENROUTER_API_KEY) throw new Error("OPENROUTER_API_KEY is not configured");
 
-    const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+    console.log("Using model:", model);
+
+    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${LOVABLE_API_KEY}`,
+        Authorization: `Bearer ${OPENROUTER_API_KEY}`,
         "Content-Type": "application/json",
+        "HTTP-Referer": "https://tdc-dkai.lovable.app",
+        "X-Title": "TDC DKAI",
       },
       body: JSON.stringify({
-        model: model || "google/gemini-2.5-flash",
+        model: model || "mistralai/mistral-7b-instruct",
         messages: [
           { role: "system", content: "Du er en hjælpsom AI-assistent fra TDC Erhverv. Du hjælper med at besvare spørgsmål om teknologi, løsninger og services." },
           ...messages,
@@ -30,21 +34,17 @@ serve(async (req) => {
     });
 
     if (!response.ok) {
+      const errorText = await response.text();
+      console.error("OpenRouter error:", response.status, errorText);
+      
       if (response.status === 429) {
         return new Response(JSON.stringify({ error: "For mange anmodninger, prøv igen senere." }), {
           status: 429,
           headers: { ...corsHeaders, "Content-Type": "application/json" },
         });
       }
-      if (response.status === 402) {
-        return new Response(JSON.stringify({ error: "Betalingskrævet, tilføj venligst midler til din workspace." }), {
-          status: 402,
-          headers: { ...corsHeaders, "Content-Type": "application/json" },
-        });
-      }
-      const t = await response.text();
-      console.error("AI gateway error:", response.status, t);
-      return new Response(JSON.stringify({ error: "AI gateway fejl" }), {
+      
+      return new Response(JSON.stringify({ error: "API fejl: " + errorText }), {
         status: 500,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
