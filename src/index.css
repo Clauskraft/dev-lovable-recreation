@@ -10,14 +10,14 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 15%;
+    --background: 240 100% 37.5%;
+    --foreground: 0 0% 100%;
 
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 15%;
+    --card-foreground: 240 100% 37.5%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 15%;
+    --popover-foreground: 240 100% 37.5%;
 
     /* TDC Digital Blue brand colors */
     --primary: 240 100% 37.5%;  /* #0000BF */
@@ -26,7 +26,7 @@ All colors MUST be HSL.
 
     /* TDC secondary colors */
     --secondary: 0 0% 96%;
-    --secondary-foreground: 0 0% 15%;
+    --secondary-foreground: 240 100% 37.5%;
 
     --muted: 0 0% 96%;
     --muted-foreground: 0 0% 45%;
@@ -127,8 +127,14 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply text-foreground;
     font-family: 'Mukta Mahee', sans-serif;
+    background: linear-gradient(135deg, hsl(240 100% 37.5%) 0%, hsl(240 100% 23.5%) 100%);
+    min-height: 100vh;
+  }
+  
+  .gradient-bg {
+    background: linear-gradient(135deg, hsl(240 100% 37.5%) 0%, hsl(240 100% 23.5%) 100%);
   }
 }
 
