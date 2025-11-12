@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const categories = [
   "Popular", "Discover", "Internal Tools", "Website", 
-  "B2B & Consumer App", "Consumer App", "B2B App", "Prototype"
+  "B2B & B2C App", "Consumer App", "B2B App", "Prototype"
 ];
 
 const projects = [
@@ -32,7 +32,7 @@ const projects = [
   {
     id: 4,
     title: "creative-portfolio",
-    category: "B2B & Consumer App",
+    category: "B2B & B2C App",
     remixes: "3247",
     image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=300&fit=crop"
   }
@@ -88,7 +88,6 @@ const CommunitySection = () => {
                   
                   <div className="flex items-center justify-between text-sm text-gray-600">
                     <span className="bg-gray-100 px-2 py-1 rounded-md">{project.category}</span>
-                    <span>{project.remixes} Remixes</span>
                   </div>
                 </div>
               </div>
