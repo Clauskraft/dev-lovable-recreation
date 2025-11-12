@@ -10,7 +10,7 @@ const Pricing = () => {
       icon: Zap,
       price: "$0",
       period: "per month",
-      description: "Discover what POWER:K can do for you",
+      description: "Discover what TDC AI can do for you",
       badge: "Free forever",
       buttonText: "Get Started",
       buttonVariant: "outline" as const,
@@ -36,7 +36,7 @@ const Pricing = () => {
         "Private projects",
         "User roles & permissions",
         "Custom domains",
-        "Remove POWER:K badge",
+        "Remove TDC AI badge",
         "Credit rollovers"
       ]
     },
@@ -63,12 +63,12 @@ const Pricing = () => {
 
   const faqs = [
     {
-      question: "What is POWER:K and how does it work?",
-      answer: "POWER:K is an AI-powered development platform that lets you create applications by chatting with AI. Simply describe what you want to build, and our AI will generate the code for you."
+      question: "What is TDC AI and how does it work?",
+      answer: "TDC AI is an AI-powered development platform that lets you create applications by chatting with AI. Simply describe what you want to build, and our AI will generate the code for you."
     },
     {
       question: "What does the free plan include?",
-      answer: "The free plan includes 5 daily credits (up to 30 per month), public projects, unlimited collaborators, and community support. Perfect for trying out POWER:K."
+      answer: "The free plan includes 5 daily credits (up to 30 per month), public projects, unlimited collaborators, and community support. Perfect for trying out TDC AI."
     },
     {
       question: "What is a credit?",

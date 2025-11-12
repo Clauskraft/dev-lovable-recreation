@@ -98,7 +98,7 @@ const Community = () => {
 
         {/* Community Features */}
         <div className="text-center">
-          <h2 className="text-3xl font-bold text-foreground mb-8">Why Join POWER:K Community?</h2>
+          <h2 className="text-3xl font-bold text-foreground mb-8">Why Join TDC AI Community?</h2>
           <div className="grid md:grid-cols-3 gap-8">
             <div className="p-6">
               <Users className="w-12 h-12 text-primary mx-auto mb-4" />

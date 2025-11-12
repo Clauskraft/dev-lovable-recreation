@@ -13,7 +13,7 @@ const Learn = () => {
 
   const tutorials = [
     {
-      title: "Your First POWER:K App",
+      title: "Your First TDC AI App",
       description: "Learn how to create your first application using AI-powered development",
       duration: "10 min",
       level: "Beginner",
@@ -65,7 +65,7 @@ const Learn = () => {
   const resources = [
     {
       title: "Documentation",
-      description: "Complete reference guide for all POWER:K features",
+      description: "Complete reference guide for all TDC AI features",
       icon: BookOpen,
       link: "#"
     },
