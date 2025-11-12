@@ -50,7 +50,7 @@ const CommunitySection = () => {
       <div className="max-w-7xl mx-auto px-6 py-16">
         {/* Section Header */}
         <div className="flex items-center justify-between mb-8">
-          <h2 className="text-3xl font-bold text-gray-900">From the Community</h2>
+          <h2 className="text-3xl font-bold text-gray-900">Sikkerhed. Compliance. Ro i Sindet. Indbygget.</h2>
           <Button variant="outline" className="text-gray-700 border-gray-300">
             View All
           </Button>
