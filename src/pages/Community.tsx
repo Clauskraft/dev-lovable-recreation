@@ -37,81 +37,92 @@ const Community = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="container mx-auto px-4 py-12">
-        {/* Header */}
-        <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6">
-            Build with <span className="text-primary">TDC Trusted Digital Community</span>
-          </h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
-            Join thousands of builders creating amazing applications with AI-powered development
-          </p>
-          <Button size="lg" className="bg-primary hover:bg-primary/90">
-            Join Community
-          </Button>
+      {/* Hero Section - TDC Style */}
+      <div className="relative bg-[hsl(230,45%,12%)] text-white overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-primary/20 via-primary/10 to-transparent"></div>
+        <div className="container mx-auto px-4 py-24 relative z-10">
+          <div className="text-center max-w-4xl mx-auto">
+            <p className="text-sm uppercase tracking-wider mb-4 text-primary/80">
+              TRUSTED DIGITAL COMMUNITY
+            </p>
+            <h1 className="text-4xl md:text-6xl font-bold mb-6">
+              Build with TDC Trusted Digital Community
+            </h1>
+            <p className="text-xl text-white/80 max-w-2xl mx-auto mb-8">
+              Join thousands of builders creating amazing applications with AI-powered development
+            </p>
+            <Button size="lg" className="bg-primary hover:bg-primary/90 text-white">
+              Join Community
+            </Button>
+          </div>
         </div>
+      </div>
 
-        {/* Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
-          {stats.map((stat, index) => (
-            <Card key={index} className="text-center border-primary/20">
-              <CardContent className="p-6">
-                <stat.icon className="w-8 h-8 text-primary mx-auto mb-3" />
-                <div className="text-2xl font-bold text-foreground mb-1">{stat.value}</div>
-                <div className="text-sm text-muted-foreground">{stat.label}</div>
-              </CardContent>
-            </Card>
-          ))}
+      {/* Stats Section - Blue Background */}
+      <div className="bg-primary py-16">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {stats.map((stat, index) => (
+              <div key={index} className="text-center text-white">
+                <stat.icon className="w-8 h-8 mx-auto mb-3 opacity-80" />
+                <div className="text-3xl font-bold mb-1">{stat.value}</div>
+                <div className="text-sm opacity-80">{stat.label}</div>
+              </div>
+            ))}
+          </div>
         </div>
+      </div>
 
-        {/* Featured Projects */}
+      <div className="container mx-auto px-4 py-16">
+
+        {/* Featured Projects - Card Style */}
         <div className="mb-16">
           <div className="flex items-center justify-between mb-8">
             <h2 className="text-3xl font-bold text-foreground">Featured Projects</h2>
-            <Button variant="outline" className="border-primary/20">
+            <Button variant="outline" className="border-primary/20 hover:bg-primary/10">
               View All
             </Button>
           </div>
           
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-3 gap-8">
             {featuredProjects.map((project, index) => (
-              <Card key={index} className="border-primary/20 hover:border-primary/40 transition-colors">
-                <div className="aspect-video bg-muted rounded-t-lg overflow-hidden">
+              <div key={index} className="group bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300">
+                <div className="aspect-video bg-muted overflow-hidden">
                   <img 
                     src={project.image} 
                     alt={project.title}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
-                <CardHeader>
-                  <div className="flex items-center justify-between mb-2">
-                    <Badge variant="secondary">{project.category}</Badge>
+                <div className="p-6">
+                  <div className="flex items-center gap-2 mb-3">
+                    <Badge className="bg-primary/10 text-primary hover:bg-primary/20">{project.category}</Badge>
                     <span className="text-sm text-muted-foreground">{project.remixes} remixes</span>
                   </div>
-                  <CardTitle className="text-lg">{project.title}</CardTitle>
-                  <p className="text-muted-foreground">by {project.author}</p>
-                </CardHeader>
-              </Card>
+                  <h3 className="text-xl font-bold text-foreground mb-2">{project.title}</h3>
+                  <p className="text-muted-foreground text-sm">by {project.author}</p>
+                </div>
+              </div>
             ))}
           </div>
         </div>
 
-        {/* Community Features */}
-        <div className="text-center">
-          <h2 className="text-3xl font-bold text-foreground mb-8">Why Join TDC AI Community?</h2>
+        {/* Community Features - Blue Card Style */}
+        <div className="bg-primary/5 rounded-2xl p-12">
+          <h2 className="text-3xl font-bold text-foreground mb-12 text-center">Why Join TDC AI Community?</h2>
           <div className="grid md:grid-cols-3 gap-8">
-            <div className="p-6">
-              <Users className="w-12 h-12 text-primary mx-auto mb-4" />
+            <div className="bg-white rounded-lg p-8 shadow-sm hover:shadow-md transition-shadow">
+              <Users className="w-12 h-12 text-primary mb-4" />
               <h3 className="text-xl font-semibold mb-3">Collaborative Building</h3>
               <p className="text-muted-foreground">Work together with developers worldwide to create amazing applications</p>
             </div>
-            <div className="p-6">
-              <Rocket className="w-12 h-12 text-primary mx-auto mb-4" />
+            <div className="bg-white rounded-lg p-8 shadow-sm hover:shadow-md transition-shadow">
+              <Rocket className="w-12 h-12 text-primary mb-4" />
               <h3 className="text-xl font-semibold mb-3">Launch Faster</h3>
               <p className="text-muted-foreground">Use community templates and components to accelerate your development</p>
             </div>
-            <div className="p-6">
-              <TrendingUp className="w-12 h-12 text-primary mx-auto mb-4" />
+            <div className="bg-white rounded-lg p-8 shadow-sm hover:shadow-md transition-shadow">
+              <TrendingUp className="w-12 h-12 text-primary mb-4" />
               <h3 className="text-xl font-semibold mb-3">Learn & Grow</h3>
               <p className="text-muted-foreground">Share knowledge and learn from the best builders in the community</p>
             </div>
