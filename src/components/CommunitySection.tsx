@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 
 const categories = [
   "Popular", "Discover", "Internal Tools", "Website", 
-  "Personal", "Consumer App", "B2B App", "Prototype"
+  "B2B & Consumer App", "Consumer App", "B2B App", "Prototype"
 ];
 
 const projects = [
@@ -30,7 +30,7 @@ const projects = [
   {
     id: 4,
     title: "creative-portfolio",
-    category: "Personal",
+    category: "B2B & Consumer App",
     remixes: "3247",
     image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=300&fit=crop"
   }
