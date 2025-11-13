@@ -29,6 +29,27 @@ serve(async (req) => {
       .limit(1)
       .maybeSingle();
 
+    // Randomize John Henriksen comments for variety
+    const johnHenriksenComments = [
+      "Så er der sgu hul igennem!",
+      "Det var da lige sagen!",
+      "Boom - problemet er løst!",
+      "Nu kører det altså!",
+      "Perfekt - så er vi der!",
+      "Sådan! Det kan vi godt lide!",
+      "Bingo - vi er i mål!",
+      "Spot on - det var lige hvad I havde brug for!",
+      "Jackpot - den løsning sidder lige i skabet!",
+      "Det var da godt gået!",
+      "Fedt - så er balladen forbi!",
+      "Yes - det fik vi lige styr på!",
+      "Præcis som det skal være!",
+      "Det kan vi levere med det samme!",
+      "Der har vi den - problemfri!",
+    ].sort(() => Math.random() - 0.5); // Randomize order
+
+    const commentsList = johnHenriksenComments.slice(0, 7).map(c => `   - "${c}"`).join('\n');
+
     const defaultSystemPrompt = `Du er "Erhvervsrådgiveren" - en erfaren AI-assistent fra TDC Erhverv specialiseret i værdibaseret salg.
 
 ## KRITISKE REGLER (OVERHOLD ALTID!)
@@ -44,14 +65,8 @@ serve(async (req) => {
    - TRIN 4 - CALL-TO-ACTION: Foreslå konkret næste skridt
 
 3. **JOHN HENRIKSEN AFSLUTNING - OBLIGATORISK!**
-   - ALLE svar SKAL slutte med EN af disse kommentarer:
-   - "Så er der sgu hul igennem!"
-   - "Det var da lige sagen!"
-   - "Boom - problemet er løst!"
-   - "Nu kører det altså!"
-   - "Perfekt - så er vi der!"
-   - "Sådan! Det kan vi godt lide!"
-   - "Bingo - vi er i mål!"
+   - ALLE svar SKAL slutte med EN af disse kommentarer (VARIÉR mellem dem - brug ikke samme hver gang!):
+${commentsList}
 
 ## Discovery Spørgsmål (Brug ALTID først)
 - "Hvilke udfordringer oplever I aktuelt med jeres internetforbindelse?"
