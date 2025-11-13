@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Upload, FileText, Folder, Search, Download, Trash2, Shield, UserPlus } from "lucide-react";
+import { Upload, FileText, Folder, Search, Download, Trash2, Shield, UserPlus, Users, UserCheck, Clock } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
@@ -274,6 +274,64 @@ const Launched = () => {
             <div className="flex items-center gap-3 mb-6">
               <Shield className="w-6 h-6 text-[hsl(210,100%,60%)]" />
               <h2 className="text-3xl font-bold text-primary-foreground">Admin Panel</h2>
+            </div>
+
+            {/* Statistics Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+              <Card className="bg-card border-0" style={{ boxShadow: 'var(--shadow-card)' }}>
+                <CardContent className="pt-6">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm text-muted-foreground mb-1">Total Brugere</p>
+                      <p className="text-3xl font-bold text-card-foreground">{users.length}</p>
+                    </div>
+                    <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+                      <Users className="w-6 h-6 text-primary" />
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="bg-card border-0" style={{ boxShadow: 'var(--shadow-card)' }}>
+                <CardContent className="pt-6">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm text-muted-foreground mb-1">Admins</p>
+                      <p className="text-3xl font-bold text-card-foreground">
+                        {userRoles.filter(r => r.role === 'admin').length}
+                      </p>
+                    </div>
+                    <div className="w-12 h-12 rounded-full bg-[hsl(210,100%,50%)]/10 flex items-center justify-center">
+                      <UserCheck className="w-6 h-6 text-[hsl(210,100%,50%)]" />
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="bg-card border-0" style={{ boxShadow: 'var(--shadow-card)' }}>
+                <CardContent className="pt-6">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm text-muted-foreground mb-1">Seneste Bruger</p>
+                      <p className="text-sm font-medium text-card-foreground">
+                        {users.length > 0 
+                          ? new Date(users[0].created_at).toLocaleDateString('da-DK', {
+                              day: 'numeric',
+                              month: 'short',
+                              year: 'numeric'
+                            })
+                          : 'Ingen brugere'}
+                      </p>
+                      {users.length > 0 && (
+                        <p className="text-xs text-muted-foreground mt-1">{users[0].email}</p>
+                      )}
+                    </div>
+                    <div className="w-12 h-12 rounded-full bg-accent/50 flex items-center justify-center">
+                      <Clock className="w-6 h-6 text-primary" />
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
             </div>
 
             {/* Add Role Section */}
