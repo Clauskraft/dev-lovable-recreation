@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Upload, FileText, Folder, Search, Download, Trash2, Shield, UserPlus, Users, UserCheck, Clock } from "lucide-react";
+import { Upload, FileText, Folder, Search, Download, Trash2, Shield, UserPlus, Users, UserCheck, Clock, MessageSquare } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
@@ -11,6 +11,8 @@ import Navigation from "@/components/Navigation";
 import SystemPromptEditor from "@/components/SystemPromptEditor";
 import ContextFileUpload from "@/components/ContextFileUpload";
 import { useIsAdmin } from "@/hooks/useIsAdmin";
+import AIChat from "@/components/AIChat";
+import ChatHistory from "@/components/ChatHistory";
 import {
   Select,
   SelectContent,
@@ -54,6 +56,11 @@ const Launched = () => {
   const [isLoadingUsers, setIsLoadingUsers] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState<string>("");
   const [selectedRole, setSelectedRole] = useState<string>("");
+  
+  // Chat history state
+  const [currentConversationId, setCurrentConversationId] = useState<string | null>(null);
+  const [conversationMessages, setConversationMessages] = useState<any[]>([]);
+  const [showChatHistory, setShowChatHistory] = useState(false);
 
   const categories = [
     { name: "Alle produkter", count: products.length },
@@ -237,6 +244,45 @@ const Launched = () => {
       console.error("Error removing role:", error);
       sonnerToast.error("Kunne ikke fjerne rolle");
     }
+  };
+
+  const loadConversationMessages = async (conversationId: string) => {
+    try {
+      const { data, error } = await supabase
+        .from('chat_messages')
+        .select('*')
+        .eq('conversation_id', conversationId)
+        .order('created_at', { ascending: true });
+
+      if (error) throw error;
+      
+      const messages = (data || []).map(msg => ({
+        role: msg.role as "user" | "assistant",
+        content: msg.content
+      }));
+      
+      setConversationMessages(messages);
+    } catch (error) {
+      console.error('Error loading messages:', error);
+    }
+  };
+
+  const handleSelectConversation = async (conversationId: string | null) => {
+    setCurrentConversationId(conversationId);
+    if (conversationId) {
+      await loadConversationMessages(conversationId);
+    } else {
+      setConversationMessages([]);
+    }
+  };
+
+  const handleNewConversation = () => {
+    setCurrentConversationId(null);
+    setConversationMessages([]);
+  };
+
+  const handleConversationCreated = (conversationId: string) => {
+    setCurrentConversationId(conversationId);
   };
 
   const getUserRoles = (userId: string) => {
@@ -459,6 +505,59 @@ const Launched = () => {
                     );
                   })}
                 </div>
+              </CardContent>
+            </Card>
+
+            {/* Chat History Section */}
+            <Card className="bg-card border-0 mt-6" style={{ boxShadow: 'var(--shadow-card)' }}>
+              <CardHeader>
+                <CardTitle className="text-card-foreground flex items-center gap-2">
+                  <MessageSquare className="w-5 h-5" />
+                  Chat Historik
+                </CardTitle>
+                <CardDescription className="text-muted-foreground">
+                  Se og administrer alle brugersamtaler med AI'en
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Button
+                  onClick={() => setShowChatHistory(!showChatHistory)}
+                  variant="outline"
+                  className="mb-4"
+                >
+                  {showChatHistory ? 'Skjul Chat Historik' : 'Vis Chat Historik'}
+                </Button>
+
+                {showChatHistory && (
+                  <div className="grid lg:grid-cols-3 gap-6 mt-4">
+                    {/* Chat History Sidebar */}
+                    <div className="lg:col-span-1">
+                      <ChatHistory
+                        currentConversationId={currentConversationId}
+                        onSelectConversation={handleSelectConversation}
+                        onNewConversation={handleNewConversation}
+                      />
+                    </div>
+
+                    {/* Chat Display */}
+                    <div className="lg:col-span-2">
+                      {currentConversationId ? (
+                        <div className="bg-background rounded-lg p-4">
+                          <AIChat
+                            conversationId={currentConversationId}
+                            onConversationCreated={handleConversationCreated}
+                            initialMessages={conversationMessages}
+                            enableHistory={true}
+                          />
+                        </div>
+                      ) : (
+                        <div className="bg-muted/50 rounded-lg p-8 text-center text-muted-foreground">
+                          Vælg en samtale for at se beskeder
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
               </CardContent>
             </Card>
           </div>

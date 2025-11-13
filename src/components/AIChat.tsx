@@ -12,6 +12,7 @@ type AIChatProps = {
   conversationId: string | null;
   onConversationCreated?: (conversationId: string) => void;
   initialMessages?: Message[];
+  enableHistory?: boolean;
 };
 
 const MODELS = [
@@ -25,7 +26,7 @@ const MODELS = [
   { id: "openchat/openchat-7b", name: "OpenChat 7B" },
 ];
 
-const AIChat = ({ conversationId, onConversationCreated, initialMessages = [] }: AIChatProps) => {
+const AIChat = ({ conversationId, onConversationCreated, initialMessages = [], enableHistory = false }: AIChatProps) => {
   const [messages, setMessages] = useState<Message[]>(initialMessages);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -59,7 +60,7 @@ const AIChat = ({ conversationId, onConversationCreated, initialMessages = [] }:
     }
   }, [messages.length, isLoading]);
 
-  const streamChat = async (userMessage: Message, convId: string) => {
+  const streamChat = async (userMessage: Message, convId: string | null) => {
     const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/ai-chat`;
     
     try {
@@ -151,8 +152,8 @@ const AIChat = ({ conversationId, onConversationCreated, initialMessages = [] }:
         }
       }
 
-      // Save assistant message to database after streaming is complete
-      if (assistantContent) {
+      // Save assistant message to database after streaming is complete (only if history is enabled)
+      if (assistantContent && convId) {
         await saveMessageToDb(convId, { role: "assistant", content: assistantContent });
       }
     } catch (error) {
@@ -166,6 +167,8 @@ const AIChat = ({ conversationId, onConversationCreated, initialMessages = [] }:
   };
 
   const saveMessageToDb = async (conversationId: string, message: Message) => {
+    if (!enableHistory) return;
+    
     try {
       const { error } = await supabase
         .from('chat_messages')
@@ -181,7 +184,9 @@ const AIChat = ({ conversationId, onConversationCreated, initialMessages = [] }:
     }
   };
 
-  const createOrGetConversation = async (firstMessage: string): Promise<string> => {
+  const createOrGetConversation = async (firstMessage: string): Promise<string | null> => {
+    if (!enableHistory) return null;
+    
     // If we already have a conversation ID, use it
     if (currentConversationId) return currentConversationId;
 
@@ -210,7 +215,7 @@ const AIChat = ({ conversationId, onConversationCreated, initialMessages = [] }:
       return newConversationId;
     } catch (error) {
       console.error('Error creating conversation:', error);
-      throw error;
+      return null;
     }
   };
 
@@ -223,11 +228,13 @@ const AIChat = ({ conversationId, onConversationCreated, initialMessages = [] }:
     setIsLoading(true);
 
     try {
-      // Create or get conversation
+      // Create or get conversation (only if history is enabled)
       const convId = await createOrGetConversation(userMessage.content);
       
-      // Save user message to database
-      await saveMessageToDb(convId, userMessage);
+      // Save user message to database (only if history is enabled)
+      if (convId) {
+        await saveMessageToDb(convId, userMessage);
+      }
 
       // Stream AI response
       await streamChat(userMessage, convId);
