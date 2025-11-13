@@ -60,12 +60,12 @@ const AIChat = ({ conversationId, onConversationCreated, initialMessages = [], e
     }
   }, [messages.length, isLoading]);
 
-  const streamChat = async (userMessage: Message, convId: string | null) => {
+  const streamChat = async (userMessage: Message, convId: string | null, currentMessages: Message[]) => {
     const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/ai-chat`;
     
     try {
       // No authentication required for testing
-      console.log('Sending chat request...');
+      console.log('Sending chat request with messages:', currentMessages.length);
 
       const resp = await fetch(CHAT_URL, {
         method: "POST",
@@ -73,7 +73,7 @@ const AIChat = ({ conversationId, onConversationCreated, initialMessages = [], e
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ 
-          messages: [...messages, userMessage],
+          messages: currentMessages,
           model: selectedModel 
         }),
       });
@@ -216,8 +216,10 @@ const AIChat = ({ conversationId, onConversationCreated, initialMessages = [], e
     if (!input.trim() || isLoading) return;
 
     const userMessage: Message = { role: "user", content: input.trim() };
+    const updatedMessages = [...messages, userMessage];
+    
     console.log('Adding user message:', userMessage);
-    setMessages(prev => [...prev, userMessage]);
+    setMessages(updatedMessages);
     setInput("");
     setIsLoading(true);
 
@@ -230,8 +232,8 @@ const AIChat = ({ conversationId, onConversationCreated, initialMessages = [], e
         await saveMessageToDb(convId, userMessage);
       }
 
-      // Stream AI response
-      await streamChat(userMessage, convId);
+      // Stream AI response with updated messages
+      await streamChat(userMessage, convId, updatedMessages);
     } catch (error) {
       console.error('Error in handleSend:', error);
     } finally {
