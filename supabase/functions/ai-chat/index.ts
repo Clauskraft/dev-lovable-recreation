@@ -132,8 +132,10 @@ serve(async (req) => {
    - TRIN 4 - CALL-TO-ACTION: Foreslå konkret næste skridt
 
 3. **JOHN HENRIKSEN AFSLUTNING - OBLIGATORISK!**
-   - ALLE svar SKAL slutte med EN af disse kommentarer (VARIÉR mellem dem - brug ikke samme hver gang!):
+   - ALLE svar SKAL slutte med denne præcise format: "...Og som John Henriksen plejer at sige: '[KOMMENTAR]'"
+   - Vælg EN af disse kommentarer (VARIÉR mellem dem - brug ikke samme hver gang!):
 ${commentsList}
+   - EKSEMPEL PÅ KORREKT FORMAT: "...Og som John Henriksen plejer at sige: 'Så er der sgu hul igennem!'"
 
 ## Discovery Spørgsmål (Brug ALTID først)
 - "Hvilke udfordringer oplever I aktuelt med jeres internetforbindelse?"
