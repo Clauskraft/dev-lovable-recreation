@@ -138,9 +138,16 @@ const AIChat = ({ conversationId, onConversationCreated, initialMessages = [], e
       // After streaming is complete, add the final message to messages array
       if (assistantContent) {
         console.log('Stream complete. Total length:', assistantContent.length);
-        setMessages(prev => [...prev, { role: "assistant", content: assistantContent }]);
+        console.log('Adding to messages array...');
+        const newMessage: Message = { role: "assistant", content: assistantContent };
+        setMessages(prev => {
+          const newMessages = [...prev, newMessage];
+          console.log('Messages array now has', newMessages.length, 'messages');
+          return newMessages;
+        });
       }
       setStreamingMessage("");
+      console.log('Cleared streamingMessage');
     } catch (error) {
       console.error("Stream error:", error);
       toast({
@@ -234,6 +241,11 @@ const AIChat = ({ conversationId, onConversationCreated, initialMessages = [], e
 
   return (
     <div className="w-full max-w-3xl mx-auto flex flex-col h-full">
+      {/* Debug info */}
+      <div className="text-white text-xs mb-2">
+        Messages: {messages.length}, Streaming: {streamingMessage.length} chars
+      </div>
+      
       {/* Messages Area */}
       {messages.length > 0 && (
         <div className="glass-effect rounded-2xl mb-4 flex flex-col overflow-hidden" style={{ height: '500px' }}>
