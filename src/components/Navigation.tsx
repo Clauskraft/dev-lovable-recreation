@@ -15,15 +15,13 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { Search, Menu, ChevronRight, Shield } from "lucide-react";
+import { Search, Menu, ChevronRight } from "lucide-react";
 import { useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
-import { useIsAdmin } from "@/hooks/useIsAdmin";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { user, signOut } = useAuth();
-  const { isAdmin } = useIsAdmin();
 
   return (
     <nav className="w-full px-6 py-3 bg-[hsl(230,45%,12%)] border-b border-white/10">
@@ -98,17 +96,6 @@ const Navigation = () => {
                 </NavigationMenuLink>
               </Link>
             </NavigationMenuItem>
-
-            {isAdmin && (
-              <NavigationMenuItem>
-                <Link to="/admin">
-                  <NavigationMenuLink className="inline-flex h-10 w-max items-center justify-center rounded-md px-4 py-2 text-sm font-medium text-[hsl(210,100%,60%)] hover:text-[hsl(210,100%,70%)] hover:bg-white/10 transition-colors">
-                    <Shield className="h-4 w-4 mr-1" />
-                    Admin
-                  </NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
-            )}
           </NavigationMenuList>
         </NavigationMenu>
         
@@ -219,19 +206,6 @@ const Navigation = () => {
                     <span className="font-medium">Inside</span>
                     <ChevronRight className="h-4 w-4" />
                   </Link>
-                  {isAdmin && (
-                    <Link 
-                      to="/admin" 
-                      onClick={() => setIsOpen(false)}
-                      className="flex items-center justify-between p-3 rounded-lg text-[hsl(210,100%,60%)] hover:text-[hsl(210,100%,70%)] hover:bg-white/10 transition-colors"
-                    >
-                      <div className="flex items-center gap-2">
-                        <Shield className="h-4 w-4" />
-                        <span className="font-medium">Admin</span>
-                      </div>
-                      <ChevronRight className="h-4 w-4" />
-                    </Link>
-                  )}
                 </div>
 
                 <div className="border-t border-white/10 pt-4 space-y-2">

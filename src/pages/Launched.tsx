@@ -1,20 +1,59 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Upload, FileText, Folder, Search, Download, Trash2 } from "lucide-react";
+import { Upload, FileText, Folder, Search, Download, Trash2, Shield, UserPlus } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { toast as sonnerToast } from "sonner";
 import Navigation from "@/components/Navigation";
 import SystemPromptEditor from "@/components/SystemPromptEditor";
 import ContextFileUpload from "@/components/ContextFileUpload";
+import { useIsAdmin } from "@/hooks/useIsAdmin";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+
+interface User {
+  id: string;
+  email: string;
+  created_at: string;
+}
+
+interface UserRole {
+  user_id: string;
+  role: string;
+}
 
 const Launched = () => {
   const { toast } = useToast();
+  const { isAdmin } = useIsAdmin();
   const [searchQuery, setSearchQuery] = useState("");
   const [products, setProducts] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  
+  // Admin state
+  const [users, setUsers] = useState<User[]>([]);
+  const [userRoles, setUserRoles] = useState<UserRole[]>([]);
+  const [isLoadingUsers, setIsLoadingUsers] = useState(false);
+  const [selectedUserId, setSelectedUserId] = useState<string>("");
+  const [selectedRole, setSelectedRole] = useState<string>("");
 
   const categories = [
     { name: "Alle produkter", count: products.length },
@@ -38,6 +77,12 @@ const Launched = () => {
       window.removeEventListener('context-files-updated', handleFileUpdate);
     };
   }, []);
+
+  useEffect(() => {
+    if (isAdmin) {
+      fetchUsersAndRoles();
+    }
+  }, [isAdmin]);
 
   const fetchContextFiles = async () => {
     try {
@@ -117,6 +162,87 @@ const Launched = () => {
     }
   };
 
+  const fetchUsersAndRoles = async () => {
+    try {
+      setIsLoadingUsers(true);
+
+      // Fetch all users via edge function
+      const { data: usersResponse, error: usersError } = await supabase.functions.invoke('list-users');
+      
+      if (usersError) throw usersError;
+
+      // Fetch all user roles
+      const { data: rolesData, error: rolesError } = await supabase
+        .from("user_roles")
+        .select("*");
+
+      if (rolesError) throw rolesError;
+
+      setUsers(usersResponse.users || []);
+      setUserRoles(rolesData || []);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      sonnerToast.error("Kunne ikke hente brugerdata");
+    } finally {
+      setIsLoadingUsers(false);
+    }
+  };
+
+  const handleAddRole = async () => {
+    if (!selectedUserId || !selectedRole) {
+      sonnerToast.error("Vælg både bruger og rolle");
+      return;
+    }
+
+    try {
+      const { error } = await supabase
+        .from("user_roles")
+        .insert([{ 
+          user_id: selectedUserId, 
+          role: selectedRole as 'admin' | 'user'
+        }]);
+
+      if (error) {
+        if (error.code === "23505") {
+          sonnerToast.error("Brugeren har allerede denne rolle");
+        } else {
+          throw error;
+        }
+        return;
+      }
+
+      sonnerToast.success("Rolle tilføjet");
+      fetchUsersAndRoles();
+      setSelectedUserId("");
+      setSelectedRole("");
+    } catch (error) {
+      console.error("Error adding role:", error);
+      sonnerToast.error("Kunne ikke tilføje rolle");
+    }
+  };
+
+  const handleRemoveRole = async (userId: string, role: 'admin' | 'user') => {
+    try {
+      const { error } = await supabase
+        .from("user_roles")
+        .delete()
+        .eq("user_id", userId)
+        .eq("role", role);
+
+      if (error) throw error;
+
+      sonnerToast.success("Rolle fjernet");
+      fetchUsersAndRoles();
+    } catch (error) {
+      console.error("Error removing role:", error);
+      sonnerToast.error("Kunne ikke fjerne rolle");
+    }
+  };
+
+  const getUserRoles = (userId: string) => {
+    return userRoles.filter(ur => ur.user_id === userId);
+  };
+
   const filteredProducts = products.filter(product =>
     product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
     product.description.toLowerCase().includes(searchQuery.toLowerCase())
@@ -141,6 +267,144 @@ const Launched = () => {
 
         {/* Context File Upload */}
         <ContextFileUpload />
+
+        {/* Admin Section - Only visible for admins */}
+        {isAdmin && (
+          <div className="mb-8">
+            <div className="flex items-center gap-3 mb-6">
+              <Shield className="w-6 h-6 text-[hsl(210,100%,60%)]" />
+              <h2 className="text-3xl font-bold text-primary-foreground">Admin Panel</h2>
+            </div>
+
+            {/* Add Role Section */}
+            <Card className="bg-card border-0 mb-6" style={{ boxShadow: 'var(--shadow-card)' }}>
+              <CardHeader>
+                <CardTitle className="text-card-foreground flex items-center gap-2">
+                  <UserPlus className="w-5 h-5" />
+                  Tildel Rolle
+                </CardTitle>
+                <CardDescription className="text-muted-foreground">
+                  Vælg en bruger og tildel en rolle
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <Select value={selectedUserId} onValueChange={setSelectedUserId}>
+                    <SelectTrigger className="bg-background border-input text-foreground">
+                      <SelectValue placeholder="Vælg bruger" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {users.map((user) => (
+                        <SelectItem key={user.id} value={user.id}>
+                          {user.email}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+
+                  <Select value={selectedRole} onValueChange={setSelectedRole}>
+                    <SelectTrigger className="bg-background border-input text-foreground">
+                      <SelectValue placeholder="Vælg rolle" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="admin">Admin</SelectItem>
+                      <SelectItem value="user">User</SelectItem>
+                    </SelectContent>
+                  </Select>
+
+                  <Button 
+                    onClick={handleAddRole}
+                    className="bg-primary hover:bg-primary/90 text-primary-foreground"
+                  >
+                    Tilføj Rolle
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Users List */}
+            <Card className="bg-card border-0" style={{ boxShadow: 'var(--shadow-card)' }}>
+              <CardHeader>
+                <CardTitle className="text-card-foreground">Alle Brugere</CardTitle>
+                <CardDescription className="text-muted-foreground">
+                  Administrer brugerroller
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {users.map((user) => {
+                    const roles = getUserRoles(user.id);
+                    return (
+                      <div
+                        key={user.id}
+                        className="flex items-center justify-between p-4 bg-accent/50 rounded-lg border border-border"
+                      >
+                        <div className="flex-1">
+                          <div className="font-medium text-card-foreground">{user.email}</div>
+                          <div className="text-sm text-muted-foreground">
+                            Oprettet: {new Date(user.created_at).toLocaleDateString('da-DK')}
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          {roles.length === 0 ? (
+                            <Badge variant="outline" className="bg-background/50 text-muted-foreground border-border">
+                              Ingen roller
+                            </Badge>
+                          ) : (
+                            roles.map((roleData) => (
+                              <div key={`${user.id}-${roleData.role}`} className="flex items-center gap-1">
+                                <Badge 
+                                  variant={roleData.role === 'admin' ? 'default' : 'secondary'}
+                                  className={roleData.role === 'admin' 
+                                    ? 'bg-primary text-primary-foreground' 
+                                    : 'bg-secondary text-secondary-foreground'}
+                                >
+                                  {roleData.role}
+                                </Badge>
+                                <AlertDialog>
+                                  <AlertDialogTrigger asChild>
+                                    <Button
+                                      variant="ghost"
+                                      size="icon"
+                                      className="h-6 w-6 text-destructive hover:text-destructive hover:bg-destructive/10"
+                                    >
+                                      <Trash2 className="h-3 w-3" />
+                                    </Button>
+                                  </AlertDialogTrigger>
+                                  <AlertDialogContent className="bg-card border-border">
+                                    <AlertDialogHeader>
+                                      <AlertDialogTitle className="text-card-foreground">
+                                        Fjern rolle?
+                                      </AlertDialogTitle>
+                                      <AlertDialogDescription className="text-muted-foreground">
+                                        Er du sikker på at du vil fjerne rollen "{roleData.role}" fra {user.email}?
+                                      </AlertDialogDescription>
+                                    </AlertDialogHeader>
+                                    <AlertDialogFooter>
+                                      <AlertDialogCancel className="bg-background text-foreground border-border hover:bg-accent">
+                                        Annuller
+                                      </AlertDialogCancel>
+                                      <AlertDialogAction
+                                        onClick={() => handleRemoveRole(user.id, roleData.role as 'admin' | 'user')}
+                                        className="bg-destructive hover:bg-destructive/90 text-destructive-foreground"
+                                      >
+                                        Fjern
+                                      </AlertDialogAction>
+                                    </AlertDialogFooter>
+                                  </AlertDialogContent>
+                                </AlertDialog>
+                              </div>
+                            ))
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        )}
 
         <div className="grid lg:grid-cols-4 gap-8">
           {/* Sidebar - Categories */}
