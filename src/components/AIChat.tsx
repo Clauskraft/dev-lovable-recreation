@@ -64,22 +64,43 @@ const AIChat = ({ conversationId, onConversationCreated, initialMessages = [], e
     const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/ai-chat`;
     
     try {
-      // Get user's session token
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) {
+      // Get user's session and refresh if needed
+      const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+      
+      if (sessionError || !session) {
+        console.log('Session error:', sessionError);
         toast({
           title: "Ikke godkendt",
-          description: "Du skal være logget ind for at bruge AI chatten.",
+          description: "Din session er udløbet. Log venligst ind igen.",
           variant: "destructive",
         });
-        throw new Error("No session");
+        // Redirect to auth page
+        window.location.href = '/auth';
+        throw new Error("No valid session");
       }
+      
+      // Refresh session to ensure we have a valid token
+      const { data: { session: refreshedSession }, error: refreshError } = await supabase.auth.refreshSession();
+      
+      if (refreshError || !refreshedSession) {
+        console.log('Session refresh error:', refreshError);
+        toast({
+          title: "Session udløbet",
+          description: "Din session kunne ikke fornyes. Log venligst ind igen.",
+          variant: "destructive",
+        });
+        // Redirect to auth page
+        window.location.href = '/auth';
+        throw new Error("Session refresh failed");
+      }
+      
+      const validSession = refreshedSession;
 
       const resp = await fetch(CHAT_URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${session.access_token}`,
+          Authorization: `Bearer ${validSession.access_token}`,
         },
         body: JSON.stringify({ 
           messages: [...messages, userMessage],
