@@ -17,9 +17,11 @@ import {
 } from "@/components/ui/sheet";
 import { Search, Menu, ChevronRight } from "lucide-react";
 import { useState } from "react";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { user, signOut } = useAuth();
 
   return (
     <nav className="w-full px-6 py-3 bg-[hsl(230,45%,12%)] border-b border-white/10">
@@ -108,9 +110,21 @@ const Navigation = () => {
           <Button variant="ghost" className="hidden lg:inline-flex text-white/90 hover:text-white hover:bg-white/10 border-0">
             Kontakt os
           </Button>
-          <Button variant="outline" className="hidden md:inline-flex bg-transparent text-white border-white/20 hover:bg-white/10">
-            Log ind
-          </Button>
+          {user ? (
+            <Button 
+              onClick={signOut}
+              variant="outline" 
+              className="hidden md:inline-flex bg-transparent text-white border-white/20 hover:bg-white/10"
+            >
+              Log ud
+            </Button>
+          ) : (
+            <Link to="/auth">
+              <Button variant="outline" className="hidden md:inline-flex bg-transparent text-white border-white/20 hover:bg-white/10">
+                Log ind
+              </Button>
+            </Link>
+          )}
 
           {/* Mobile Menu */}
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
@@ -205,9 +219,21 @@ const Navigation = () => {
                   <Button variant="ghost" className="w-full justify-start text-white/90 hover:text-white hover:bg-white/10">
                     Kontakt os
                   </Button>
-                  <Button variant="outline" className="w-full bg-transparent text-white border-white/20 hover:bg-white/10">
-                    Log ind
-                  </Button>
+                  {user ? (
+                    <Button 
+                      onClick={signOut}
+                      variant="outline" 
+                      className="w-full bg-transparent text-white border-white/20 hover:bg-white/10"
+                    >
+                      Log ud
+                    </Button>
+                  ) : (
+                    <Link to="/auth" onClick={() => setIsOpen(false)}>
+                      <Button variant="outline" className="w-full bg-transparent text-white border-white/20 hover:bg-white/10">
+                        Log ind
+                      </Button>
+                    </Link>
+                  )}
                 </div>
               </div>
             </SheetContent>
