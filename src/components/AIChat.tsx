@@ -38,7 +38,6 @@ const AIChat = ({ conversationId, onConversationCreated, initialMessages = [], e
 
   // Update messages when initialMessages changes
   useEffect(() => {
-    console.log('useEffect: initialMessages changed to:', initialMessages.length);
     if (initialMessages.length > 0) {
       setMessages(initialMessages);
     }
@@ -136,21 +135,15 @@ const AIChat = ({ conversationId, onConversationCreated, initialMessages = [], e
       }
 
       // After streaming is complete, add the final message to messages array
-      console.log('Stream complete - assistantContent:', assistantContent.substring(0, 50));
-      
       if (assistantContent) {
         const newMessage: Message = { role: "assistant", content: assistantContent };
-        console.log('Adding assistant message to array');
         
-        // First clear the streaming message
+        // Update messages array first, then clear streaming
+        setMessages(prev => [...prev, newMessage]);
+        
+        // Small delay to ensure state update happens before clearing
+        await new Promise(resolve => setTimeout(resolve, 100));
         setStreamingMessage("");
-        
-        // Then add to messages array
-        setMessages(prev => {
-          const updated = [...prev, newMessage];
-          console.log('Messages updated. New length:', updated.length);
-          return updated;
-        });
       }
     } catch (error) {
       console.error("Stream error:", error);
@@ -245,12 +238,6 @@ const AIChat = ({ conversationId, onConversationCreated, initialMessages = [], e
 
   return (
     <div className="w-full max-w-3xl mx-auto flex flex-col h-full">
-      {/* Debug */}
-      <div className="text-white text-xs bg-red-500 p-2 mb-2">
-        Messages: {messages.length} | Streaming: {streamingMessage ? 'YES' : 'NO'} ({streamingMessage.length} chars)
-        {messages.map((m, i) => <div key={i}>{i}: {m.role} - {m.content.substring(0, 30)}...</div>)}
-      </div>
-      
       {/* Messages Area */}
       {(messages.length > 0 || streamingMessage) && (
         <div className="glass-effect rounded-2xl mb-4 flex flex-col overflow-hidden" style={{ height: '500px' }}>
@@ -265,17 +252,17 @@ const AIChat = ({ conversationId, onConversationCreated, initialMessages = [], e
                     className={`rounded-2xl px-5 py-3 shadow-md ${
                       msg.role === "user"
                         ? "bg-primary text-primary-foreground max-w-[75%]"
-                        : "bg-white text-gray-900 max-w-[85%]"
+                        : "bg-white text-gray-900 max-w-full"
                     }`}
                   >
-                    <p className="whitespace-pre-wrap text-sm leading-relaxed">{msg.content}</p>
+                    <p className="whitespace-pre-wrap text-sm leading-relaxed text-left">{msg.content}</p>
                   </div>
                 </div>
               ))}
               {streamingMessage && (
                 <div className="flex justify-start">
-                  <div className="rounded-2xl px-5 py-3 shadow-md bg-white text-gray-900 max-w-[85%]">
-                    <p className="whitespace-pre-wrap text-sm leading-relaxed">{streamingMessage}</p>
+                  <div className="rounded-2xl px-5 py-3 shadow-md bg-white text-gray-900 max-w-full">
+                    <p className="whitespace-pre-wrap text-sm leading-relaxed text-left">{streamingMessage}</p>
                   </div>
                 </div>
               )}
