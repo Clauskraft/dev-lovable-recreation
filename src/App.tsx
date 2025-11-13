@@ -13,6 +13,7 @@ import Learn from "./pages/Learn";
 import Launched from "./pages/Launched";
 import AIMobile from "./pages/AIMobile";
 import ReferatService from "./pages/ReferatService";
+import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -79,6 +80,14 @@ const App = () => (
               element={
                 <ProtectedRoute>
                   <ReferatService />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin"
+              element={
+                <ProtectedRoute>
+                  <Admin />
                 </ProtectedRoute>
               }
             />
