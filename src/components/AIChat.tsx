@@ -38,7 +38,10 @@ const AIChat = ({ conversationId, onConversationCreated, initialMessages = [], e
 
   // Update messages when initialMessages changes
   useEffect(() => {
-    setMessages(initialMessages);
+    console.log('useEffect: initialMessages changed to:', initialMessages.length);
+    if (initialMessages.length > 0) {
+      setMessages(initialMessages);
+    }
   }, [initialMessages]);
 
   // Update conversation ID when prop changes
@@ -133,20 +136,21 @@ const AIChat = ({ conversationId, onConversationCreated, initialMessages = [], e
       }
 
       // After streaming is complete, add the final message to messages array
+      console.log('Stream complete - assistantContent:', assistantContent.substring(0, 50));
+      
       if (assistantContent) {
         const newMessage: Message = { role: "assistant", content: assistantContent };
+        console.log('Adding assistant message to array');
         
-        setMessages(prev => {
-          const newMessages = [...prev, newMessage];
-          return newMessages;
-        });
-        
-        // Clear streaming message AFTER setting messages
-        setTimeout(() => {
-          setStreamingMessage("");
-        }, 50);
-      } else {
+        // First clear the streaming message
         setStreamingMessage("");
+        
+        // Then add to messages array
+        setMessages(prev => {
+          const updated = [...prev, newMessage];
+          console.log('Messages updated. New length:', updated.length);
+          return updated;
+        });
       }
     } catch (error) {
       console.error("Stream error:", error);
@@ -241,6 +245,12 @@ const AIChat = ({ conversationId, onConversationCreated, initialMessages = [], e
 
   return (
     <div className="w-full max-w-3xl mx-auto flex flex-col h-full">
+      {/* Debug */}
+      <div className="text-white text-xs bg-red-500 p-2 mb-2">
+        Messages: {messages.length} | Streaming: {streamingMessage ? 'YES' : 'NO'} ({streamingMessage.length} chars)
+        {messages.map((m, i) => <div key={i}>{i}: {m.role} - {m.content.substring(0, 30)}...</div>)}
+      </div>
+      
       {/* Messages Area */}
       {(messages.length > 0 || streamingMessage) && (
         <div className="glass-effect rounded-2xl mb-4 flex flex-col overflow-hidden" style={{ height: '500px' }}>
