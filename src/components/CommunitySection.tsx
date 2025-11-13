@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { Globe, Shield, FileText, Layers } from "lucide-react";
+import { Globe, Shield, FileText, Layers, Palette } from "lucide-react";
+import { useEffect, useRef } from "react";
 
 const categories = [
   "Popular", "Offentlig Sektor", "Defense", "Health", 
@@ -37,11 +38,13 @@ const projects = [
   },
   {
     id: 4,
-    title: "creative-portfolio",
-    category: "B2B & B2C App",
+    title: "Creative Portfolio",
+    category: "Offentlig Sektor",
     remixes: "3247",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=300&fit=crop",
-    icon: Layers
+    video: "/creative-portfolio-animation.mp4",
+    icon: Palette,
+    link: "#creative-portfolio",
+    description: "Et sikkert og compliant univers for grafisk arbejde. Arbejd med avancerede AI-drevne designværktøjer, der overholder GDPR og NIS2. Skab visuelt indhold med indbygget compliance, datasikkerhed og fuld kontrol over dine kreative processer. Perfekt til organisationer der kræver både kreativitet og regulatorisk overholdelse."
   }
 ];
 
@@ -73,17 +76,53 @@ const CommunitySection = () => {
         {/* Project Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {projects.map((project) => {
+            const VideoPlayer = ({ videoSrc }: { videoSrc: string }) => {
+              const videoRef = useRef<HTMLVideoElement>(null);
+              const hasPlayedAudio = useRef(false);
+
+              useEffect(() => {
+                const video = videoRef.current;
+                if (!video) return;
+
+                const handleEnded = () => {
+                  if (!hasPlayedAudio.current) {
+                    hasPlayedAudio.current = true;
+                  }
+                  video.muted = true;
+                  video.play();
+                };
+
+                video.addEventListener('ended', handleEnded);
+                return () => video.removeEventListener('ended', handleEnded);
+              }, []);
+
+              return (
+                <video
+                  ref={videoRef}
+                  src={videoSrc}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  autoPlay
+                  playsInline
+                  muted={false}
+                />
+              );
+            };
+
             const Card = (
               <div
                 className="group bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300 cursor-pointer"
               >
-                {/* Project Image */}
+                {/* Project Image or Video */}
                 <div className="aspect-video overflow-hidden bg-gray-100">
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
+                  {project.video ? (
+                    <VideoPlayer videoSrc={project.video} />
+                  ) : (
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                  )}
                 </div>
                 
                 {/* Project Info */}
@@ -98,6 +137,12 @@ const CommunitySection = () => {
                   <div className="flex items-center justify-between text-sm text-gray-600">
                     <span className="bg-gray-100 px-2 py-1 rounded-md">{project.category}</span>
                   </div>
+                  
+                  {project.description && (
+                    <p className="mt-2 text-xs text-gray-600 line-clamp-2">
+                      {project.description}
+                    </p>
+                  )}
                 </div>
               </div>
             );
