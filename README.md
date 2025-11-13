@@ -51,7 +51,18 @@ This project is built with:
 
 ## Deployment
 
-This application is configured for deployment on Railway. See deployment documentation for specific instructions.
+### Automated Deployment via GitHub Actions
+
+This repository includes a GitHub Actions workflow (`.github/workflows/railway-deploy.yml`) that automatically deploys to Railway on push to main or feature branches.
+
+**Setup**:
+1. Add `RAILWAY_TOKEN` to GitHub repository secrets
+2. Push to configured branches to trigger deployment
+3. Monitor deployment in GitHub Actions tab
+
+### Manual Deployment
+
+This application is configured for deployment on Railway. See `DEPLOYMENT.md` for detailed instructions on manual deployment options.
 
 ## Architecture
 

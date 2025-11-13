@@ -24,7 +24,39 @@ SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
 
 ## Deployment Steps
 
-### Option 1: Automatic Deployment (Recommended)
+### Option 1: GitHub Actions (Recommended) ✨
+
+**Automatic deployment via GitHub Actions workflow:**
+
+1. **Setup Railway Token**:
+   - Go to Railway dashboard → Account Settings → Tokens
+   - Generate a new token
+   - Add it to GitHub repository secrets as `RAILWAY_TOKEN`
+
+2. **Configure in GitHub**:
+   - Go to repository Settings → Secrets and variables → Actions
+   - Click "New repository secret"
+   - Name: `RAILWAY_TOKEN`
+   - Value: Your Railway token
+
+3. **Connect Railway Project**:
+   - Create a new project in Railway dashboard
+   - Link to your GitHub repository
+   - Railway will detect `railway.json` and `nixpacks.toml`
+
+4. **Deploy**:
+   - Push to `main` or `copilot/remove-loveable-credits` branch
+   - GitHub Actions will automatically build and deploy
+   - Monitor deployment in Actions tab
+
+**Workflow file**: `.github/workflows/railway-deploy.yml`
+
+The workflow runs on:
+- Push to main or copilot/remove-loveable-credits branches
+- Pull requests to main
+- Manual trigger via workflow_dispatch
+
+### Option 2: Railway Dashboard (Manual)
 
 1. Connect your GitHub repository to Railway
 2. Select this repository and branch
@@ -36,7 +68,7 @@ SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
 4. Add environment variables in Railway dashboard
 5. Deploy!
 
-### Option 2: Railway CLI
+### Option 3: Railway CLI
 
 ```bash
 # Install Railway CLI
