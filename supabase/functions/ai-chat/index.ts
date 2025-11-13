@@ -52,7 +52,6 @@ Du praktiserer værdibaseret salgsteknik med fokus på at forstå kundens faktis
 - Først når problemet er fuldt forstået, præsenter relevante TDC løsninger
 - Link hver løsning DIREKTE til kundens specifikke problem
 - Fokuser på værdi og ROI, ikke features
-- Brug produktinformation fra kontekstfiler når tilgængelig
 - ALDRIG nævn priser før problemet er kvalificeret
 
 ### 4. CALL-TO-ACTION (Næste skridt)
@@ -72,8 +71,8 @@ TDC's kerneboodskap er: "Suveræn AI-kraft. Med fuld kontrol og indbygget compli
 - Undgå teknisk jargon med mindre kunden bruger det først
 - Strukturerede, scannable svar med afsnit og punkter
 
-## "John Henriksen" Afrundinger
-ALTID EFTER at du har præsenteret en løsning, afslut med en uformel dansk kommentar. Vælg tilfældigt mellem disse:
+## "John Henriksen" Afrundinger - KRITISK VIGTIGT!
+HVER GANG du har præsenteret en løsning eller givet et svar, SKAL du afslutte med en af disse uformelle danske kommentarer:
 - "Så er der sgu hul igennem!"
 - "Det var da lige sagen!"
 - "Boom - problemet er løst!"
@@ -84,58 +83,20 @@ ALTID EFTER at du har præsenteret en løsning, afslut med en uformel dansk komm
 - "Bingo - vi er i mål!"
 - "Spot on - det var lige hvad I havde brug for!"
 - "Jackpot - den løsning sidder lige i skabet!"
-- "Der kom den! Præcis som I skulle bruge det!"
-- "Yes! Nu er den hjemme!"
-- "Dét var fandeme godt klaret!"
-- "Lige i øjet! Det passer perfekt til jeres behov!"
-- "Ka-ching! Nu får I styr på det!"
-- "Voilà - færdig! Nu kan I komme i gang!"
-- "Tjek! Det løser vi lige for jer!"
-- "Nice! Det kommer til at fungere perfekt!"
-- "Præcis! Sådan gør vi det!"
-- "Der sad den! Nu er I godt kørende!"
-Brug ALTID når du præsenterer en løsning, og vælg en kommentar der passer til situationen.
+
+DET ER OBLIGATORISK at bruge en af disse efter HVERT svar!
 
 ## Vigtigt
 - Giv ALDRIG teknisk support - du er sælger, ikke support
 - Sælg løsninger på problemer, ikke produkter
-- Vær nysgerrig og stil kvalificerende spørgsmål
-- Hvis du ikke har nok information til at svare præcist, stil opklarende spørgsmål
-
-## Tilgængelige Produktområder
-- TDC AI Mobile: AI-enheder til alle medarbejdere
-- Referatservice: Speech-to-text transskription (GDPR/NIS2 compliant)
-- AI-drevne erhvervsløsninger
-- Cybersikkerhed og compliance
-- Digital infrastruktur
-
-Brug altid kontekstfiler når de er tilgængelige for præcise produktdetaljer.`;
+- Vær nysgerrig og stil kvalificerende spørgsmål`;
 
     const systemPrompt = settingsData?.system_prompt || defaultSystemPrompt;
 
-    // Fetch all context files
-    const { data: contextFiles } = await supabase
-      .from('context_files')
-      .select('file_name, content')
-      .order('created_at', { ascending: false });
-
-    // Build context string from files
-    let contextString = '';
-    if (contextFiles && contextFiles.length > 0) {
-      contextString = '\n\nTilgængelig produktinformation:\n\n';
-      contextFiles.forEach((file: any) => {
-        if (file.content) {
-          contextString += `--- ${file.file_name} ---\n${file.content}\n\n`;
-        }
-      });
-    }
-
-    // Combine system prompt with context
-    const enhancedSystemPrompt = systemPrompt + contextString;
-
+    // TEMPORARILY DISABLE context files to test if prompt is followed
     console.log('Using model:', model);
-    console.log('System prompt length:', enhancedSystemPrompt.length);
-    console.log('Context files count:', contextFiles?.length || 0);
+    console.log('System prompt length:', systemPrompt.length);
+    console.log('Context files: DISABLED for testing');
 
     const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
       method: "POST",
@@ -145,10 +106,10 @@ Brug altid kontekstfiler når de er tilgængelige for præcise produktdetaljer.`
         "HTTP-Referer": "https://tdc-dkai.lovable.app",
         "X-Title": "TDC DKAI",
       },
-        body: JSON.stringify({
-          model: model || "mistralai/mixtral-8x7b-instruct",
-          messages: [
-          { role: "system", content: enhancedSystemPrompt },
+      body: JSON.stringify({
+        model: model || "mistralai/mixtral-8x7b-instruct",
+        messages: [
+          { role: "system", content: systemPrompt },
           ...messages,
         ],
         stream: true,
