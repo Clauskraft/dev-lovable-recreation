@@ -103,27 +103,57 @@ Når kunden spørger specifikt om produkter, giv generel info baseret ovenståen
 
     const systemPrompt = settingsData?.system_prompt || defaultSystemPrompt;
 
-    // Re-enable context files but keep them separate for now
+    // Fetch context files for RAG (Retrieval-Augmented Generation)
     const { data: contextFiles } = await supabase
       .from('context_files')
       .select('file_name, content')
       .order('created_at', { ascending: false });
 
-    let contextString = '';
-    if (contextFiles && contextFiles.length > 0) {
-      contextString = '\n\n## DETALJERET PRODUKTINFORMATION\nNår kunden spørger specifikt om priser eller tekniske detaljer, reference denne information:\n\n';
-      contextFiles.forEach((file: any) => {
-        if (file.content) {
-          contextString += `--- ${file.file_name} ---\n${file.content}\n\n`;
+    // Extract user's latest question for context retrieval
+    const lastUserMessage = messages.filter((m: any) => m.role === 'user').pop();
+    const userQuery = lastUserMessage?.content?.toLowerCase() || '';
+
+    // RAG: Search for relevant sections in context based on keywords
+    let relevantContext = '';
+    if (contextFiles && contextFiles.length > 0 && userQuery) {
+      const keywords = extractKeywords(userQuery);
+      const contextContent = contextFiles[0]?.content || '';
+      
+      // Split context into sections (by headers or paragraphs)
+      const sections = contextContent.split(/\n#{1,3}\s+/);
+      const relevantSections: string[] = [];
+      
+      sections.forEach((section: string) => {
+        const sectionLower = section.toLowerCase();
+        // Check if section contains any keywords
+        const matchScore = keywords.filter((kw: string) => sectionLower.includes(kw)).length;
+        if (matchScore > 0) {
+          relevantSections.push(section.trim());
         }
       });
+      
+      // Limit context to ~10,000 characters max
+      if (relevantSections.length > 0) {
+        relevantContext = '\n\n## RELEVANT PRODUKTINFORMATION\nBaseret på dit spørgsmål, her er relevant information:\n\n' + 
+          relevantSections.slice(0, 5).join('\n\n---\n\n').substring(0, 10000);
+      }
     }
 
-    const enhancedSystemPrompt = systemPrompt + contextString;
+    const enhancedSystemPrompt = systemPrompt + relevantContext;
 
     console.log('Using model:', model);
     console.log('System prompt length:', enhancedSystemPrompt.length);
     console.log('Context files count:', contextFiles?.length || 0);
+    console.log('Relevant sections found:', relevantContext ? 'yes' : 'no');
+    console.log('Keywords extracted:', userQuery ? extractKeywords(userQuery).join(', ') : 'none');
+
+// Helper function to extract keywords from user query
+function extractKeywords(query: string): string[] {
+  // Remove common Danish words and extract meaningful keywords
+  const stopWords = ['hvad', 'hvordan', 'hvorfor', 'hvem', 'hvor', 'kan', 'jeg', 'er', 'det', 'en', 'et', 'den', 'de', 'til', 'på', 'med', 'om', 'har', 'vil'];
+  const words = query.toLowerCase().split(/\s+/);
+  return words.filter(w => w.length > 3 && !stopWords.includes(w));
+}
 
     const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
       method: "POST",
