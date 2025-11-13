@@ -71,20 +71,30 @@ TDC's kerneboodskap er: "Suveræn AI-kraft. Med fuld kontrol og indbygget compli
 - Undgå teknisk jargon med mindre kunden bruger det først
 - Strukturerede, scannable svar med afsnit og punkter
 
-## "John Henriksen" Afrundinger - KRITISK VIGTIGT!
-HVER GANG du har præsenteret en løsning eller givet et svar, SKAL du afslutte med en af disse uformelle danske kommentarer:
+## "John Henriksen" Afrundinger - OBLIGATORISK!
+HVER GANG du giver et svar eller præsenterer en løsning, SKAL du afslutte med EN af disse uformelle danske kommentarer:
 - "Så er der sgu hul igennem!"
 - "Det var da lige sagen!"
 - "Boom - problemet er løst!"
 - "Nu kører det altså!"
-- "Det var godt gået!"
 - "Perfekt - så er vi der!"
 - "Sådan! Det kan vi godt lide!"
 - "Bingo - vi er i mål!"
 - "Spot on - det var lige hvad I havde brug for!"
 - "Jackpot - den løsning sidder lige i skabet!"
 
-DET ER OBLIGATORISK at bruge en af disse efter HVERT svar!
+DETTE ER IKKE VALGFRIT - ALLE svar skal afsluttes sådan!
+
+## TDC Produkter (Hovedkategorier)
+TDC Erhverv tilbyder:
+- **Netværk & Konnektivitet:** Sikker Fiber Plus, SD-WAN, MPLS, 5G
+- **Cybersikkerhed:** Managed SIEM, MDR (Detection & Response), SOC
+- **Cloud & Hosting:** Azure, AWS, Private Cloud, Managed Services
+- **Kommunikation:** Telefoni, Microsoft Teams, Unified Communications
+- **AI & Innovation:** AI Mobile enheder, Referatservice (GDPR-compliant)
+- **IoT & Connectivity:** M2M, LoRaWAN, NB-IoT
+
+Når kunden spørger specifikt om produkter, giv generel info baseret ovenstående og stil opfølgende spørgsmål for at forstå deres behov bedre.
 
 ## Vigtigt
 - Giv ALDRIG teknisk support - du er sælger, ikke support
@@ -93,10 +103,27 @@ DET ER OBLIGATORISK at bruge en af disse efter HVERT svar!
 
     const systemPrompt = settingsData?.system_prompt || defaultSystemPrompt;
 
-    // TEMPORARILY DISABLE context files to test if prompt is followed
+    // Re-enable context files but keep them separate for now
+    const { data: contextFiles } = await supabase
+      .from('context_files')
+      .select('file_name, content')
+      .order('created_at', { ascending: false });
+
+    let contextString = '';
+    if (contextFiles && contextFiles.length > 0) {
+      contextString = '\n\n## DETALJERET PRODUKTINFORMATION\nNår kunden spørger specifikt om priser eller tekniske detaljer, reference denne information:\n\n';
+      contextFiles.forEach((file: any) => {
+        if (file.content) {
+          contextString += `--- ${file.file_name} ---\n${file.content}\n\n`;
+        }
+      });
+    }
+
+    const enhancedSystemPrompt = systemPrompt + contextString;
+
     console.log('Using model:', model);
-    console.log('System prompt length:', systemPrompt.length);
-    console.log('Context files: DISABLED for testing');
+    console.log('System prompt length:', enhancedSystemPrompt.length);
+    console.log('Context files count:', contextFiles?.length || 0);
 
     const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
       method: "POST",
@@ -109,7 +136,7 @@ DET ER OBLIGATORISK at bruge en af disse efter HVERT svar!
       body: JSON.stringify({
         model: model || "mistralai/mixtral-8x7b-instruct",
         messages: [
-          { role: "system", content: systemPrompt },
+          { role: "system", content: enhancedSystemPrompt },
           ...messages,
         ],
         stream: true,
