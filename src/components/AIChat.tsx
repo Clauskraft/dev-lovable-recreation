@@ -64,8 +64,6 @@ const AIChat = ({ conversationId, onConversationCreated, initialMessages = [], e
   const streamChat = async (userMessage: Message, convId: string | null, currentMessages: Message[]) => {
     const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/ai-chat`;
     
-    console.log('Starting chat stream with', currentMessages.length, 'messages');
-    
     try {
       const resp = await fetch(CHAT_URL, {
         method: "POST",
@@ -126,7 +124,6 @@ const AIChat = ({ conversationId, onConversationCreated, initialMessages = [], e
             if (content) {
               assistantContent += content;
               setStreamingMessage(assistantContent);
-              console.log('Streaming:', assistantContent.length, 'characters');
             }
           } catch {
             textBuffer = line + "\n" + textBuffer;
@@ -137,31 +134,20 @@ const AIChat = ({ conversationId, onConversationCreated, initialMessages = [], e
 
       // After streaming is complete, add the final message to messages array
       if (assistantContent) {
-        console.log('=== STREAM COMPLETE ===');
-        console.log('assistantContent length:', assistantContent.length);
-        console.log('assistantContent preview:', assistantContent.substring(0, 100));
-        console.log('Current messages before adding:', messages.length);
-        
         const newMessage: Message = { role: "assistant", content: assistantContent };
-        console.log('Created newMessage:', newMessage.role, newMessage.content.length);
         
         setMessages(prev => {
-          console.log('Inside setMessages callback. prev.length:', prev.length);
           const newMessages = [...prev, newMessage];
-          console.log('newMessages.length after adding:', newMessages.length);
-          console.log('Last message in array:', newMessages[newMessages.length - 1]);
           return newMessages;
         });
         
         // Clear streaming message AFTER setting messages
         setTimeout(() => {
           setStreamingMessage("");
-          console.log('Cleared streamingMessage after messages updated');
         }, 50);
       } else {
         setStreamingMessage("");
       }
-      console.log('=== STREAM END ===');
     } catch (error) {
       console.error("Stream error:", error);
       toast({
@@ -255,16 +241,6 @@ const AIChat = ({ conversationId, onConversationCreated, initialMessages = [], e
 
   return (
     <div className="w-full max-w-3xl mx-auto flex flex-col h-full">
-      {/* Debug info */}
-      <div className="text-white text-xs mb-2 bg-black/50 p-2 rounded">
-        <div>Messages array length: {messages.length}</div>
-        <div>Streaming: {streamingMessage.length} chars</div>
-        <div>Is loading: {isLoading ? 'Yes' : 'No'}</div>
-        {messages.length > 0 && (
-          <div>Last message: {messages[messages.length - 1].role} - {messages[messages.length - 1].content.substring(0, 50)}...</div>
-        )}
-      </div>
-      
       {/* Messages Area */}
       {(messages.length > 0 || streamingMessage) && (
         <div className="glass-effect rounded-2xl mb-4 flex flex-col overflow-hidden" style={{ height: '500px' }}>
@@ -279,7 +255,7 @@ const AIChat = ({ conversationId, onConversationCreated, initialMessages = [], e
                     className={`rounded-2xl px-5 py-3 shadow-md ${
                       msg.role === "user"
                         ? "bg-primary text-primary-foreground max-w-[75%]"
-                        : "bg-white text-foreground max-w-[85%]"
+                        : "bg-white text-gray-900 max-w-[85%]"
                     }`}
                   >
                     <p className="whitespace-pre-wrap text-sm leading-relaxed">{msg.content}</p>
@@ -288,7 +264,7 @@ const AIChat = ({ conversationId, onConversationCreated, initialMessages = [], e
               ))}
               {streamingMessage && (
                 <div className="flex justify-start">
-                  <div className="rounded-2xl px-5 py-3 shadow-md bg-white text-foreground max-w-[85%]">
+                  <div className="rounded-2xl px-5 py-3 shadow-md bg-white text-gray-900 max-w-[85%]">
                     <p className="whitespace-pre-wrap text-sm leading-relaxed">{streamingMessage}</p>
                   </div>
                 </div>
