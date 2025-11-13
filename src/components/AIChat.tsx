@@ -8,6 +8,12 @@ import { supabase } from "@/integrations/supabase/client";
 
 type Message = { role: "user" | "assistant"; content: string };
 
+type AIChatProps = {
+  conversationId: string | null;
+  onConversationCreated?: (conversationId: string) => void;
+  initialMessages?: Message[];
+};
+
 const MODELS = [
   { id: "mistralai/mistral-7b-instruct", name: "Mistral 7B (Hurtig & Effektiv)" },
   { id: "mistralai/mixtral-8x7b-instruct", name: "Mixtral 8x7B (Kraftfuld)" },
@@ -19,13 +25,24 @@ const MODELS = [
   { id: "openchat/openchat-7b", name: "OpenChat 7B" },
 ];
 
-const AIChat = () => {
-  const [messages, setMessages] = useState<Message[]>([]);
+const AIChat = ({ conversationId, onConversationCreated, initialMessages = [] }: AIChatProps) => {
+  const [messages, setMessages] = useState<Message[]>(initialMessages);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [selectedModel, setSelectedModel] = useState(MODELS[0].id);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
+  const [currentConversationId, setCurrentConversationId] = useState<string | null>(conversationId);
+
+  // Update messages when initialMessages changes
+  useEffect(() => {
+    setMessages(initialMessages);
+  }, [initialMessages]);
+
+  // Update conversation ID when prop changes
+  useEffect(() => {
+    setCurrentConversationId(conversationId);
+  }, [conversationId]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
@@ -42,7 +59,7 @@ const AIChat = () => {
     }
   }, [messages.length, isLoading]);
 
-  const streamChat = async (userMessage: Message) => {
+  const streamChat = async (userMessage: Message, convId: string) => {
     const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/ai-chat`;
     
     try {
@@ -133,6 +150,11 @@ const AIChat = () => {
           }
         }
       }
+
+      // Save assistant message to database after streaming is complete
+      if (assistantContent) {
+        await saveMessageToDb(convId, { role: "assistant", content: assistantContent });
+      }
     } catch (error) {
       console.error("Stream error:", error);
       toast({
@@ -140,6 +162,55 @@ const AIChat = () => {
         description: "Kunne ikke forbinde til AI. Prøv igen.",
         variant: "destructive",
       });
+    }
+  };
+
+  const saveMessageToDb = async (conversationId: string, message: Message) => {
+    try {
+      const { error } = await supabase
+        .from('chat_messages')
+        .insert({
+          conversation_id: conversationId,
+          role: message.role,
+          content: message.content
+        });
+
+      if (error) throw error;
+    } catch (error) {
+      console.error('Error saving message:', error);
+    }
+  };
+
+  const createOrGetConversation = async (firstMessage: string): Promise<string> => {
+    // If we already have a conversation ID, use it
+    if (currentConversationId) return currentConversationId;
+
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error("No user");
+
+      // Create conversation with first message as title (truncated)
+      const title = firstMessage.slice(0, 50) + (firstMessage.length > 50 ? '...' : '');
+      
+      const { data, error } = await supabase
+        .from('chat_conversations')
+        .insert({
+          user_id: user.id,
+          title
+        })
+        .select()
+        .single();
+
+      if (error) throw error;
+      
+      const newConversationId = data.id;
+      setCurrentConversationId(newConversationId);
+      onConversationCreated?.(newConversationId);
+      
+      return newConversationId;
+    } catch (error) {
+      console.error('Error creating conversation:', error);
+      throw error;
     }
   };
 
@@ -151,8 +222,20 @@ const AIChat = () => {
     setInput("");
     setIsLoading(true);
 
-    await streamChat(userMessage);
-    setIsLoading(false);
+    try {
+      // Create or get conversation
+      const convId = await createOrGetConversation(userMessage.content);
+      
+      // Save user message to database
+      await saveMessageToDb(convId, userMessage);
+
+      // Stream AI response
+      await streamChat(userMessage, convId);
+    } catch (error) {
+      console.error('Error in handleSend:', error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
