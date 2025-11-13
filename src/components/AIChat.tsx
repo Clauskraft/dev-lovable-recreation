@@ -64,9 +64,6 @@ const AIChat = ({ conversationId, onConversationCreated, initialMessages = [], e
     const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/ai-chat`;
     
     try {
-      // No authentication required for testing
-      console.log('Sending chat request with messages:', currentMessages.length);
-
       const resp = await fetch(CHAT_URL, {
         method: "POST",
         headers: {
@@ -125,16 +122,24 @@ const AIChat = ({ conversationId, onConversationCreated, initialMessages = [], e
             const content = parsed.choices?.[0]?.delta?.content as string | undefined;
             if (content) {
               assistantContent += content;
-              console.log('Received content chunk:', content);
+              
               setMessages(prev => {
                 const newMessages = [...prev];
                 const lastMsg = newMessages[newMessages.length - 1];
+                
+                // If last message is assistant, update it
                 if (lastMsg?.role === "assistant") {
-                  newMessages[newMessages.length - 1] = { ...lastMsg, content: assistantContent };
+                  newMessages[newMessages.length - 1] = { 
+                    role: "assistant", 
+                    content: assistantContent 
+                  };
                 } else {
-                  newMessages.push({ role: "assistant", content: assistantContent });
+                  // Add new assistant message
+                  newMessages.push({ 
+                    role: "assistant", 
+                    content: assistantContent 
+                  });
                 }
-                console.log('Updated messages:', newMessages.length);
                 return newMessages;
               });
             }
@@ -218,7 +223,6 @@ const AIChat = ({ conversationId, onConversationCreated, initialMessages = [], e
     const userMessage: Message = { role: "user", content: input.trim() };
     const updatedMessages = [...messages, userMessage];
     
-    console.log('Adding user message:', userMessage);
     setMessages(updatedMessages);
     setInput("");
     setIsLoading(true);
