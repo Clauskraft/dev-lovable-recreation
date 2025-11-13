@@ -39,7 +39,7 @@ const projects = [
   {
     id: 4,
     title: "Creative Portfolio",
-    category: "Offentlig Sektor",
+    category: "Crea App",
     remixes: "3247",
     video: "/creative-portfolio-animation.mp4",
     icon: Palette,
