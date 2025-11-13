@@ -43,8 +43,7 @@ const projects = [
     remixes: "3247",
     video: "/creative-portfolio-animation.mp4",
     icon: Palette,
-    link: "#creative-portfolio",
-    description: "Et sikkert og compliant univers for grafisk arbejde. Arbejd med avancerede AI-drevne designværktøjer, der overholder GDPR og NIS2. Skab visuelt indhold med indbygget compliance, datasikkerhed og fuld kontrol over dine kreative processer. Perfekt til organisationer der kræver både kreativitet og regulatorisk overholdelse."
+    link: "#creative-portfolio"
   }
 ];
 
@@ -78,17 +77,12 @@ const CommunitySection = () => {
           {projects.map((project) => {
             const VideoPlayer = ({ videoSrc }: { videoSrc: string }) => {
               const videoRef = useRef<HTMLVideoElement>(null);
-              const hasPlayedAudio = useRef(false);
 
               useEffect(() => {
                 const video = videoRef.current;
                 if (!video) return;
 
                 const handleEnded = () => {
-                  if (!hasPlayedAudio.current) {
-                    hasPlayedAudio.current = true;
-                  }
-                  video.muted = true;
                   video.play();
                 };
 
@@ -103,7 +97,7 @@ const CommunitySection = () => {
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   autoPlay
                   playsInline
-                  muted={false}
+                  muted={true}
                 />
               );
             };
@@ -137,12 +131,6 @@ const CommunitySection = () => {
                   <div className="flex items-center justify-between text-sm text-gray-600">
                     <span className="bg-gray-100 px-2 py-1 rounded-md">{project.category}</span>
                   </div>
-                  
-                  {project.description && (
-                    <p className="mt-2 text-xs text-gray-600 line-clamp-2">
-                      {project.description}
-                    </p>
-                  )}
                 </div>
               </div>
             );
