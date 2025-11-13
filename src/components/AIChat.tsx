@@ -31,6 +31,7 @@ const AIChat = ({ conversationId, onConversationCreated, initialMessages = [], e
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [selectedModel, setSelectedModel] = useState(MODELS[0].id);
+  const [streamingMessage, setStreamingMessage] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
   const [currentConversationId, setCurrentConversationId] = useState<string | null>(conversationId);
@@ -122,26 +123,7 @@ const AIChat = ({ conversationId, onConversationCreated, initialMessages = [], e
             const content = parsed.choices?.[0]?.delta?.content as string | undefined;
             if (content) {
               assistantContent += content;
-              
-              setMessages(prev => {
-                const newMessages = [...prev];
-                const lastMsg = newMessages[newMessages.length - 1];
-                
-                // If last message is assistant, update it
-                if (lastMsg?.role === "assistant") {
-                  newMessages[newMessages.length - 1] = { 
-                    role: "assistant", 
-                    content: assistantContent 
-                  };
-                } else {
-                  // Add new assistant message
-                  newMessages.push({ 
-                    role: "assistant", 
-                    content: assistantContent 
-                  });
-                }
-                return newMessages;
-              });
+              setStreamingMessage(assistantContent);
             }
           } catch {
             textBuffer = line + "\n" + textBuffer;
@@ -149,6 +131,10 @@ const AIChat = ({ conversationId, onConversationCreated, initialMessages = [], e
           }
         }
       }
+
+      // After streaming is complete, add the final message to messages array
+      setMessages(prev => [...prev, { role: "assistant", content: assistantContent }]);
+      setStreamingMessage("");
 
       // Save assistant message to database after streaming is complete (only if history is enabled)
       if (assistantContent && convId) {
@@ -161,6 +147,7 @@ const AIChat = ({ conversationId, onConversationCreated, initialMessages = [], e
         description: "Kunne ikke forbinde til AI. Prøv igen.",
         variant: "destructive",
       });
+      setStreamingMessage("");
     }
   };
 
@@ -275,6 +262,13 @@ const AIChat = ({ conversationId, onConversationCreated, initialMessages = [], e
                   </div>
                 </div>
               ))}
+              {streamingMessage && (
+                <div className="flex justify-start">
+                  <div className="rounded-2xl px-5 py-3 shadow-md bg-white text-foreground max-w-[85%]">
+                    <p className="whitespace-pre-wrap text-sm leading-relaxed">{streamingMessage}</p>
+                  </div>
+                </div>
+              )}
             </div>
             <div ref={messagesEndRef} className="h-1" />
           </div>
