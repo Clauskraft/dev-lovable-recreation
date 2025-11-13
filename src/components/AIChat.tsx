@@ -64,6 +64,8 @@ const AIChat = ({ conversationId, onConversationCreated, initialMessages = [], e
   const streamChat = async (userMessage: Message, convId: string | null, currentMessages: Message[]) => {
     const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/ai-chat`;
     
+    console.log('Starting chat stream with', currentMessages.length, 'messages');
+    
     try {
       const resp = await fetch(CHAT_URL, {
         method: "POST",
@@ -124,6 +126,7 @@ const AIChat = ({ conversationId, onConversationCreated, initialMessages = [], e
             if (content) {
               assistantContent += content;
               setStreamingMessage(assistantContent);
+              console.log('Streaming:', assistantContent.length, 'characters');
             }
           } catch {
             textBuffer = line + "\n" + textBuffer;
@@ -133,13 +136,11 @@ const AIChat = ({ conversationId, onConversationCreated, initialMessages = [], e
       }
 
       // After streaming is complete, add the final message to messages array
-      setMessages(prev => [...prev, { role: "assistant", content: assistantContent }]);
-      setStreamingMessage("");
-
-      // Save assistant message to database after streaming is complete (only if history is enabled)
-      if (assistantContent && convId) {
-        await saveMessageToDb(convId, { role: "assistant", content: assistantContent });
+      if (assistantContent) {
+        console.log('Stream complete. Total length:', assistantContent.length);
+        setMessages(prev => [...prev, { role: "assistant", content: assistantContent }]);
       }
+      setStreamingMessage("");
     } catch (error) {
       console.error("Stream error:", error);
       toast({
@@ -215,16 +216,8 @@ const AIChat = ({ conversationId, onConversationCreated, initialMessages = [], e
     setIsLoading(true);
 
     try {
-      // Create or get conversation (only if history is enabled)
-      const convId = await createOrGetConversation(userMessage.content);
-      
-      // Save user message to database (only if history is enabled)
-      if (convId) {
-        await saveMessageToDb(convId, userMessage);
-      }
-
       // Stream AI response with updated messages
-      await streamChat(userMessage, convId, updatedMessages);
+      await streamChat(userMessage, null, updatedMessages);
     } catch (error) {
       console.error('Error in handleSend:', error);
     } finally {
