@@ -153,12 +153,14 @@ const AIChat = ({ conversationId, onConversationCreated, initialMessages = [], e
           return newMessages;
         });
         
-        // Small delay to ensure state update
+        // Clear streaming message AFTER setting messages
         setTimeout(() => {
-          console.log('After timeout - messages.length:', messages.length);
-        }, 100);
+          setStreamingMessage("");
+          console.log('Cleared streamingMessage after messages updated');
+        }, 50);
+      } else {
+        setStreamingMessage("");
       }
-      setStreamingMessage("");
       console.log('=== STREAM END ===');
     } catch (error) {
       console.error("Stream error:", error);
@@ -264,7 +266,7 @@ const AIChat = ({ conversationId, onConversationCreated, initialMessages = [], e
       </div>
       
       {/* Messages Area */}
-      {messages.length > 0 && (
+      {(messages.length > 0 || streamingMessage) && (
         <div className="glass-effect rounded-2xl mb-4 flex flex-col overflow-hidden" style={{ height: '500px' }}>
           <div className="flex-1 overflow-y-auto p-6 flex flex-col">
             <div className="space-y-4 flex-grow">
