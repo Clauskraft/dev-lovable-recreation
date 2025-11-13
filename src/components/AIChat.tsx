@@ -125,6 +125,7 @@ const AIChat = ({ conversationId, onConversationCreated, initialMessages = [], e
             const content = parsed.choices?.[0]?.delta?.content as string | undefined;
             if (content) {
               assistantContent += content;
+              console.log('Received content chunk:', content);
               setMessages(prev => {
                 const newMessages = [...prev];
                 const lastMsg = newMessages[newMessages.length - 1];
@@ -133,6 +134,7 @@ const AIChat = ({ conversationId, onConversationCreated, initialMessages = [], e
                 } else {
                   newMessages.push({ role: "assistant", content: assistantContent });
                 }
+                console.log('Updated messages:', newMessages.length);
                 return newMessages;
               });
             }
@@ -214,6 +216,7 @@ const AIChat = ({ conversationId, onConversationCreated, initialMessages = [], e
     if (!input.trim() || isLoading) return;
 
     const userMessage: Message = { role: "user", content: input.trim() };
+    console.log('Adding user message:', userMessage);
     setMessages(prev => [...prev, userMessage]);
     setInput("");
     setIsLoading(true);
