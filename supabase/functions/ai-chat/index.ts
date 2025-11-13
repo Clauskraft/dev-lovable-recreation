@@ -125,7 +125,8 @@ Når kunden spørger specifikt om produkter, giv generel info baseret ovenståen
         // Calculate TF-IDF scores for each section
         const scoredSections = sections.map((section, idx) => {
           const score = calculateTFIDFScore(userQuery, section, sections);
-          return { section: section.trim(), score, index: idx };
+          const sectionPreview = section.substring(0, 100).replace(/\n/g, ' ');
+          return { section: section.trim(), score, index: idx, preview: sectionPreview };
         });
         
         // Sort by score and take top 5 most relevant sections
@@ -134,6 +135,15 @@ Når kunden spørger specifikt om produkter, giv generel info baseret ovenståen
           .sort((a, b) => b.score - a.score)
           .slice(0, 5);
         
+        console.log('\n=== TF-IDF RAG SCORING ===');
+        console.log('User query:', userQuery.substring(0, 200));
+        console.log('Total sections analyzed:', sections.length);
+        console.log('Sections with score > 0:', scoredSections.filter(s => s.score > 0).length);
+        console.log('\nTop 5 sections selected:');
+        topSections.forEach((s, i) => {
+          console.log(`${i + 1}. Score: ${s.score.toFixed(4)} | Preview: ${s.preview}...`);
+        });
+        
         if (topSections.length > 0) {
           const contextText = topSections
             .map(s => s.section)
@@ -141,7 +151,11 @@ Når kunden spørger specifikt om produkter, giv generel info baseret ovenståen
             .substring(0, 10000);
           
           relevantContext = '\n\n## RELEVANT PRODUKTINFORMATION\nBaseret på dit spørgsmål, her er relevant information:\n\n' + contextText;
+          console.log('Total context characters added:', contextText.length);
+        } else {
+          console.log('No relevant sections found with score > 0');
         }
+        console.log('=== END TF-IDF SCORING ===\n');
       }
     }
 
