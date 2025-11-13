@@ -16,12 +16,12 @@ type AIChatProps = {
 };
 
 const MODELS = [
-  { id: "mistralai/mixtral-8x7b-instruct", name: "Mixtral 8x7B (Kraftfuld - Anbefalet)" },
-  { id: "mistralai/mistral-large", name: "Mistral Large (Mest Avanceret)" },
+  { id: "mistralai/mistral-large", name: "Mistral Large (Anbefalet - Bedst til instruktioner)" },
+  { id: "meta-llama/llama-3.1-405b-instruct", name: "Llama 3.1 405B (Mest Kraftfuld)" },
+  { id: "meta-llama/llama-3-70b-instruct", name: "Llama 3 70B (Kraftfuld)" },
+  { id: "mistralai/mixtral-8x7b-instruct", name: "Mixtral 8x7B (Hurtig men svagere)" },
   { id: "mistralai/mistral-7b-instruct", name: "Mistral 7B (Hurtig & Effektiv)" },
   { id: "meta-llama/llama-3-8b-instruct", name: "Llama 3 8B (Hurtig)" },
-  { id: "meta-llama/llama-3-70b-instruct", name: "Llama 3 70B (Kraftfuld)" },
-  { id: "meta-llama/llama-3.1-405b-instruct", name: "Llama 3.1 405B (Mest Kraftfuld)" },
   { id: "google/gemma-7b-it", name: "Gemma 7B (Google)" },
   { id: "openchat/openchat-7b", name: "OpenChat 7B" },
 ];
@@ -30,7 +30,7 @@ const AIChat = ({ conversationId, onConversationCreated, initialMessages = [], e
   const [messages, setMessages] = useState<Message[]>(initialMessages);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedModel, setSelectedModel] = useState(MODELS[0].id);
+  const [selectedModel, setSelectedModel] = useState("mistralai/mistral-large"); // Default to best model for instruction following
   const [streamingMessage, setStreamingMessage] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();

@@ -258,10 +258,15 @@ function calculateTFIDFScore(query: string, document: string, allDocuments: stri
         "X-Title": "TDC DKAI",
       },
       body: JSON.stringify({
-        model: model || "mistralai/mixtral-8x7b-instruct",
+        model: model || "mistralai/mistral-large",
         messages: [
           { role: "system", content: enhancedSystemPrompt },
           ...messages,
+          // Add explicit reminder before model generates response
+          { 
+            role: "system", 
+            content: "VIGTIGT: Du SKAL afslutte dit svar med EN af 'John Henriksen' kommentarerne (f.eks. 'Så er der sgu hul igennem!'). Dette er IKKE valgfrit!" 
+          }
         ],
         stream: true,
       }),
