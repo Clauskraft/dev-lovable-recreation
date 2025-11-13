@@ -111,6 +111,8 @@ serve(async (req) => {
       "Det her er solid kvalitet!",
       "Nu får I virkelig styr på tingene!",
       "Sådan sikrer vi compliance!",
+      // Konkurrence-relateret kommentar
+      "Og det får I satme ikke hos Telia :-)",
     ].sort(() => Math.random() - 0.5); // Randomize order
 
     const commentsList = johnHenriksenComments.slice(0, 7).map(c => `   - "${c}"`).join('\n');
