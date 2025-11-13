@@ -113,29 +113,35 @@ Når kunden spørger specifikt om produkter, giv generel info baseret ovenståen
     const lastUserMessage = messages.filter((m: any) => m.role === 'user').pop();
     const userQuery = lastUserMessage?.content?.toLowerCase() || '';
 
-    // RAG: Search for relevant sections in context based on keywords
+    // RAG: Search for relevant sections using TF-IDF scoring
     let relevantContext = '';
     if (contextFiles && contextFiles.length > 0 && userQuery) {
-      const keywords = extractKeywords(userQuery);
       const contextContent = contextFiles[0]?.content || '';
       
       // Split context into sections (by headers or paragraphs)
-      const sections = contextContent.split(/\n#{1,3}\s+/);
-      const relevantSections: string[] = [];
+      const sections = contextContent.split(/\n#{1,3}\s+/).filter(s => s.trim().length > 50);
       
-      sections.forEach((section: string) => {
-        const sectionLower = section.toLowerCase();
-        // Check if section contains any keywords
-        const matchScore = keywords.filter((kw: string) => sectionLower.includes(kw)).length;
-        if (matchScore > 0) {
-          relevantSections.push(section.trim());
+      if (sections.length > 0) {
+        // Calculate TF-IDF scores for each section
+        const scoredSections = sections.map((section, idx) => {
+          const score = calculateTFIDFScore(userQuery, section, sections);
+          return { section: section.trim(), score, index: idx };
+        });
+        
+        // Sort by score and take top 5 most relevant sections
+        const topSections = scoredSections
+          .filter(s => s.score > 0)
+          .sort((a, b) => b.score - a.score)
+          .slice(0, 5);
+        
+        if (topSections.length > 0) {
+          const contextText = topSections
+            .map(s => s.section)
+            .join('\n\n---\n\n')
+            .substring(0, 10000);
+          
+          relevantContext = '\n\n## RELEVANT PRODUKTINFORMATION\nBaseret på dit spørgsmål, her er relevant information:\n\n' + contextText;
         }
-      });
-      
-      // Limit context to ~10,000 characters max
-      if (relevantSections.length > 0) {
-        relevantContext = '\n\n## RELEVANT PRODUKTINFORMATION\nBaseret på dit spørgsmål, her er relevant information:\n\n' + 
-          relevantSections.slice(0, 5).join('\n\n---\n\n').substring(0, 10000);
       }
     }
 
@@ -144,15 +150,62 @@ Når kunden spørger specifikt om produkter, giv generel info baseret ovenståen
     console.log('Using model:', model);
     console.log('System prompt length:', enhancedSystemPrompt.length);
     console.log('Context files count:', contextFiles?.length || 0);
-    console.log('Relevant sections found:', relevantContext ? 'yes' : 'no');
-    console.log('Keywords extracted:', userQuery ? extractKeywords(userQuery).join(', ') : 'none');
+    console.log('Relevant context added:', relevantContext ? 'yes' : 'no');
 
-// Helper function to extract keywords from user query
-function extractKeywords(query: string): string[] {
-  // Remove common Danish words and extract meaningful keywords
-  const stopWords = ['hvad', 'hvordan', 'hvorfor', 'hvem', 'hvor', 'kan', 'jeg', 'er', 'det', 'en', 'et', 'den', 'de', 'til', 'på', 'med', 'om', 'har', 'vil'];
-  const words = query.toLowerCase().split(/\s+/);
-  return words.filter(w => w.length > 3 && !stopWords.includes(w));
+// Helper functions for TF-IDF scoring
+function tokenize(text: string): string[] {
+  // Remove common Danish stop words and extract meaningful terms
+  const stopWords = new Set([
+    'og', 'i', 'jeg', 'det', 'at', 'en', 'et', 'den', 'til', 'er', 'som', 'på', 'de',
+    'med', 'han', 'af', 'for', 'ikke', 'der', 'var', 'mig', 'sig', 'men', 'har',
+    'om', 'vi', 'min', 'havde', 'ham', 'hun', 'nu', 'over', 'da', 'fra', 'du',
+    'ud', 'sin', 'dem', 'os', 'op', 'man', 'hans', 'hvor', 'eller', 'hvad', 'skal',
+    'selv', 'her', 'alle', 'vil', 'blev', 'kunne', 'ind', 'når', 'være', 'dog',
+    'noget', 'ville', 'jo', 'deres', 'efter', 'ned', 'skulle', 'denne', 'end',
+    'dette', 'mit', 'også', 'under', 'have', 'dig', 'anden', 'hende', 'mine',
+    'alt', 'meget', 'sit', 'sine', 'vor', 'mod', 'disse', 'hvis', 'din', 'kan',
+    'how', 'what', 'when', 'where', 'why', 'who', 'the', 'a', 'an', 'and', 'or',
+    'hvem', 'hvordan', 'hvorfor', 'hvornår'
+  ]);
+  
+  return text.toLowerCase()
+    .split(/[\s\p{P}]+/u)
+    .filter(word => word.length > 2 && !stopWords.has(word))
+    .filter(word => !/^\d+$/.test(word)); // Remove pure numbers
+}
+
+function calculateTermFrequency(term: string, document: string): number {
+  const tokens = tokenize(document);
+  const termCount = tokens.filter(t => t === term).length;
+  return tokens.length > 0 ? termCount / tokens.length : 0;
+}
+
+function calculateInverseDocumentFrequency(term: string, allDocuments: string[]): number {
+  const docsWithTerm = allDocuments.filter(doc => 
+    tokenize(doc).includes(term)
+  ).length;
+  
+  return docsWithTerm > 0 
+    ? Math.log(allDocuments.length / docsWithTerm) 
+    : 0;
+}
+
+function calculateTFIDFScore(query: string, document: string, allDocuments: string[]): number {
+  const queryTerms = tokenize(query);
+  
+  if (queryTerms.length === 0) return 0;
+  
+  let totalScore = 0;
+  const uniqueTerms = [...new Set(queryTerms)];
+  
+  for (const term of uniqueTerms) {
+    const tf = calculateTermFrequency(term, document);
+    const idf = calculateInverseDocumentFrequency(term, allDocuments);
+    totalScore += tf * idf;
+  }
+  
+  // Normalize by query length
+  return totalScore / queryTerms.length;
 }
 
     const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
