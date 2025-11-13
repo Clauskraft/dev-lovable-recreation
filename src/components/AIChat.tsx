@@ -137,17 +137,29 @@ const AIChat = ({ conversationId, onConversationCreated, initialMessages = [], e
 
       // After streaming is complete, add the final message to messages array
       if (assistantContent) {
-        console.log('Stream complete. Total length:', assistantContent.length);
-        console.log('Adding to messages array...');
+        console.log('=== STREAM COMPLETE ===');
+        console.log('assistantContent length:', assistantContent.length);
+        console.log('assistantContent preview:', assistantContent.substring(0, 100));
+        console.log('Current messages before adding:', messages.length);
+        
         const newMessage: Message = { role: "assistant", content: assistantContent };
+        console.log('Created newMessage:', newMessage.role, newMessage.content.length);
+        
         setMessages(prev => {
+          console.log('Inside setMessages callback. prev.length:', prev.length);
           const newMessages = [...prev, newMessage];
-          console.log('Messages array now has', newMessages.length, 'messages');
+          console.log('newMessages.length after adding:', newMessages.length);
+          console.log('Last message in array:', newMessages[newMessages.length - 1]);
           return newMessages;
         });
+        
+        // Small delay to ensure state update
+        setTimeout(() => {
+          console.log('After timeout - messages.length:', messages.length);
+        }, 100);
       }
       setStreamingMessage("");
-      console.log('Cleared streamingMessage');
+      console.log('=== STREAM END ===');
     } catch (error) {
       console.error("Stream error:", error);
       toast({
@@ -242,8 +254,13 @@ const AIChat = ({ conversationId, onConversationCreated, initialMessages = [], e
   return (
     <div className="w-full max-w-3xl mx-auto flex flex-col h-full">
       {/* Debug info */}
-      <div className="text-white text-xs mb-2">
-        Messages: {messages.length}, Streaming: {streamingMessage.length} chars
+      <div className="text-white text-xs mb-2 bg-black/50 p-2 rounded">
+        <div>Messages array length: {messages.length}</div>
+        <div>Streaming: {streamingMessage.length} chars</div>
+        <div>Is loading: {isLoading ? 'Yes' : 'No'}</div>
+        {messages.length > 0 && (
+          <div>Last message: {messages[messages.length - 1].role} - {messages[messages.length - 1].content.substring(0, 50)}...</div>
+        )}
       </div>
       
       {/* Messages Area */}
