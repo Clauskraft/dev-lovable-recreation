@@ -145,9 +145,9 @@ Brug altid kontekstfiler når de er tilgængelige for præcise produktdetaljer.`
         "HTTP-Referer": "https://tdc-dkai.lovable.app",
         "X-Title": "TDC DKAI",
       },
-      body: JSON.stringify({
-        model: model || "mistralai/mistral-7b-instruct",
-        messages: [
+        body: JSON.stringify({
+          model: model || "mistralai/mixtral-8x7b-instruct",
+          messages: [
           { role: "system", content: enhancedSystemPrompt },
           ...messages,
         ],

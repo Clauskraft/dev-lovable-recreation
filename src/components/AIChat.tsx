@@ -16,9 +16,9 @@ type AIChatProps = {
 };
 
 const MODELS = [
-  { id: "mistralai/mistral-7b-instruct", name: "Mistral 7B (Hurtig & Effektiv)" },
-  { id: "mistralai/mixtral-8x7b-instruct", name: "Mixtral 8x7B (Kraftfuld)" },
+  { id: "mistralai/mixtral-8x7b-instruct", name: "Mixtral 8x7B (Kraftfuld - Anbefalet)" },
   { id: "mistralai/mistral-large", name: "Mistral Large (Mest Avanceret)" },
+  { id: "mistralai/mistral-7b-instruct", name: "Mistral 7B (Hurtig & Effektiv)" },
   { id: "meta-llama/llama-3-8b-instruct", name: "Llama 3 8B (Hurtig)" },
   { id: "meta-llama/llama-3-70b-instruct", name: "Llama 3 70B (Kraftfuld)" },
   { id: "meta-llama/llama-3.1-405b-instruct", name: "Llama 3.1 405B (Mest Kraftfuld)" },
