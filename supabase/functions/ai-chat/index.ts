@@ -209,17 +209,44 @@ function calculateTFIDFScore(query: string, document: string, allDocuments: stri
   
   if (queryTerms.length === 0) return 0;
   
-  let totalScore = 0;
+  // Calculate TF-IDF score
+  let tfidfScore = 0;
   const uniqueTerms = [...new Set(queryTerms)];
   
   for (const term of uniqueTerms) {
     const tf = calculateTermFrequency(term, document);
     const idf = calculateInverseDocumentFrequency(term, allDocuments);
-    totalScore += tf * idf;
+    tfidfScore += tf * idf;
   }
   
-  // Normalize by query length
-  return totalScore / queryTerms.length;
+  // Normalize TF-IDF by query length
+  tfidfScore = tfidfScore / queryTerms.length;
+  
+  // Add substring matching score for better flexibility
+  const docLower = document.toLowerCase();
+  const queryLower = query.toLowerCase();
+  let substringScore = 0;
+  
+  // Check for full query match
+  if (docLower.includes(queryLower)) {
+    substringScore += 2.0;
+  }
+  
+  // Check for individual term matches (including partial)
+  for (const term of queryTerms) {
+    if (term.length < 3) continue; // Skip very short terms
+    
+    // Count occurrences of term in document
+    const regex = new RegExp(term, 'gi');
+    const matches = docLower.match(regex);
+    if (matches) {
+      substringScore += matches.length * 0.5;
+    }
+  }
+  
+  // Combine scores: TF-IDF + substring matching
+  // Weight substring matching more heavily to catch partial matches
+  return (tfidfScore * 0.3) + (substringScore * 0.7);
 }
 
     const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
