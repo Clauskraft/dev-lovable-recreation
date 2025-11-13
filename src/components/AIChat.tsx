@@ -154,16 +154,16 @@ const AIChat = () => {
     <div className="w-full max-w-3xl mx-auto flex flex-col h-full">
       {/* Messages Area */}
       {messages.length > 0 && (
-        <div className="glass-effect rounded-2xl mb-4 flex flex-col overflow-hidden" style={{ height: '500px' }}>
+        <div className="glass-effect-strong rounded-2xl mb-4 flex flex-col overflow-hidden shadow-floating" style={{ height: '500px' }}>
           <div className="flex-1 overflow-y-auto p-6 flex flex-col">
             <div className="space-y-4 flex-grow">
               {messages.map((msg, idx) => (
                 <div
                   key={idx}
-                  className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
+                  className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"} animate-fade-in`}
                 >
                   <div
-                    className={`rounded-2xl px-5 py-3 shadow-md ${
+                    className={`rounded-2xl px-5 py-3 shadow-elevated transition-smooth hover:scale-[1.02] ${
                       msg.role === "user"
                         ? "bg-primary text-primary-foreground max-w-[75%]"
                         : "bg-white text-foreground max-w-[85%]"
@@ -180,7 +180,7 @@ const AIChat = () => {
       )}
 
       {/* Input Area */}
-      <div className="glass-effect rounded-2xl p-4 shadow-lg">
+      <div className="glass-effect-strong rounded-2xl p-4 shadow-floating">
         <div className="flex items-center gap-3 mb-4">
           <Input
             value={input}
@@ -193,7 +193,7 @@ const AIChat = () => {
           <Button
             onClick={handleSend}
             disabled={isLoading || !input.trim()}
-            className="p-3 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full shadow-md transition-all hover:scale-105"
+            className="p-3 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full shadow-elevated transition-bounce hover:scale-110 hover:shadow-floating hover-glow"
             size="icon"
           >
             {isLoading ? (

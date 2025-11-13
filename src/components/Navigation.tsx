@@ -22,14 +22,14 @@ const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="w-full px-6 py-3 bg-[hsl(230,45%,12%)] border-b border-white/10">
+    <nav className="w-full px-6 py-3 bg-[hsl(230,45%,12%)] border-b border-white/10 backdrop-blur-md bg-opacity-95 sticky top-0 z-50 shadow-lg">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         {/* Logo */}
-        <Link to="/" className="flex items-center gap-3 hover:opacity-90 transition-opacity">
-          <div className="w-10 h-10 rounded-full bg-[hsl(210,100%,50%)] flex items-center justify-center">
+        <Link to="/" className="flex items-center gap-3 transition-smooth hover:scale-105 group">
+          <div className="w-10 h-10 rounded-full bg-[hsl(210,100%,50%)] flex items-center justify-center shadow-lg group-hover:shadow-xl group-hover:shadow-primary/50 transition-smooth">
             <span className="text-white font-bold text-sm">TDC</span>
           </div>
-          <span className="text-xl font-bold text-white tracking-tight">Erhverv</span>
+          <span className="text-xl font-bold text-white tracking-tight group-hover:text-[hsl(210,100%,70%)] transition-smooth">Erhverv</span>
         </Link>
         
         {/* Main Navigation */}
@@ -108,7 +108,7 @@ const Navigation = () => {
           <Button variant="ghost" className="hidden lg:inline-flex text-white/90 hover:text-white hover:bg-white/10 border-0">
             Kontakt os
           </Button>
-          <Button variant="outline" className="hidden md:inline-flex bg-transparent text-white border-white/20 hover:bg-white/10">
+          <Button variant="outline" className="hidden md:inline-flex bg-transparent text-white border-white/20 hover:bg-white/10 transition-smooth hover:scale-105 hover:border-white/40 hover:shadow-lg">
             Log ind
           </Button>
 
