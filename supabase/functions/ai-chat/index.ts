@@ -292,11 +292,19 @@ function calculateTFIDFScore(query: string, document: string, allDocuments: stri
           ...messages,
           { 
             role: "system", 
-            content: "VIGTIGT: Du SKAL afslutte dit svar med EN af 'John Henriksen' kommentarerne (f.eks. 'Så er der sgu hul igennem!'). Dette er IKKE valgfrit!" 
+            content: `KRITISK PÅMINDELSE:
+- Dit svar SKAL slutte med NØJAGTIGT dette format: "...Og som John Henriksen siger: '[KOMMENTAR]'"
+- Vælg en kommentar der passer til EMNET:
+  * Hvis emnet er SIKKERHED/SOC/SIEM → brug "det holder sgu de Røde Banditter fra døren!" eller lignende sikkerhedskommentar
+  * Hvis emnet er NETVÆRK/FIBER → brug "nu kører det som smurt!" eller lignende netværkskommentar
+  * Hvis emnet er CLOUD → brug cloudkommentar
+  * Hvis emnet er BACKUP → brug backupkommentar
+- BRUG ALDRIG "Så er der sgu hul igennem!" til sikkerhedsemner!
+- Formatet er IKKE valgfrit - start ALTID med "...Og som John Henriksen siger:"` 
           }
         ],
         stream: true,
-        max_tokens: 2000, // Limit tokens to prevent credit exhaustion
+        max_tokens: 2000,
       }),
     });
 
