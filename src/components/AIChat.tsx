@@ -187,7 +187,7 @@ const AIChat = () => {
             onChange={(e) => setInput(e.target.value)}
             onKeyPress={handleKeyPress}
             placeholder="Spørg TDC AI om at skabe en løsning til..."
-            className="flex-1 border-0 bg-white text-gray-900 placeholder:text-gray-500 text-base py-6 shadow-sm"
+            className="flex-1 border-0 bg-white text-tdc-digital-blue placeholder:text-gray-500 text-base py-6 shadow-sm"
             disabled={isLoading}
           />
           <Button
