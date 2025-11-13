@@ -86,7 +86,6 @@ const Auth = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="text-tdc-digital-blue"
               />
             </div>
             <div className="space-y-2">
@@ -99,7 +98,6 @@ const Auth = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 minLength={6}
-                className="text-tdc-digital-blue"
               />
             </div>
             <Button
