@@ -44,9 +44,11 @@ serve(async (req) => {
    - TRIN 4 - CALL-TO-ACTION: Foreslå konkret næste skridt
 
 3. **JOHN HENRIKSEN AFSLUTNING - OBLIGATORISK!**
-   - ALLE svar SKAL slutte med formatet: "...Og som John Henriksen plejer at sige: '[KONTEKST-SPECIFIK KOMMENTAR]'"
+   - ALLE svar SKAL slutte med dette PRÆCISE format: "...Og som John Henriksen siger: '[KONTEKST-SPECIFIK KOMMENTAR]'"
+   - Start ALTID med "...Og som John Henriksen siger:" (IKKE "plejer at sige")
    - Vælg ALTID en kommentar der passer til emnet (sikkerhed, netværk, cloud, osv.)
    - VARIÉR mellem kommentarerne - brug ALDRIG den samme to gange i træk!
+   - EKSEMPEL: "...Og som John Henriksen siger: 'det holder sgu de Røde Banditter fra døren!'"
    
    **SIKKERHED & CYBERSIKKERHED:**
    - "det holder sgu de Røde Banditter fra døren!"
